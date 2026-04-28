@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>L'Esprit du Midi — Menu signature · Maison de Bacon</title>
+<meta name="description" content="Menu Esprit du Midi · 74€ · servi uniquement au déjeuner. Tartare de daurade de Méditerranée, noix de Saint-Jacques, blanquette de veau printanière, savarin aux agrumes. Cuisine marine du Chef Nicolas Davouze, Cap d'Antibes.">
+<meta name="theme-color" content="#091a2d">
+
+<link rel="canonical" href="https://maisondebacon.fr/lesprit-du-midi/">
+<link rel="alternate" hreflang="fr-FR" href="https://maisondebacon.fr/lesprit-du-midi/">
+
+<!-- Schema.org Menu -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Menu",
+  "@id": "https://maisondebacon.fr/lesprit-du-midi/#menu",
+  "name": "L'Esprit du Midi",
+  "description": "Menu signature servi uniquement au déjeuner. Trois entrées au choix, deux plats, trois desserts.",
+  "inLanguage": "fr",
+  "offers": { "@type": "Offer", "price": "74", "priceCurrency": "EUR" },
+  "hasMenuSection": [
+    {
+      "@type": "MenuSection",
+      "name": "Entrées",
+      "hasMenuItem": [
+        { "@type": "MenuItem", "name": "Tartare de daurade de Méditerranée, bavaroise de concombre et citron vert", "description": "Vinaigrette aux agrumes, perlée à l'huile de mandarine de Mr Roméo." },
+        { "@type": "MenuItem", "name": "L'œuf de poule marbré, jardin mimosa", "description": "Pousses de la ferme de Gabin." },
+        { "@type": "MenuItem", "name": "Pâté croûte marin aux petits œufs", "description": "Pickles de légumes, sauce tartare aux herbes fraîches." }
+      ]
+    },
+    {
+      "@type": "MenuSection",
+      "name": "Plats",
+      "hasMenuItem": [
+        { "@type": "MenuItem", "name": "Noix de Saint-Jacques rôties au beurre", "description": "Pommes curcuma et asperges, émulsion verveine." },
+        { "@type": "MenuItem", "name": "Blanquette de veau printanière", "description": "Aux herbes fraîches." }
+      ]
+    },
+    {
+      "@type": "MenuSection",
+      "name": "Desserts",
+      "hasMenuItem": [
+        { "@type": "MenuItem", "name": "Savarin revisité aux agrumes et citron de pays", "description": "Sorbet orange sanguine." },
+        { "@type": "MenuItem", "name": "L'orange sanguine rafraîchie et confite", "description": "Sauce Suzette tiédie." },
+        { "@type": "MenuItem", "name": "Assortiment de fromages affinés" }
+      ]
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="styles.css?v=10">
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Aller au contenu</a>
+
+<!-- NAV (shared) -->
+<header class="nav is-scrolled" data-nav="solid">
+  <a href="index.html" class="nav__brand" aria-label="Maison de Bacon — accueil">
+    <img src="assets/img/logo-white.svg" alt="" width="38" height="22">
+    <span class="nav__brand-mark">Maison de Bacon</span>
+  </a>
+  <nav class="nav__menu" aria-label="Navigation principale">
+    <a href="restaurant.html">Restaurant</a>
+    <a href="rooftop.html">Roof Top</a>
+    <a href="appartement.html">Appartement</a>
+    <a href="menu.html" aria-current="page" style="color:var(--gold)">La Carte</a>
+    <a href="index.html#chef">Le Chef</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <div class="nav__lang" role="group" aria-label="Langue">
+      <button aria-current="true">FR</button><span>·</span><button>EN</button>
+    </div>
+    <a href="#reserver" class="nav__cta">Réserver</a>
+    <button class="nav__burger" data-burger aria-label="Ouvrir le menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<aside class="mobile-panel" data-mobile-panel aria-hidden="true">
+  <div class="mobile-panel__head">
+    <img src="assets/img/logo-white.svg" alt="Maison de Bacon" width="56">
+    <button class="mobile-panel__close" data-mobile-close aria-label="Fermer">Fermer ✕</button>
+  </div>
+  <nav class="mobile-panel__menu">
+    <a href="restaurant.html">Restaurant</a>
+    <a href="rooftop.html">Roof Top</a>
+    <a href="appartement.html">Appartement</a>
+    <a href="menu.html">La Carte</a>
+    <a href="index.html#chef">Le Chef</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+  <div class="mobile-panel__foot">
+    664 Bd de Bacon · Cap d'Antibes<br>
+    <a href="tel:+33493615002">+33 4 93 61 50 02</a>
+  </div>
+</aside>
+
+<main id="main">
+
+<!-- ============================================================
+     MENU
+     ============================================================ -->
+<section class="menu-paper menu-paper--top">
+  <div class="wrap">
+
+    <header class="menu-intro reveal">
+      <p class="eyebrow">La Carte · Saison de Printemps</p>
+      <h1 class="menu-intro__title">Nos menus du déjeuner</h1>
+    </header>
+
+    <div class="menu-tabs reveal" role="tablist" aria-label="Sélection du menu">
+      <button data-tab="midi" aria-selected="true" role="tab">L'Esprit du Midi · 74€</button>
+      <button data-tab="express" aria-selected="false" role="tab">L'Esprit Express · 49€</button>
+    </div>
+
+    <article class="menu-card reveal" data-tab-panel="midi" role="tabpanel">
+
+      <header class="menu-card__head">
+        <h2 class="menu-card__title">L'Esprit du Midi</h2>
+        <p class="menu-card__sub">Servi uniquement au déjeuner</p>
+        <p class="menu-card__price">74€</p>
+        <p class="menu-card__meta">Trois services · entrée · plat · dessert</p>
+      </header>
+
+      <p class="menu-course-label">Entrées au choix</p>
+
+      <div class="menu-section">
+        <div class="dish">
+          <p class="dish__name">Tartare de daurade de Méditerranée, bavaroise de concombre et citron vert</p>
+          <p class="dish__en">Vinaigrette aux agrumes, perlée à l'huile de mandarine de Mr Roméo.</p>
+        </div>
+        <p class="dish__or">— ou —</p>
+        <div class="dish">
+          <p class="dish__name">L'œuf de poule marbré, jardin mimosa</p>
+          <p class="dish__en">Pousses de la ferme de Gabin.</p>
+        </div>
+        <p class="dish__or">— ou —</p>
+        <div class="dish">
+          <p class="dish__name">Pâté croûte marin aux petits œufs</p>
+          <p class="dish__en">Pickles de légumes, sauce tartare aux herbes fraîches.</p>
+        </div>
+      </div>
+
+      <p class="menu-course-label">Plats au choix</p>
+
+      <div class="menu-section">
+        <div class="dish">
+          <p class="dish__name">Noix de Saint-Jacques rôties au beurre</p>
+          <p class="dish__en">Pommes curcuma et asperges, émulsion verveine.</p>
+        </div>
+        <p class="dish__or">— ou —</p>
+        <div class="dish">
+          <p class="dish__name">Blanquette de veau printanière</p>
+          <p class="dish__en">Aux herbes fraîches.</p>
+        </div>
+      </div>
+
+      <p class="menu-course-label">Desserts au choix</p>
+
+      <div class="menu-section">
+        <div class="dish">
+          <p class="dish__name">Savarin revisité aux agrumes et citron de pays</p>
+          <p class="dish__en">Sorbet orange sanguine.</p>
+        </div>
+        <p class="dish__or">— ou —</p>
+        <div class="dish">
+          <p class="dish__name">L'orange sanguine rafraîchie et confite</p>
+          <p class="dish__en">Sauce Suzette tiédie.</p>
+        </div>
+        <p class="dish__or">— ou —</p>
+        <div class="dish">
+          <p class="dish__name">Assortiment de fromages affinés</p>
+        </div>
+      </div>
+
+      <div class="menu-foot">
+        Viandes d'origine France · Carte des allergènes sur demande<br>
+        <img src="assets/img/logo-white.svg" alt="" style="filter:invert(1) sepia(1) saturate(2) hue-rotate(345deg) brightness(0.7)">
+      </div>
+
+    </article>
+
+    <article class="menu-card reveal" data-tab-panel="express" role="tabpanel" hidden>
+
+      <header class="menu-card__head">
+        <h2 class="menu-card__title">L'Esprit Express</h2>
+        <p class="menu-card__sub">Uniquement le midi · sauf le week-end</p>
+        <p class="menu-card__price">49€</p>
+        <p class="menu-card__meta">Deux services · plat · dessert</p>
+      </header>
+
+      <p class="menu-course-label">Plat</p>
+
+      <div class="menu-section">
+        <div class="dish">
+          <p class="dish__name">Noix de Saint-Jacques rôties au beurre</p>
+          <p class="dish__en">Pommes curcuma et asperges, émulsion verveine.</p>
+        </div>
+        <p class="dish__or">— ou —</p>
+        <div class="dish">
+          <p class="dish__name">Blanquette de veau printanière</p>
+          <p class="dish__en">Aux herbes fraîches.</p>
+        </div>
+      </div>
+
+      <p class="menu-course-label">Dessert</p>
+
+      <div class="menu-section">
+        <div class="dish">
+          <p class="dish__name">Savarin revisité aux agrumes et citron de pays</p>
+          <p class="dish__en">Sorbet orange sanguine.</p>
+        </div>
+        <p class="dish__or">— ou —</p>
+        <div class="dish">
+          <p class="dish__name">Assortiment de fromages affinés</p>
+        </div>
+      </div>
+
+      <div class="menu-foot">
+        Service du midi en semaine · réservation conseillée
+      </div>
+
+    </article>
+
+    <div class="menu-cta-row reveal reveal--delay-2">
+      <a href="https://bookings.zenchef.com/?rid=354476&pid=1001" target="_blank" rel="noopener" class="btn-solid">
+        Réserver pour le déjeuner
+        <span class="hero__cta-arrow"></span>
+      </a>
+      <a href="index.html#chef" class="btn-ghost">Découvrir le Chef</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     INFO BLOCK
+     ============================================================ -->
+<section class="book">
+  <div class="wrap reveal">
+    <p class="eyebrow">À propos de la Carte</p>
+    <h2 class="book__title display">Une carte qui suit <em>la marée</em>.</h2>
+    <p class="book__lede">
+      Le Chef Nicolas Davouze travaille avec les pêcheurs d'Antibes et un cercle
+      de producteurs nommés — agrumes de Mr Roméo, œufs de la ferme de Gabin.
+      La carte change avec les saisons et l'arrivage. Elle est ré-imprimée chaque mois.
+    </p>
+    <p class="book__phone">
+      Renseignements et allergies : <a href="tel:+33493615002">+33 4 93 61 50 02</a>
+    </p>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER (shared) -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img src="assets/img/logo-white.svg" alt="Maison de Bacon">
+        <p class="footer__intro">
+          Institution gastronomique du Cap d'Antibes depuis 1948.
+          Cuisine marine et méditerranéenne, face à la mer.
+        </p>
+        <address class="footer__brand-address">
+          664 Boulevard de Bacon<br>
+          06160 Cap d'Antibes
+        </address>
+      </div>
+      <div>
+        <p class="footer__h">La Maison</p>
+        <ul class="footer__list">
+          <li><a href="restaurant.html">Restaurant de Bacon</a></li>
+          <li><a href="rooftop.html">Roof Top Club</a></li>
+          <li><a href="appartement.html">L'Appartement de Victor</a></li>
+          <li><a href="menu.html">La Carte</a></li>
+          <li><a href="index.html#chef">Le Chef</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer__h">Privé &amp; Événements</p>
+        <ul class="footer__list">
+          <li><a href="#">Privatisations</a></li>
+          <li><a href="#">Mariages</a></li>
+          <li><a href="#">Événements d'entreprise</a></li>
+          <li><a href="#">Bon Cadeau</a></li>
+          <li><a href="#">Recrutement</a></li>
+        </ul>
+      </div>
+      <div class="footer__contact">
+        <p class="footer__h">Nous Contacter</p>
+        <div class="footer__contact-row">
+          <p class="footer__contact-label">Réservations</p>
+          <p class="footer__contact-value">
+            <a href="tel:+33493615002">+33 4 93 61 50 02</a><br>
+            <a href="mailto:reservation@maisondebacon.fr">reservation@maisondebacon.fr</a>
+          </p>
+        </div>
+        <div class="footer__contact-row">
+          <p class="footer__contact-label">Horaires</p>
+          <p class="footer__contact-value">Mardi — dimanche<br>12h – 14h · 19h – 22h</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© <span data-year>2026</span> Maison de Bacon</span>
+      <span>
+        <a href="#">Mentions légales</a> &nbsp;·&nbsp;
+        <a href="#">Politique de confidentialité</a> &nbsp;·&nbsp;
+        <a href="https://www.instagram.com/maisondebacon/" target="_blank" rel="noopener">Instagram</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>

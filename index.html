@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Maison de Bacon — Restaurant gastronomique face à la mer · Cap d'Antibes</title>
+<meta name="description" content="Institution gastronomique du Cap d'Antibes depuis 1948. Cuisine marine et méditerranéenne du Chef Nicolas Davouze. Trois lieux d'exception face à la Méditerranée — restaurant, Roof Top, Appartement de Victor.">
+<meta name="theme-color" content="#091a2d">
+
+<link rel="canonical" href="https://maisondebacon.fr/">
+<link rel="alternate" hreflang="fr-FR" href="https://maisondebacon.fr/">
+<link rel="alternate" hreflang="en" href="https://maisondebacon.fr/en/">
+<link rel="alternate" hreflang="x-default" href="https://maisondebacon.fr/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="Maison de Bacon">
+<meta property="og:title" content="Maison de Bacon — Restaurant gastronomique face à la mer">
+<meta property="og:description" content="Institution gastronomique du Cap d'Antibes depuis 1948. Cuisine marine du Chef Nicolas Davouze.">
+<meta property="og:url" content="https://maisondebacon.fr/">
+<meta property="og:image" content="assets/img/hero-terrace.jpg">
+
+<!-- Schema.org Restaurant -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "@id": "https://maisondebacon.fr/#restaurant",
+  "name": "Maison de Bacon",
+  "alternateName": "La Maison de Bacon",
+  "description": "Institution gastronomique du Cap d'Antibes depuis 1948. Cuisine marine et méditerranéenne du Chef Nicolas Davouze.",
+  "url": "https://maisondebacon.fr/",
+  "telephone": "+33 4 93 61 50 02",
+  "image": ["https://maisondebacon.fr/assets/img/hero-terrace.jpg"],
+  "priceRange": "€€€€",
+  "servesCuisine": ["Méditerranéenne", "Cuisine marine", "Gastronomique française"],
+  "acceptsReservations": "True",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "664 Boulevard de Bacon",
+    "addressLocality": "Antibes",
+    "postalCode": "06160",
+    "addressRegion": "Alpes-Maritimes",
+    "addressCountry": "FR"
+  },
+  "geo": { "@type": "GeoCoordinates", "latitude": 43.5567, "longitude": 7.1336 },
+  "openingHoursSpecification": [{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+    "opens": "12:00", "closes": "22:00"
+  }],
+  "hasMenu": "https://maisondebacon.fr/lesprit-du-midi/",
+  "award": ["Gault & Millau 2024 — 3 toques 15/20 — Table Remarquable", "Référencé au Guide Michelin"]
+}
+</script>
+
+<link rel="preload" as="image" href="assets/img/hero-terrace.jpg" fetchpriority="high">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="styles.css?v=10">
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Aller au contenu</a>
+
+<!-- ============================================================
+     NAV
+     ============================================================ -->
+<header class="nav" data-nav>
+  <a href="/" class="nav__brand" aria-label="Maison de Bacon — accueil">
+    <img src="assets/img/logo-white.svg" alt="" width="38" height="22">
+    <span class="nav__brand-mark">Maison de Bacon</span>
+  </a>
+
+  <nav class="nav__menu" aria-label="Navigation principale">
+    <a href="restaurant.html">Restaurant</a>
+    <a href="rooftop.html">Roof Top</a>
+    <a href="appartement.html">Appartement</a>
+    <a href="menu.html">La Carte</a>
+    <a href="#chef">Le Chef</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <div class="nav__lang" role="group" aria-label="Langue">
+      <button aria-current="true">FR</button><span>·</span><button>EN</button>
+    </div>
+    <a href="#reserver" class="nav__cta">Réserver</a>
+    <button class="nav__burger" data-burger aria-label="Ouvrir le menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- mobile panel -->
+<aside class="mobile-panel" data-mobile-panel aria-hidden="true">
+  <div class="mobile-panel__head">
+    <img src="assets/img/logo-white.svg" alt="Maison de Bacon" width="56">
+    <button class="mobile-panel__close" data-mobile-close aria-label="Fermer">Fermer ✕</button>
+  </div>
+  <nav class="mobile-panel__menu">
+    <a href="restaurant.html">Restaurant</a>
+    <a href="rooftop.html">Roof Top</a>
+    <a href="appartement.html">Appartement</a>
+    <a href="menu.html">La Carte</a>
+    <a href="#chef">Le Chef</a>
+    <a href="#contact">Contact</a>
+    <a href="#reserver">Réserver</a>
+  </nav>
+  <div class="mobile-panel__foot">
+    664 Bd de Bacon · Cap d'Antibes<br>
+    <a href="tel:+33493615002">+33 4 93 61 50 02</a>
+  </div>
+</aside>
+
+<main id="main">
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero__media" role="presentation"></div>
+
+  <div class="wrap hero__inner">
+
+    <p class="hero__tagline reveal">
+      <span class="rule" aria-hidden="true"></span>
+      Institution gastronomique face à la mer
+    </p>
+
+    <h1 id="hero-title" class="hero__title display reveal reveal--delay-1">
+      Maison <em>de Bacon</em>
+    </h1>
+
+    <div class="hero__bottom">
+      <p class="hero__lede reveal reveal--delay-2">
+        Une cuisine marine et méditerranéenne, signée par le Chef <em>Nicolas Davouze</em>,
+        servie face au Massif du Mercantour et au vieil Antibes.
+      </p>
+      <a href="#reserver" class="hero__cta reveal reveal--delay-3" id="reserver">
+        Réserver une table
+        <span class="hero__cta-arrow"></span>
+      </a>
+    </div>
+  </div>
+
+  <span class="hero__scroll" aria-hidden="true">
+    Découvrir
+    <span class="hero__scroll-line"></span>
+  </span>
+</section>
+
+<!-- ============================================================
+     PROLOGUE
+     ============================================================ -->
+<section class="prologue section-pad" id="restaurant">
+  <div class="wrap">
+    <div class="prologue__grid">
+      <div class="prologue__copy reveal">
+        <p class="eyebrow">Le Renouveau</p>
+        <h2 class="display section-head__title" style="margin-top:1rem">
+          Une institution<br><em>réinventée</em>.
+        </h2>
+        <p>
+          Inaugurée en 1948 sur la pointe du Cap, la Maison de Bacon a écrit l'un
+          des plus beaux chapitres de la gastronomie azuréenne. Reprise par des
+          amoureux de la table, la maison se réinvente sans rien renier de ce qui
+          fait sa légende — la mer, le feu, la rigueur d'un classique.
+        </p>
+        <p>
+          Trois lieux composent désormais l'expérience : le restaurant historique,
+          l'<em>Appartement de Victor</em> pour les tables privées, et le tout
+          nouveau <em>Roof Top Club</em>, terrasse panoramique ouverte sur la
+          Méditerranée.
+        </p>
+
+        <div class="prologue__stats">
+          <div class="prologue__stat">
+            <div class="prologue__stat-num">1948</div>
+            <div class="prologue__stat-label">Année de fondation</div>
+          </div>
+          <div class="prologue__stat">
+            <div class="prologue__stat-num">3</div>
+            <div class="prologue__stat-label">Toques Gault &amp; Millau</div>
+          </div>
+          <div class="prologue__stat">
+            <div class="prologue__stat-num">III</div>
+            <div class="prologue__stat-label">Univers, une maison</div>
+          </div>
+        </div>
+      </div>
+
+      <figure class="prologue__media reveal reveal--delay-2">
+        <img src="assets/img/photo-1955.jpg" alt="La Maison de Bacon en 1955, vue d'archive" loading="lazy" width="1200" height="1500">
+        <figcaption class="prologue__caption">Cap d'Antibes · 1955</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- divider -->
+<div class="wrap section-pad--tight">
+  <div class="divider" aria-hidden="true">
+    <svg viewBox="0 0 80 24" fill="none" stroke="currentColor" stroke-width="1.2">
+      <path d="M2 12 Q 10 4, 18 12 T 34 12" />
+      <path d="M46 12 Q 54 4, 62 12 T 78 12" />
+      <circle cx="40" cy="12" r="2.4" fill="currentColor"/>
+    </svg>
+  </div>
+</div>
+
+<!-- ============================================================
+     VENUES
+     ============================================================ -->
+<section class="venues section-pad grain" id="univers">
+  <div class="wrap">
+
+    <div class="section-head reveal">
+      <div>
+        <p class="eyebrow eyebrow--cream">Trois Univers</p>
+        <h2 class="section-head__title display">
+          Une maison,<br><em>trois adresses</em>.
+        </h2>
+      </div>
+      <p class="section-head__lede">
+        Le restaurant pour la table d'institution, l'<em>Appartement de Victor</em> pour
+        l'intime, le <em>Roof Top Club</em> pour la fin du jour. Chacun avec sa propre
+        identité, tous avec la même mer pour toile de fond.
+      </p>
+    </div>
+
+    <div class="venues__grid">
+
+      <a href="restaurant.html" class="venue-card reveal reveal--delay-1">
+        <div class="venue-card__img" style="background-image:url('assets/img/photo-interior.jpg')"></div>
+        <div class="venue-card__inner">
+          <span class="venue-card__index">I &nbsp;—&nbsp; Restaurant</span>
+          <div>
+            <h3 class="venue-card__title display">
+              Restaurant <em>de Bacon</em>
+            </h3>
+            <p class="venue-card__sub">Cuisine marine · Vue sur la Méditerranée</p>
+            <span class="venue-card__cta">Découvrir &nbsp;→</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="appartement.html" class="venue-card reveal reveal--delay-2">
+        <div class="venue-card__img" style="background-image:url('assets/img/boyron-3.jpg')"></div>
+        <div class="venue-card__inner">
+          <span class="venue-card__index">II &nbsp;—&nbsp; Privatisation</span>
+          <div>
+            <h3 class="venue-card__title display">
+              L'Appartement<br><em>de Victor</em>
+            </h3>
+            <p class="venue-card__sub">Salle privée · jusqu'à 22 couverts</p>
+            <span class="venue-card__cta">Découvrir &nbsp;→</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="rooftop.html" class="venue-card reveal reveal--delay-3">
+        <div class="venue-card__img" style="background-image:url('assets/img/boyron-1.jpg')"></div>
+        <div class="venue-card__inner">
+          <span class="venue-card__index">III &nbsp;—&nbsp; Roof Top</span>
+          <div>
+            <h3 class="venue-card__title display">
+              Roof Top<br><em>Club Bacon</em>
+            </h3>
+            <p class="venue-card__sub">Terrasse panoramique · à partir de 18h</p>
+            <span class="venue-card__cta">Découvrir &nbsp;→</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CHEF
+     ============================================================ -->
+<section class="chef section-pad" id="chef">
+  <div class="wrap">
+    <div class="chef__grid">
+
+      <figure class="chef__media reveal">
+        <img src="assets/img/photo-chef-portrait.jpg" alt="Portrait du Chef Nicolas Davouze" loading="lazy" width="1200" height="1500">
+      </figure>
+
+      <div class="chef__copy-block reveal reveal--delay-1">
+        <p class="eyebrow">Le Chef</p>
+        <h2 class="chef__name display">
+          Nicolas <em>Davouze</em>
+        </h2>
+        <p class="chef__role">Bocuse d'Or France · ancien du Bristol</p>
+
+        <div class="chef__copy">
+          <p>
+            Formé à l'Institut Bocuse, lauréat <em>Bocuse d'Or France</em>,
+            passé par les cuisines du Bristol à Paris, Nicolas Davouze a fait
+            de la mer son langage. Soupe de roche, bouillabaisse, poissons
+            entiers grillés au feu de bois — il revisite les classiques de
+            Bacon avec la précision d'un horloger.
+          </p>
+          <p>
+            Sa carte change avec la marée. Les agrumes viennent de Mr Roméo,
+            les œufs de la ferme de Gabin. Tout, ici, a un nom et un visage.
+          </p>
+        </div>
+
+        <div class="accolades">
+          <div class="accolade">
+            <div class="accolade__num">15<span style="font-size:.55em">/20</span></div>
+            <div class="accolade__label">Note Gault<br>&amp; Millau 2024</div>
+          </div>
+          <div class="accolade">
+            <div class="accolade__num">III</div>
+            <div class="accolade__label">Toques<br>Gault &amp; Millau</div>
+          </div>
+          <div class="accolade">
+            <div class="accolade__num">★</div>
+            <div class="accolade__label">Référencé au<br>Guide Michelin</div>
+          </div>
+          <div class="accolade">
+            <div class="accolade__num">1<sup style="font-size:.5em">er</sup></div>
+            <div class="accolade__label">Table Remarquable<br>Côte d'Azur</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     EVENT FEATURE
+     ============================================================ -->
+<section class="event section-pad grain" id="evenements">
+  <div class="wrap event__inner">
+
+    <div class="reveal">
+      <p class="eyebrow eyebrow--cream">À la Maison · 31 mai 2026</p>
+      <p class="event__date display">Fête des Mères</p>
+      <h2 class="event__title display">
+        Un menu d'exception<br>pour <em>toutes les mamans</em>.
+      </h2>
+      <p class="event__lede">
+        À l'occasion de la Fête des Mères, la Maison de Bacon célèbre toutes les
+        mamans avec un menu pensé comme une parenthèse de douceur. Face au
+        spectacle de la Méditerranée, le Chef Nicolas Davouze compose en cinq
+        services.
+      </p>
+      <div class="event__price">
+        <span>Menu signature</span>
+        <b>135€</b>
+        <span>par convive</span>
+      </div>
+      <p style="margin-top:2rem">
+        <a href="#reserver" class="hero__cta" style="background:var(--cream); color:var(--navy-deep)">
+          Réserver pour le 31 mai
+          <span class="hero__cta-arrow"></span>
+        </a>
+      </p>
+    </div>
+
+    <figure class="event__media reveal reveal--delay-2">
+      <img src="assets/img/boyron-4.jpg" alt="Dressage signature du Chef Davouze" loading="lazy">
+    </figure>
+  </div>
+</section>
+
+<!-- ============================================================
+     PRESS / ACCOLADES STRIP
+     ============================================================ -->
+<section class="press section-pad--tight" aria-label="Distinctions et presse">
+  <div class="wrap press__row">
+    <p><span class="press__mark">«</span><q>Une institution gastronomique</q><span class="press__mark">»</span> <span class="press__by">— Gault &amp; Millau</span></p>
+    <p><span class="press__mark">«</span><q>Vue parmi les plus belles de la Côte</q><span class="press__mark">»</span> <span class="press__by">— Guide Michelin</span></p>
+    <p><span class="press__mark">«</span><q>Une renaissance maîtrisée</q><span class="press__mark">»</span> <span class="press__by">— Vogue Hospitality</span></p>
+  </div>
+</section>
+
+<!-- ============================================================
+     RESERVATION (anchor target)
+     ============================================================ -->
+<section class="book" id="reserver">
+  <div class="wrap reveal">
+    <p class="eyebrow">Réservation</p>
+    <h2 class="book__title display">Une table, <em>face à la mer</em>.</h2>
+    <p class="book__lede">
+      Réservation en ligne ouverte 24h/24. Pour les groupes de plus de 8 couverts,
+      les privatisations et les événements, contactez-nous directement.
+    </p>
+    <a class="book__cta" href="https://bookings.zenchef.com/?rid=354476&pid=1001" target="_blank" rel="noopener">
+      Réserver en ligne
+      <span class="hero__cta-arrow"></span>
+    </a>
+    <p class="book__phone"><a href="tel:+33493615002">+33 4 93 61 50 02</a></p>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer" id="contact">
+  <div class="wrap">
+    <div class="footer__top">
+
+      <div class="footer__brand">
+        <img src="assets/img/logo-white.svg" alt="Maison de Bacon">
+        <p class="footer__intro">
+          Institution gastronomique du Cap d'Antibes depuis 1948.
+          Cuisine marine et méditerranéenne, face à la mer.
+        </p>
+        <address class="footer__brand-address">
+          664 Boulevard de Bacon<br>
+          06160 Cap d'Antibes
+        </address>
+      </div>
+
+      <div>
+        <p class="footer__h">La Maison</p>
+        <ul class="footer__list">
+          <li><a href="restaurant.html">Restaurant de Bacon</a></li>
+          <li><a href="rooftop.html">Roof Top Club</a></li>
+          <li><a href="appartement.html">L'Appartement de Victor</a></li>
+          <li><a href="menu.html">La Carte</a></li>
+          <li><a href="#chef">Le Chef</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer__h">Privé &amp; Événements</p>
+        <ul class="footer__list">
+          <li><a href="#">Privatisations</a></li>
+          <li><a href="#">Mariages</a></li>
+          <li><a href="#">Événements d'entreprise</a></li>
+          <li><a href="#">Bon Cadeau</a></li>
+          <li><a href="#">Recrutement</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__contact">
+        <p class="footer__h">Nous Contacter</p>
+
+        <div class="footer__contact-row">
+          <p class="footer__contact-label">Réservations</p>
+          <p class="footer__contact-value">
+            <a href="tel:+33493615002">+33 4 93 61 50 02</a><br>
+            <a href="mailto:reservation@maisondebacon.fr">reservation@maisondebacon.fr</a>
+          </p>
+        </div>
+
+        <div class="footer__contact-row">
+          <p class="footer__contact-label">Horaires</p>
+          <p class="footer__contact-value">Mardi — dimanche<br>12h – 14h · 19h – 22h</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer__bottom">
+      <span>© <span data-year>2026</span> Maison de Bacon</span>
+      <span>
+        <a href="#">Mentions légales</a> &nbsp;·&nbsp;
+        <a href="#">Politique de confidentialité</a> &nbsp;·&nbsp;
+        <a href="https://www.instagram.com/maisondebacon/" target="_blank" rel="noopener">Instagram</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>
