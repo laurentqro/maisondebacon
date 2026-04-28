@@ -393,8 +393,8 @@ section { position: relative; }
 .section-head__lede {
   max-width: 50ch;
   color: var(--ink);
-  font-size: var(--step-1);
-  line-height: 1.55;
+  font-size: var(--step-0);
+  line-height: 1.65;
 }
 .section-head__lede em { font-style: italic; color: var(--gold); }
 
@@ -425,21 +425,30 @@ section { position: relative; }
   .prologue__grid { grid-template-columns: 1.05fr 1fr; align-items: center; }
 }
 .prologue__copy { max-width: 56ch; }
-.prologue__copy p {
-  font-size: var(--step-1);
+
+.prologue__title {
+  margin-top: 1rem;
+  font-size: var(--step-3);
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.prologue__lede,
+.prologue__body {
+  margin-top: 1.4rem;
+  font-size: var(--step-0);
   line-height: 1.65;
   color: rgba(20, 32, 44, 0.86);
-  margin-block: 1rem;
 }
-.prologue__copy p:first-of-type::first-letter {
+
+.prologue__asterism {
+  margin: 1.6rem 0;
+  text-align: left;
   font-family: var(--display);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 4.4em;
-  float: left;
-  line-height: 0.85;
-  padding: 0.18em 0.18em 0 0;
+  font-size: var(--step-1);
+  letter-spacing: 0.6em;
   color: var(--gold);
+  opacity: 0.55;
 }
 .prologue__media {
   position: relative;
@@ -465,24 +474,26 @@ section { position: relative; }
   font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase;
 }
 .prologue__stats {
-  margin-top: 2rem;
-  display: grid; grid-template-columns: repeat(3, 1fr);
+  margin-top: 2.4rem;
+  display: grid; grid-template-columns: repeat(2, 1fr);
   border-top: 1px solid var(--rule);
 }
 .prologue__stat {
-  padding: 1.5rem 0.5rem 0;
+  padding: 1.5rem 1rem 0 0;
   border-right: 1px solid var(--rule);
 }
-.prologue__stat:last-child { border-right: 0; }
+.prologue__stat:last-child { border-right: 0; padding-left: 1.5rem; padding-right: 0; }
 .prologue__stat-num {
   font-family: var(--display); font-style: italic;
-  font-size: var(--step-3); line-height: 1; color: var(--gold);
+  font-size: var(--step-3); line-height: 1; color: var(--gold-deep);
 }
+.prologue__stat-frac { font-size: 0.55em; color: var(--gold); margin-left: 0.05em; }
 .prologue__stat-label {
-  margin-top: 0.4rem;
+  margin-top: 0.5rem;
   font-family: var(--eyebrow);
   font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase;
   color: rgba(20,32,44,0.7);
+  line-height: 1.5;
 }
 
 /* ============================================================
@@ -594,7 +605,7 @@ section { position: relative; }
   font-size: 0.78rem; letter-spacing: 0.32em; text-transform: uppercase;
   color: var(--gold);
 }
-.chef__copy { margin-top: 1.4rem; font-size: var(--step-1); line-height: 1.65; max-width: 50ch; }
+.chef__copy { margin-top: 1.4rem; font-size: var(--step-0); line-height: 1.65; max-width: 50ch; }
 .chef__copy p + p { margin-top: 1rem; }
 
 .accolades {
@@ -643,7 +654,7 @@ section { position: relative; }
   font-size: var(--step-4); line-height: 0.98; letter-spacing: -0.01em;
   margin-block: 1rem;
 }
-.event__lede { color: rgba(244,236,220,0.82); font-size: var(--step-1); line-height: 1.6; max-width: 44ch; }
+.event__lede { color: rgba(244,236,220,0.82); font-size: var(--step-0); line-height: 1.65; max-width: 44ch; }
 .event__price {
   margin-top: 1.6rem;
   display: inline-flex; align-items: baseline; gap: 1rem;
@@ -1007,7 +1018,7 @@ section { position: relative; }
   font-size: var(--step-4); line-height: 0.98;
 }
 .venue-intro__title em { font-style: italic; color: var(--gold); }
-.venue-intro__copy { font-size: var(--step-1); line-height: 1.65; max-width: 56ch; }
+.venue-intro__copy { font-size: var(--step-0); line-height: 1.65; max-width: 56ch; }
 .venue-intro__copy p + p { margin-top: 1rem; }
 
 /* venue gallery — diagonal/asymmetric */
@@ -1068,7 +1079,7 @@ section { position: relative; }
   margin-bottom: 1rem;
 }
 .book__title em { font-style: italic; color: var(--gold); }
-.book__lede { max-width: 50ch; margin: 0 auto 2rem; font-size: var(--step-1); line-height: 1.6; }
+.book__lede { max-width: 50ch; margin: 0 auto 2rem; font-size: var(--step-0); line-height: 1.65; }
 .book__cta {
   display: inline-flex; align-items: center; gap: 1rem;
   padding: 1.1rem 1.8rem;
