@@ -8,7 +8,9 @@
     // Pages without a dark hero (data-nav="solid") keep the navy background at all times.
     const alwaysSolid = nav.getAttribute('data-nav') === 'solid';
     const onScroll = () => {
-      nav.classList.toggle('is-scrolled', alwaysSolid || window.scrollY > 30);
+      const scrolled = alwaysSolid || window.scrollY > 30;
+      nav.classList.toggle('is-scrolled', scrolled);
+      document.body.classList.toggle('is-scrolled', scrolled);
     };
     onScroll();
     if (!alwaysSolid) window.addEventListener('scroll', onScroll, { passive: true });
