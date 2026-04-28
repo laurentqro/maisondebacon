@@ -19,7 +19,7 @@
 <meta property="og:title" content="Maison de Bacon — Restaurant gastronomique face à la mer">
 <meta property="og:description" content="Institution gastronomique du Cap d'Antibes depuis 1948. Cuisine marine du Chef Nicolas Davouze.">
 <meta property="og:url" content="https://maisondebacon.fr/">
-<meta property="og:image" content="assets/img/hero-terrace.jpg">
+<meta property="og:image" content="assets/img/photo-sea.jpg">
 
 <!-- Schema.org Restaurant -->
 <script type="application/ld+json">
@@ -32,7 +32,7 @@
   "description": "Institution gastronomique du Cap d'Antibes depuis 1948. Cuisine marine et méditerranéenne du Chef Nicolas Davouze.",
   "url": "https://maisondebacon.fr/",
   "telephone": "+33 4 93 61 50 02",
-  "image": ["https://maisondebacon.fr/assets/img/hero-terrace.jpg"],
+  "image": ["https://maisondebacon.fr/assets/img/photo-sea.jpg"],
   "priceRange": "€€€€",
   "servesCuisine": ["Méditerranéenne", "Cuisine marine", "Gastronomique française"],
   "acceptsReservations": "True",
@@ -55,13 +55,13 @@
 }
 </script>
 
-<link rel="preload" as="image" href="assets/img/hero-terrace.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/photo-sea.jpg" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="styles.css?v=10">
+<link rel="stylesheet" href="styles.css?v=11">
 </head>
 
-<body>
+<body class="page-home">
 
 <a class="skip-link" href="#main">Aller au contenu</a>
 
@@ -134,22 +134,17 @@
       Maison <em>de Bacon</em>
     </h1>
 
-    <div class="hero__bottom">
-      <p class="hero__lede reveal reveal--delay-2">
-        Une cuisine marine et méditerranéenne, signée par le Chef <em>Nicolas Davouze</em>,
-        servie face au Massif du Mercantour et au vieil Antibes.
-      </p>
-      <a href="#reserver" class="hero__cta reveal reveal--delay-3" id="reserver">
-        Réserver une table
-        <span class="hero__cta-arrow"></span>
-      </a>
-    </div>
-  </div>
+    <p class="hero__lede reveal reveal--delay-2">
+      Cuisine marine du Chef <em>Nicolas Davouze</em>
+      <span class="hero__lede-sep" aria-hidden="true">·</span>
+      Depuis 1948
+    </p>
 
-  <span class="hero__scroll" aria-hidden="true">
-    Découvrir
-    <span class="hero__scroll-line"></span>
-  </span>
+    <a href="#reserver" class="hero__cta reveal reveal--delay-3" id="reserver">
+      Réserver une table
+      <span class="hero__cta-arrow"></span>
+    </a>
+  </div>
 </section>
 
 <!-- ============================================================
