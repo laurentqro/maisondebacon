@@ -1,23 +1,42 @@
 # .htaccess — wp-content/uploads/
 #
-# Sert automatiquement le fichier <image>.<ext>.webp à la place du fichier source
-# si :
-#   1. Le navigateur envoie Accept: image/webp dans le header
-#   2. Le fichier .webp correspondant existe sur disque
+# Sert un .webp à la place d'un JPG/PNG source quand le navigateur l'accepte.
 #
-# Convention de nommage : photo.jpg → photo.jpg.webp
-# (compatible avec Elementor Image Optimizer et notre script optimize-webp.sh)
+# Deux conventions de nommage cohabitent sur ce site :
+#   - photo.jpg.webp  (généré par le bulk Elementor Image Optimizer historique
+#                     et par notre script optimize-webp.sh — convention "extension ajoutée")
+#   - photo.webp      (généré par les uploads récents via Elementor Image Optimizer
+#                     en mode optimize_on_upload — convention "extension remplacée")
+#
+# Le rewrite essaie les DEUX cibles dans l'ordre :
+#   1. photo.webp        (priorité : plus court, format WP 6.5+ moderne)
+#   2. photo.jpg.webp    (fallback : couvre tout le back-catalog)
+#
+# Si aucun des deux n'existe, le fichier source est servi tel quel (pas de 404).
+#
+# Convention de stockage côté serveur : on garde aussi le JPG/PNG source
+# pour les navigateurs qui n'envoient pas Accept: image/webp (rare aujourd'hui,
+# surtout les très vieux Safari et certains crawlers).
 
 <IfModule mod_rewrite.c>
 RewriteEngine On
+
+# Variante 1 — photo.webp (remplace l'extension source)
+# Exemple : /uploads/2026/05/photo.jpg → /uploads/2026/05/photo.webp
+RewriteCond %{HTTP_ACCEPT} image/webp
+RewriteCond %{REQUEST_FILENAME} ^(.+)\.(jpe?g|png)$ [NC]
+RewriteCond %1.webp -f
+RewriteRule ^(.+)\.(jpe?g|png)$ $1.webp [T=image/webp,E=webp:1,L]
+
+# Variante 2 — photo.jpg.webp (ajoute .webp à l'extension complète)
+# Exemple : /uploads/2024/06/photo.jpg → /uploads/2024/06/photo.jpg.webp
 RewriteCond %{HTTP_ACCEPT} image/webp
 RewriteCond %{REQUEST_FILENAME} (?i)\.(jpe?g|png)$
 RewriteCond %{REQUEST_FILENAME}\.webp -f
 RewriteRule ^ %{REQUEST_URI}.webp [T=image/webp,E=webp:1,L]
 </IfModule>
 
-# Ajoute Vary: Accept pour que les caches HTTP (CDN, proxy navigateur)
-# stockent une version par type de Accept-header.
+# Vary: Accept pour les caches HTTP (CDN, proxy navigateur).
 <IfModule mod_headers.c>
 Header append Vary Accept env=webp
 </IfModule>
