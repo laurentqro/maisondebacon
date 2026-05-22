@@ -2,13 +2,18 @@
 # optimize-webp.sh — Génère des .webp pour les images d'un répertoire WordPress uploads.
 #
 # Usage:
-#   ./optimize-webp.sh /chemin/vers/uploads [--dry-run]
+#   ./optimize-webp.sh /chemin/vers/uploads [--dry-run] [--cleanup-existing]
 #
 # Comportement:
 #   - Parcourt récursivement le répertoire passé en argument
-#   - Pour chaque .jpg/.jpeg/.png, génère <basename>.webp avec cwebp -q 80
-#   - Skip si <basename>.webp existe déjà
+#   - Pour chaque .jpg/.jpeg/.png, génère <source>.webp (extension ajoutée) via cwebp -q 80
+#   - Skip si <source>.webp existe déjà
 #   - Skip les fichiers .gif (cwebp ne gère pas l'animation correctement)
+#   - GARDE ANTI-RÉGRESSION : si le .webp produit est >= au source, on le supprime
+#     (servir un .webp plus gros que le JPG est contre-productif)
+#   - Avec --cleanup-existing : avant le run, parcourt tous les .webp préexistants
+#     (notamment ceux créés par Elementor Image Optimizer qui n'a pas cette garde)
+#     et supprime ceux qui sont plus gros que leur source
 #   - Log progression à stdout, erreurs à stderr
 #
 # Conçu pour OVH mutualisé : pas de parallélisation par défaut (CPU partagé).
@@ -17,18 +22,25 @@ set -euo pipefail
 
 QUALITY=80
 DRY_RUN=0
+CLEANUP_EXISTING=0
 
 if [ "${1:-}" = "" ]; then
-  echo "Usage: $0 <repertoire> [--dry-run]" >&2
+  echo "Usage: $0 <repertoire> [--dry-run] [--cleanup-existing]" >&2
   exit 1
 fi
 
 TARGET_DIR="$1"
 shift || true
 
-if [ "${1:-}" = "--dry-run" ]; then
-  DRY_RUN=1
-fi
+# Parse flags (ordre libre)
+while [ "${1:-}" != "" ]; do
+  case "$1" in
+    --dry-run) DRY_RUN=1 ;;
+    --cleanup-existing) CLEANUP_EXISTING=1 ;;
+    *) echo "Flag inconnu : $1" >&2; exit 1 ;;
+  esac
+  shift
+done
 
 if [ ! -d "$TARGET_DIR" ]; then
   echo "ERREUR: répertoire introuvable: $TARGET_DIR" >&2
@@ -51,11 +63,37 @@ SAVED_BYTES=0
 START_TS=$(date +%s)
 
 echo "=== optimize-webp.sh — démarrage ==="
-echo "Répertoire    : $TARGET_DIR"
-echo "Qualité       : $QUALITY"
-echo "Dry-run       : $DRY_RUN"
-echo "Démarrage     : $(date)"
+echo "Répertoire        : $TARGET_DIR"
+echo "Qualité           : $QUALITY"
+echo "Dry-run           : $DRY_RUN"
+echo "Cleanup existing  : $CLEANUP_EXISTING"
+echo "Démarrage         : $(date)"
 echo ""
+
+# Phase 0 — Cleanup des .webp préexistants plus gros que leur source.
+# Concerne notamment les fichiers créés par Elementor Image Optimizer qui ne fait
+# pas cette garde et peut sauvegarder des .webp plus lourds que le JPG/PNG source.
+if [ "$CLEANUP_EXISTING" = "1" ]; then
+  echo "Phase 0 : nettoyage des .webp préexistants dégradants..."
+  CLEANUP_REMOVED=0
+  while IFS= read -r webp; do
+    src="${webp%.webp}"
+    if [ -f "$src" ]; then
+      src_size=$(stat -c %s "$src" 2>/dev/null || echo 0)
+      webp_size=$(stat -c %s "$webp" 2>/dev/null || echo 0)
+      if [ "$webp_size" -gt 0 ] && [ "$src_size" -gt 0 ] && [ "$webp_size" -ge "$src_size" ]; then
+        if [ "$DRY_RUN" = "1" ]; then
+          echo "[dry-run] REMOVE $webp"
+        else
+          rm -f "$webp"
+        fi
+        CLEANUP_REMOVED=$((CLEANUP_REMOVED + 1))
+      fi
+    fi
+  done < <(find "$TARGET_DIR" -type f -name '*.webp')
+  echo "  -> $CLEANUP_REMOVED .webp supprimés (plus gros que leur source)"
+  echo ""
+fi
 
 # Pré-comptage pour afficher la progression
 TOTAL=$(find "$TARGET_DIR" -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' \) | wc -l)
