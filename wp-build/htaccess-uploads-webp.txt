@@ -1,0 +1,23 @@
+# .htaccess — wp-content/uploads/
+#
+# Sert automatiquement le fichier <image>.<ext>.webp à la place du fichier source
+# si :
+#   1. Le navigateur envoie Accept: image/webp dans le header
+#   2. Le fichier .webp correspondant existe sur disque
+#
+# Convention de nommage : photo.jpg → photo.jpg.webp
+# (compatible avec Elementor Image Optimizer et notre script optimize-webp.sh)
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{HTTP_ACCEPT} image/webp
+RewriteCond %{REQUEST_FILENAME} (?i)\.(jpe?g|png)$
+RewriteCond %{REQUEST_FILENAME}\.webp -f
+RewriteRule ^ %{REQUEST_URI}.webp [T=image/webp,E=webp:1,L]
+</IfModule>
+
+# Ajoute Vary: Accept pour que les caches HTTP (CDN, proxy navigateur)
+# stockent une version par type de Accept-header.
+<IfModule mod_headers.c>
+Header append Vary Accept env=webp
+</IfModule>
