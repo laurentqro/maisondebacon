@@ -1207,7 +1207,11 @@ body.elementor-editor-active .mdb-sticky-cta {
 	}
 }
 
-/* --- 7170bb4c « Nos Univers » : section navy, cartes arche --------- */
+/* --- 7170bb4c « Nos Univers » : section navy, cartes ---------------
+   3 univers (Restaurant / Appartement de Victor / Roof Top), cadres
+   d'image STRICTEMENT égaux (ratio 3/4, cadre net — pas d'arche),
+   eyebrow doré au-dessus de chaque titre, CTA « Découvrir » alignés.
+   Titres : 265c21d5 (Restaurant) · 728a3929 (Appartement) · 5ba5eec4 (Roof Top). */
 .elementor-element-7170bb4c {
 	background: var(--mdb-navy) !important;
 	color: var(--mdb-cream) !important;
@@ -1217,29 +1221,87 @@ body.elementor-editor-active .mdb-sticky-cta {
 	font-size: var(--mdb-step-4) !important;
 	text-align: center;
 }
-/* Sous-titres des cartes (RESTAURANT DE BACON, etc.) : eyebrow doré. */
-.elementor-element-7170bb4c .elementor-widget-heading:not(:first-of-type) .elementor-heading-title {
-	font-family: var(--mdb-font-eyebrow) !important;
-	font-size: 0.82rem !important;
-	letter-spacing: 0.28em !important;
-	text-transform: uppercase !important;
-	color: var(--mdb-gold-bright) !important;
+
+/* Les 3 cartes = conteneurs frères ; hauteur égale, contenu réparti pour
+   que les CTA s'alignent en bas quelle que soit la longueur du titre. */
+.elementor-element-7a5faa3b,
+.elementor-element-6520f472,
+.elementor-element-4c990681 {
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: center !important;
+	height: 100% !important;
+	text-align: center;
 }
-/* Images des univers : léger liseré + coin arrondi haut, hover zoom. */
+/* Le bouton (dernier enfant) est poussé en bas -> CTA alignés. */
+.elementor-element-7a5faa3b > .elementor-widget-button,
+.elementor-element-6520f472 > .elementor-widget-button,
+.elementor-element-4c990681 > .elementor-widget-button {
+	margin-top: auto !important;
+	padding-top: 1.6rem;
+}
+
+/* Arches : gabarit IDENTIQUE pour les 3 (même ratio, même arrondi,
+   même liseré). On force un ratio portrait constant + recadrage cover,
+   donc les 3 images occupent exactement la même surface. */
+/* L'arche est BAKED-IN dans les PNG sources (750x1000 RGBA, coins
+   transparents). On laisse donc l'image à sa taille naturelle (pas de
+   recadrage cover, pas de border ni border-radius qui casseraient la
+   silhouette). Toutes les sources font 750x1000 -> gabarits identiques. */
 .elementor-element-7170bb4c .elementor-widget-image img {
-	border: 1px solid rgba(177, 137, 84, 0.35);
+	display: block;
+	width: 100% !important;
+	height: auto !important;
 	transition: transform 1.2s var(--mdb-ease), filter 0.6s var(--mdb-ease);
 	filter: saturate(0.95) brightness(0.9);
 }
 .elementor-element-7170bb4c .elementor-widget-image:hover img {
-	transform: scale(1.03);
+	transform: scale(1.02);
 	filter: saturate(1) brightness(1);
 }
+
+/* Eyebrow doré AU-DESSUS de chaque titre de carte (qualifie l'univers).
+   Texte décoratif en CSS -> TRP ne le traduit pas : variantes EN explicites. */
+.elementor-element-265c21d5 .elementor-heading-title::before { content: "Le restaurant"; }
+.elementor-element-728a3929 .elementor-heading-title::before { content: "Réception privée"; }
+.elementor-element-5ba5eec4 .elementor-heading-title::before { content: "Le rooftop"; }
+html[lang^="en"] .elementor-element-265c21d5 .elementor-heading-title::before { content: "The restaurant"; }
+html[lang^="en"] .elementor-element-728a3929 .elementor-heading-title::before { content: "Private events"; }
+html[lang^="en"] .elementor-element-5ba5eec4 .elementor-heading-title::before { content: "The rooftop"; }
+.elementor-element-265c21d5 .elementor-heading-title::before,
+.elementor-element-728a3929 .elementor-heading-title::before,
+.elementor-element-5ba5eec4 .elementor-heading-title::before {
+	display: block;
+	font-family: var(--mdb-font-eyebrow);
+	font-size: 0.72rem;
+	letter-spacing: 0.3em;
+	text-transform: uppercase;
+	color: var(--mdb-gold-bright);
+	opacity: 0.9;
+	margin-bottom: 0.55rem;
+}
+
+/* Titres des cartes : Cormorant bas-de-casse (lisible), fin filet or.
+   On abandonne les capitales ultra-espacées d'origine. */
+.elementor-element-7170bb4c .elementor-widget-heading:not(:first-of-type) .elementor-heading-title {
+	font-family: var(--mdb-font-display) !important;
+	font-size: clamp(1.35rem, 2.2vw, 1.75rem) !important;
+	font-weight: 500 !important;
+	letter-spacing: 0.01em !important;
+	text-transform: none !important;
+	color: var(--mdb-cream) !important;
+	line-height: 1.2 !important;
+	margin: 1.25rem 0 0 !important;
+}
+
 /* CTA des univers : ghost crème -> se remplit d'or au survol. */
 .elementor-element-7170bb4c .elementor-button {
 	background: transparent !important;
 	color: var(--mdb-cream) !important;
 	border: 1px solid rgba(244, 236, 220, 0.45) !important;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	font-size: 0.8rem;
 }
 .elementor-element-7170bb4c .elementor-button:hover {
 	background: var(--mdb-gold) !important;

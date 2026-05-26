@@ -10,8 +10,10 @@
 $APPLY = getenv('MDB_APPLY') === '1';
 $POST = 106136;
 // 535de6f4 / 5e6ef985 = image pseudo-sections (déjà retirées) ;
-// 36b4ff0 = section spacer vide (bande blanche) ; 3281ff98 = heading vide caché.
-$TARGETS = array('535de6f4', '5e6ef985', '36b4ff0', '3281ff98');
+// 36b4ff0 = section spacer vide (bande blanche) ; 3281ff98 = heading vide caché ;
+// 3db53501 = container vide (bg mdb-rt-2 + spacer 500px) entre Nos Univers et
+//            Bon Cadeau -> grosse bande blanche. À retirer.
+$TARGETS = array('535de6f4', '5e6ef985', '36b4ff0', '3281ff98', '3db53501');
 
 $data = get_post_meta($POST, '_elementor_data', true);
 $raw = is_string($data) ? $data : wp_json_encode($data);
