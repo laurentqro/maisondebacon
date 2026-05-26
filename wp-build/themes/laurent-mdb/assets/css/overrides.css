@@ -217,7 +217,25 @@ body.mdb-scrolled .mdb-header {
 	opacity: 0.6;
 }
 
-.mdb-panel__foot { margin-top: auto; padding-top: 1.6rem; }
+.mdb-panel__foot {
+	margin-top: auto;
+	padding-top: 1.6rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.7rem;
+}
+/* Bouton fantôme du pied : sur fond crème, on inverse les tons (la variante
+   .mdb-btn--ghost par défaut est pensée pour le fond navy de la barre). */
+.mdb-panel__foot .mdb-btn--ghost {
+	color: var(--mdb-navy-deep);
+	border-color: var(--mdb-rule);
+}
+.mdb-panel__foot .mdb-btn--ghost:hover {
+	background: var(--mdb-navy-deep);
+	color: var(--mdb-cream);
+	border-color: var(--mdb-navy-deep);
+}
+.mdb-panel__foot .mdb-btn--ghost:hover .mdb-btn__dot { background: var(--mdb-gold); }
 
 /* Sous-panneau (droite) — blanc, aperçu de la rubrique active */
 .mdb-panel__sub {

@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'MDB_THEME_VERSION', '0.3.7' );
+define( 'MDB_THEME_VERSION', '0.3.8' );
 define( 'MDB_THEME_DIR', get_stylesheet_directory() );
 define( 'MDB_THEME_URI', get_stylesheet_directory_uri() );
 
@@ -217,6 +217,7 @@ add_action( 'wp_footer', function () {
 			</ul>
 
 			<div class="mdb-panel__foot">
+				<a class="mdb-btn mdb-btn--ghost mdb-btn--block" href="https://maisondebacon.bonkdo.com/fr/" target="_blank" rel="noopener"><span class="mdb-btn__dot" aria-hidden="true"></span>Carte cadeau</a>
 				<a class="mdb-btn mdb-btn--solid mdb-btn--block" href="<?php echo esc_url( $reserve_url ); ?>" target="_blank" rel="noopener">Réserver</a>
 			</div>
 		</aside>
