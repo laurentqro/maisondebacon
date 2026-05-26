@@ -1449,6 +1449,79 @@ html[lang^="en"] .elementor-element-5ba5eec4 .elementor-heading-title::before { 
 	margin: 0 0 1.75rem !important;
 }
 
+/* --- Newsletter « Restez informés » (colonne Marque, sous les réseaux) ---
+   Formulaire CF7 (email seul + consentement). Input crème bordé or, bouton
+   ghost qui se remplit d'or au survol. Placeholder backend : contact@…
+   (à confirmer client). */
+.elementor-108363 .mdb-foot-eyebrow--nl .elementor-heading-title,
+.elementor-108363 .mdb-foot-eyebrow--nl {
+	margin: 2.25rem 0 1rem !important;
+}
+.elementor-108363 .mdb-foot-newsletter { margin-top: 0 !important; }
+.elementor-108363 .mdb-foot-newsletter .wpcf7 { max-width: 22rem; }
+.elementor-108363 .mdb-foot-newsletter .mdb-nl-row {
+	display: flex !important;
+	gap: 0.5rem;
+	margin: 0 0 0.75rem !important;
+}
+.elementor-108363 .mdb-foot-newsletter input[type="email"] {
+	flex: 1 1 auto;
+	min-width: 0;
+	background: transparent !important;
+	border: 1px solid var(--mdb-rule) !important;
+	border-radius: 2px !important;
+	color: var(--mdb-cream) !important;
+	font-family: var(--mdb-font-body) !important;
+	font-size: 0.95rem !important;
+	padding: 0.7rem 0.9rem !important;
+}
+.elementor-108363 .mdb-foot-newsletter input[type="email"]::placeholder {
+	color: var(--mdb-cream) !important;
+	opacity: 0.45;
+}
+.elementor-108363 .mdb-foot-newsletter input[type="email"]:focus {
+	outline: none !important;
+	border-color: var(--mdb-gold) !important;
+}
+.elementor-108363 .mdb-foot-newsletter .mdb-nl-submit,
+.elementor-108363 .mdb-foot-newsletter input[type="submit"] {
+	flex: 0 0 auto;
+	background: transparent !important;
+	border: 1px solid var(--mdb-gold) !important;
+	border-radius: 2px !important;
+	color: var(--mdb-gold) !important;
+	font-family: var(--mdb-font-eyebrow) !important;
+	font-size: 0.74rem !important;
+	letter-spacing: 0.12em !important;
+	text-transform: uppercase !important;
+	padding: 0.7rem 1.1rem !important;
+	cursor: pointer;
+	transition: background 0.3s var(--mdb-ease), color 0.3s var(--mdb-ease);
+}
+.elementor-108363 .mdb-foot-newsletter .mdb-nl-submit:hover,
+.elementor-108363 .mdb-foot-newsletter input[type="submit"]:hover {
+	background: var(--mdb-gold) !important;
+	color: var(--mdb-navy-deep) !important;
+}
+/* Consentement : petit texte discret. */
+.elementor-108363 .mdb-foot-newsletter .wpcf7-acceptance,
+.elementor-108363 .mdb-foot-newsletter .wpcf7-list-item-label {
+	font-family: var(--mdb-font-body) !important;
+	font-size: 0.78rem !important;
+	line-height: 1.5 !important;
+	color: var(--mdb-cream) !important;
+	opacity: 0.6;
+}
+.elementor-108363 .mdb-foot-newsletter .wpcf7-list-item { margin: 0 !important; }
+/* Messages de réponse CF7 sobres. */
+.elementor-108363 .mdb-foot-newsletter .wpcf7-response-output {
+	font-family: var(--mdb-font-body) !important;
+	font-size: 0.82rem !important;
+	margin: 0.6rem 0 0 !important;
+	padding: 0.5rem 0.7rem !important;
+	border-width: 1px !important;
+}
+
 /* --- Listes de liens --- */
 .elementor-108363 .mdb-foot-links {
 	list-style: none !important;
