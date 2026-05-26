@@ -1,0 +1,73 @@
+[
+  {
+    "id": "mdbhdr01",
+    "elType": "section",
+    "settings": {
+      "layout": "full_width",
+      "html_tag": "header",
+      "stretch_section": "section-stretched",
+      "content_position": "middle",
+      "structure": "30",
+      "padding": { "unit": "px", "top": "16", "right": "0", "bottom": "16", "left": "0", "isLinked": false },
+      "css_classes": "mdb-header"
+    },
+    "elements": [
+      {
+        "id": "mdbhdrcol1",
+        "elType": "column",
+        "settings": { "_column_size": 33, "_inline_size": 30, "content_position": "center" },
+        "elements": [
+          {
+            "id": "mdbhdrtgl",
+            "elType": "widget",
+            "widgetType": "html",
+            "settings": {
+              "html": "<button type=\"button\" class=\"mdb-menu-toggle\" aria-expanded=\"false\" aria-controls=\"mdb-panel\" data-mdb-menu-open><span class=\"mdb-menu-toggle__bars\" aria-hidden=\"true\"><span></span><span></span></span><span class=\"mdb-menu-toggle__label\">Menu</span></button>",
+              "_css_classes": "mdb-header__toggle"
+            },
+            "elements": []
+          }
+        ]
+      },
+      {
+        "id": "mdbhdrcol2",
+        "elType": "column",
+        "settings": { "_column_size": 33, "_inline_size": 40, "content_position": "center" },
+        "elements": [
+          {
+            "id": "mdbhdrlogo",
+            "elType": "widget",
+            "widgetType": "image",
+            "settings": {
+              "image": { "url": "https://staging.maisondebacon.fr/wp-content/uploads/2024/05/Logo_Blanc.svg", "id": 106362 },
+              "image_size": "full",
+              "align": "center",
+              "width": { "unit": "px", "size": 124 },
+              "link_to": "custom",
+              "link": { "url": "https://staging.maisondebacon.fr/", "is_external": "", "nofollow": "" },
+              "_css_classes": "mdb-header__logo"
+            },
+            "elements": []
+          }
+        ]
+      },
+      {
+        "id": "mdbhdrcol3",
+        "elType": "column",
+        "settings": { "_column_size": 33, "_inline_size": 30, "content_position": "center" },
+        "elements": [
+          {
+            "id": "mdbhdrcta",
+            "elType": "widget",
+            "widgetType": "html",
+            "settings": {
+              "html": "<div class=\"mdb-header__actions\"><a class=\"mdb-btn mdb-btn--ghost\" href=\"https://maisondebacon.bonkdo.com/fr/\" target=\"_blank\" rel=\"noopener\"><span class=\"mdb-btn__dot\" aria-hidden=\"true\"></span>Carte cadeau</a><a class=\"mdb-btn mdb-btn--solid\" href=\"https://bookings.zenchef.com/results?rid=354476&amp;pid=1001\" target=\"_blank\" rel=\"noopener\">Réserver</a></div>",
+              "_css_classes": "mdb-header__cta"
+            },
+            "elements": []
+          }
+        ]
+      }
+    ]
+  }
+]

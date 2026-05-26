@@ -1,0 +1,2 @@
+Placeholder — remplacer par un fichier PNG 1200x900 affiché dans Apparence → Thèmes.
+À générer depuis /concept/index.html (capture du hero) avant déploiement.

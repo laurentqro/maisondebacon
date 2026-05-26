@@ -1,0 +1,13 @@
+/*
+Theme Name: Maison de Bacon
+Theme URI: https://maisondebacon.fr
+Description: Thème enfant de Laurent — refonte visuelle Maison de Bacon. Centralise les surcharges CSS/PHP, le sticky CTA réservation, le cap dimension upload images et les corrections de hiérarchie HTML/SEO.
+Author: Laurent Curau
+Author URI: https://laurentcurau.com
+Template: hello-elementor
+Version: 0.1.0
+Text Domain: laurent-mdb
+*/
+
+/* Les overrides CSS sont chargés depuis assets/css/ via functions.php (wp_enqueue_style). */
+/* Ce fichier ne sert qu'au header WordPress et reste volontairement vide. */

@@ -1,0 +1,58 @@
+/*
+ * Maison de Bacon — design tokens
+ * Source de vérité : /concept/styles.css
+ *
+ * Ce fichier centralise les variables CSS partagées par tout le site.
+ * Toute autre feuille de style (overrides.css, widgets du plugin) doit
+ * réutiliser ces tokens et ne JAMAIS hardcoder de couleur ou de famille.
+ *
+ * Design language : "Mediterranean grand-hotel editorial" — tiré du blason
+ * héraldique : champ navy, or laiton, papier crème, corail provençal.
+ *
+ * Les Google Fonts (Cormorant Garamond, Tenor Sans, Inter Tight) sont
+ * enqueue via functions.php (mdb-fonts), pas en @import ici.
+ */
+
+:root {
+	/* ---------- Palette (alignée concept) ---------- */
+	--mdb-navy: #0e253f;          /* champ du blason */
+	--mdb-navy-deep: #091a2d;     /* nav, footer */
+	--mdb-navy-soft: #1a3656;     /* hover/bordures */
+	--mdb-cream: #f4ecdc;         /* papier crème chaud */
+	--mdb-cream-warm: #ece2cd;    /* ivoire léger */
+	--mdb-bone: #e6dac0;          /* papier vieilli */
+	--mdb-gold: #b18954;          /* laiton héraldique */
+	--mdb-gold-bright: #c9a371;
+	--mdb-gold-deep: #8a6736;     /* plus foncé — sur fond crème */
+	--mdb-coral: #b8463b;         /* rouge provençal délavé */
+	--mdb-ink: #14202c;
+	--mdb-rule: rgba(177, 137, 84, 0.32);
+	--mdb-rule-soft: rgba(177, 137, 84, 0.18);
+
+	/* ---------- Typographie ---------- */
+	--mdb-font-display: "Cormorant Garamond", "Times New Roman", serif;
+	--mdb-font-eyebrow: "Tenor Sans", "Optima", serif;
+	--mdb-font-body: "Inter Tight", "Helvetica Neue", system-ui, sans-serif;
+
+	/* ---------- Échelle fluide (clamp) ---------- */
+	--mdb-step--1: clamp(0.78rem, 0.74rem + 0.2vw, 0.86rem);
+	--mdb-step-0:  clamp(0.95rem, 0.88rem + 0.3vw, 1.05rem);
+	--mdb-step-1:  clamp(1.1rem, 1rem + 0.5vw, 1.3rem);
+	--mdb-step-2:  clamp(1.4rem, 1.15rem + 1vw, 1.85rem);
+	--mdb-step-3:  clamp(2rem, 1.5rem + 2vw, 3rem);
+	--mdb-step-4:  clamp(2.6rem, 2rem + 3.2vw, 4.6rem);
+	--mdb-step-5:  clamp(3.4rem, 2.5rem + 5vw, 7rem);
+	--mdb-step-6:  clamp(4.5rem, 3rem + 8vw, 10rem);
+
+	/* ---------- Layout ---------- */
+	--mdb-gutter: clamp(1.25rem, 4vw, 3rem);
+	--mdb-wrap-max: 1320px;
+
+	/* ---------- Motion ---------- */
+	--mdb-ease: cubic-bezier(.2, .7, .2, 1);
+
+	/* ---------- Z-index ---------- */
+	--mdb-z-sticky-cta: 60;
+	--mdb-z-nav: 80;
+	--mdb-z-mobile-panel: 100;
+}

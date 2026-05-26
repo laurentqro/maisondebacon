@@ -1,0 +1,395 @@
+/*
+ * Maison de Bacon — surcharges globales (habillage concept).
+ *
+ * Source de vérité visuelle : /concept/styles.css
+ * Cible : header Elementor (template MDB Header) + composants globaux.
+ */
+
+/* =========================================================
+   HEADER — barre minimaliste façon Terre Blanche
+   MENU (gauche) · logo (centre) · Carte cadeau + Réserver (droite)
+   Cible le template Elementor MDB Header (classes .mdb-header*)
+   ========================================================= */
+.mdb-header {
+	position: fixed;
+	inset: 0 0 auto 0;
+	z-index: var(--mdb-z-nav);
+	width: 100%;
+	max-width: 100vw;
+	overflow: hidden;
+	background: var(--mdb-navy-deep);
+	border-bottom: 1px solid rgba(177, 137, 84, 0.22);
+	transition: box-shadow 0.45s var(--mdb-ease);
+}
+.mdb-header > .elementor-container {
+	max-width: var(--mdb-wrap-max);
+	margin-inline: auto;
+	padding-inline: var(--mdb-gutter);
+}
+body.mdb-scrolled .mdb-header {
+	box-shadow: 0 8px 30px -12px rgba(9, 26, 45, 0.55);
+}
+
+/* Logo parfaitement centré dans sa colonne */
+.mdb-header__logo .elementor-widget-container,
+.mdb-header__logo img { margin-inline: auto; }
+
+/* --- Bouton MENU (gauche) --- */
+.mdb-menu-toggle {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.7rem;
+	background: none;
+	border: 0;
+	padding: 6px 0;
+	cursor: pointer;
+	color: var(--mdb-cream);
+	font-family: var(--mdb-font-eyebrow);
+	font-size: 0.74rem;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+}
+.mdb-menu-toggle__bars {
+	display: inline-flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 5px;
+	width: 24px;
+}
+.mdb-menu-toggle__bars span {
+	display: block;
+	height: 1px;
+	background: var(--mdb-gold-bright);
+	transition: width 0.4s var(--mdb-ease), background 0.3s var(--mdb-ease);
+}
+.mdb-menu-toggle__bars span:first-child { width: 24px; }
+.mdb-menu-toggle__bars span:last-child  { width: 16px; }
+.mdb-menu-toggle:hover .mdb-menu-toggle__bars span:last-child { width: 24px; }
+.mdb-menu-toggle:hover { color: #fff; }
+
+/* --- Boutons d'action (droite) --- */
+.mdb-header__actions {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	gap: clamp(0.6rem, 1.4vw, 1.1rem);
+}
+.mdb-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.55rem;
+	font-family: var(--mdb-font-eyebrow);
+	font-size: 0.72rem;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	text-decoration: none;
+	white-space: nowrap;
+	padding: 0.7rem 1.3rem;
+	border: 1px solid transparent;
+	transition: background 0.4s var(--mdb-ease), color 0.4s var(--mdb-ease), border-color 0.4s var(--mdb-ease);
+}
+.mdb-btn__dot {
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: var(--mdb-gold);
+	flex-shrink: 0;
+	transition: background 0.4s var(--mdb-ease);
+}
+.mdb-btn--ghost {
+	background: transparent;
+	color: var(--mdb-cream);
+	border-color: rgba(244, 236, 220, 0.4);
+}
+.mdb-btn--ghost:hover {
+	background: var(--mdb-gold);
+	color: var(--mdb-navy-deep);
+	border-color: var(--mdb-gold);
+}
+.mdb-btn--ghost:hover .mdb-btn__dot { background: var(--mdb-navy-deep); }
+.mdb-btn--solid {
+	background: var(--mdb-gold);
+	color: var(--mdb-navy-deep);
+	border-color: var(--mdb-gold);
+}
+.mdb-btn--solid:hover {
+	background: var(--mdb-gold-bright);
+	border-color: var(--mdb-gold-bright);
+}
+.mdb-btn--block { width: 100%; justify-content: center; padding-block: 0.95rem; }
+
+/* Sur petit écran, on masque la carte cadeau et le label du MENU */
+@media (max-width: 880px) {
+	.mdb-btn--ghost { display: none; }
+	.mdb-menu-toggle__label { display: none; }
+}
+
+/* =========================================================
+   MEGA-MENU OFF-CANVAS (panneau latéral)
+   ========================================================= */
+.mdb-panel {
+	position: fixed;
+	inset: 0;
+	z-index: var(--mdb-z-mobile-panel);
+	visibility: hidden;
+	pointer-events: none;
+}
+.mdb-panel.is-open { visibility: visible; pointer-events: auto; }
+
+.mdb-panel__overlay {
+	position: absolute;
+	inset: 0;
+	background: rgba(9, 26, 45, 0.55);
+	opacity: 0;
+	transition: opacity 0.5s var(--mdb-ease);
+}
+.mdb-panel.is-open .mdb-panel__overlay { opacity: 1; }
+
+/* Colonne rubriques (gauche) — crème, comme la référence */
+.mdb-panel__nav {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: min(420px, 88vw);
+	background: var(--mdb-cream);
+	color: var(--mdb-navy-deep);
+	display: flex;
+	flex-direction: column;
+	padding: clamp(1.5rem, 3vw, 2.4rem);
+	transform: translateX(-100%);
+	transition: transform 0.55s var(--mdb-ease);
+	overflow-y: auto;
+}
+.mdb-panel.is-open .mdb-panel__nav { transform: translateX(0); }
+
+.mdb-panel__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: clamp(1.5rem, 4vw, 2.6rem);
+}
+.mdb-panel__close {
+	background: none;
+	border: 0;
+	cursor: pointer;
+	font-size: 1.6rem;
+	line-height: 1;
+	color: var(--mdb-navy-deep);
+	opacity: 0.7;
+	transition: opacity 0.3s var(--mdb-ease);
+}
+.mdb-panel__close:hover { opacity: 1; }
+.mdb-panel__lang .mdb-lang__item { color: rgba(20, 32, 44, 0.55); }
+.mdb-panel__lang .mdb-lang__item.is-active { color: var(--mdb-gold-deep); }
+.mdb-panel__lang .mdb-lang__sep { color: var(--mdb-gold-deep); }
+
+.mdb-panel__eyebrow {
+	font-family: var(--mdb-font-eyebrow);
+	font-size: 0.7rem;
+	letter-spacing: 0.28em;
+	text-transform: uppercase;
+	color: var(--mdb-gold-deep);
+	margin: 0 0 0.8rem;
+}
+.mdb-panel__list { list-style: none; margin: 0; padding: 0; }
+.mdb-panel__item + .mdb-panel__item { margin-top: 0.15rem; }
+.mdb-panel__link {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	padding: 0.4rem 0;
+	text-decoration: none;
+	color: var(--mdb-navy-deep);
+	font-family: var(--mdb-font-display);
+	font-size: clamp(1.5rem, 2.4vw, 1.9rem);
+	font-weight: 400;
+	line-height: 1.1;
+	transition: color 0.3s var(--mdb-ease);
+}
+.mdb-panel__link:hover,
+.mdb-panel__link.is-active { color: var(--mdb-gold-deep); }
+.mdb-panel__item.is-active .mdb-panel__link { font-weight: 600; }
+.mdb-panel__chevron {
+	font-size: 1.4rem;
+	color: var(--mdb-gold-deep);
+	opacity: 0.6;
+}
+
+.mdb-panel__foot { margin-top: auto; padding-top: 1.6rem; }
+
+/* Sous-panneau (droite) — blanc, aperçu de la rubrique active */
+.mdb-panel__sub {
+	position: absolute;
+	top: 0;
+	left: min(420px, 88vw);
+	height: 100%;
+	width: min(420px, 80vw);
+	background: #fff;
+	color: var(--mdb-navy-deep);
+	padding: clamp(2.4rem, 4vw, 3.4rem) clamp(1.6rem, 3vw, 2.6rem);
+	transform: translateX(-100%);
+	opacity: 0;
+	transition: transform 0.55s var(--mdb-ease) 0.05s, opacity 0.4s var(--mdb-ease);
+	overflow-y: auto;
+}
+.mdb-panel.is-open .mdb-panel__sub.is-open {
+	transform: translateX(0);
+	opacity: 1;
+}
+.mdb-panel__pane[hidden] { display: none; }
+.mdb-panel__media {
+	width: min(260px, 100%);
+	aspect-ratio: 4 / 5;
+	overflow: hidden;
+	border-radius: 0 64px 0 0;
+	margin-bottom: 1.8rem;
+	background: var(--mdb-cream-warm);
+}
+.mdb-panel__media img { width: 100%; height: 100%; object-fit: cover; }
+.mdb-panel__sublist { list-style: none; margin: 0 0 1.6rem; padding: 0; }
+.mdb-panel__sublist li + li { margin-top: 0.6rem; }
+.mdb-panel__sublink {
+	text-decoration: none;
+	color: var(--mdb-navy-deep);
+	font-family: var(--mdb-font-display);
+	font-size: clamp(1.15rem, 1.8vw, 1.4rem);
+	line-height: 1.2;
+	transition: color 0.3s var(--mdb-ease);
+}
+.mdb-panel__sublink:hover { color: var(--mdb-gold-deep); }
+.mdb-panel__discover {
+	display: inline-block;
+	font-family: var(--mdb-font-eyebrow);
+	font-size: 0.68rem;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	text-decoration: none;
+	color: var(--mdb-navy-deep);
+	border: 1px solid var(--mdb-rule);
+	border-radius: 999px;
+	padding: 0.6rem 1.2rem;
+	transition: background 0.3s var(--mdb-ease), color 0.3s var(--mdb-ease);
+}
+.mdb-panel__discover:hover { background: var(--mdb-navy-deep); color: var(--mdb-cream); }
+
+/* Le sous-panneau passe sous la liste sur mobile */
+@media (max-width: 760px) {
+	.mdb-panel__nav { width: 100vw; }
+	.mdb-panel__sub { display: none; }
+}
+
+/* Verrouille le scroll du body quand le panneau est ouvert */
+body.mdb-panel-open { overflow: hidden; }
+
+/* Sélecteur de langue FR · EN — deux liens HTML purs, réutilisé dans le panneau */
+.mdb-lang {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45rem;
+	font-family: var(--mdb-font-eyebrow);
+	font-size: 0.72rem;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+.mdb-lang__item {
+	color: rgba(244, 236, 220, 0.7);
+	transition: color 0.3s var(--mdb-ease);
+}
+.mdb-lang__item:hover { color: var(--mdb-gold-bright); }
+.mdb-lang__item.is-active { color: var(--mdb-gold); }
+.mdb-lang__sep { color: var(--mdb-gold); opacity: 0.55; }
+
+/* Le header est position:fixed → il sort du flux et recouvre le haut du
+   contenu. Sur les pages dont la 1re section est un hero plein écran
+   (fond image/vidéo sombre), c'est voulu : le hero passe sous le header.
+   Ailleurs, on pousse le contenu vers le bas via une classe body posée par
+   functions.php (mdb-needs-header-offset). */
+body.mdb-needs-header-offset .elementor-location-header ~ .e-con,
+body.mdb-needs-header-offset .site-content,
+body.mdb-needs-header-offset .elementor-location-header + div[data-elementor-type="wp-page"] {
+	padding-top: clamp(72px, 9vh, 104px);
+}
+
+/* Ancrage : compenser le header fixe pour les liens #section */
+:target { scroll-margin-top: 100px; }
+
+/* Vidéo de fond du hero — désormais self-hosted (MP4), plus d'embed YouTube :
+   aucun chrome (titre, bouton pause, contrôles). La balise <video> couvre la
+   section sans déborder. On neutralise tout clic par sécurité. */
+.elementor-background-video-container { pointer-events: none; }
+
+/* =========================================================
+   STICKY RESERVATION CTA (toutes pages)
+   ========================================================= */
+.mdb-sticky-cta {
+	position: fixed;
+	right: clamp(1rem, 2.5vw, 2rem);
+	bottom: clamp(1rem, 2.5vw, 2rem);
+	z-index: var(--mdb-z-sticky-cta);
+
+	display: inline-flex;
+	align-items: center;
+	gap: 0.75rem;
+
+	padding: 0.95rem 1.5rem;
+	border-radius: 999px;
+
+	font-family: var(--mdb-font-eyebrow);
+	font-size: 0.8rem;
+	font-weight: 400;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	text-decoration: none;
+	color: var(--mdb-navy-deep);
+
+	background: var(--mdb-gold);
+	box-shadow: 0 12px 28px rgba(9, 26, 45, 0.28);
+
+	transform: translateY(120%);
+	opacity: 0;
+	transition:
+		transform 320ms cubic-bezier(0.2, 0.6, 0.2, 1),
+		opacity 220ms ease,
+		background-color 220ms ease,
+		color 220ms ease,
+		box-shadow 220ms ease;
+}
+
+.mdb-sticky-cta.is-visible {
+	transform: translateY(0);
+	opacity: 1;
+}
+
+.mdb-sticky-cta:hover,
+.mdb-sticky-cta:focus-visible {
+	background: var(--mdb-navy-deep);
+	color: var(--mdb-cream);
+	box-shadow: 0 16px 32px rgba(9, 26, 45, 0.42);
+}
+
+.mdb-sticky-cta__arrow {
+	display: inline-block;
+	transform: translateX(0);
+	transition: transform 220ms ease;
+}
+
+.mdb-sticky-cta:hover .mdb-sticky-cta__arrow,
+.mdb-sticky-cta:focus-visible .mdb-sticky-cta__arrow {
+	transform: translateX(3px);
+}
+
+/* Masque la sticky CTA quand on est dans la section #reserver de la page,
+ * pour éviter le doublon visuel avec le bouton principal de réservation. */
+body.mdb-reserver-in-view .mdb-sticky-cta {
+	transform: translateY(120%);
+	opacity: 0;
+	pointer-events: none;
+}
+
+/* Cache la sticky CTA dans le back-office Elementor (édition en direct) */
+body.elementor-editor-active .mdb-sticky-cta {
+	display: none;
+}
