@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'MDB_THEME_VERSION', '0.5.3' );
+define( 'MDB_THEME_VERSION', '0.5.4' );
 define( 'MDB_THEME_DIR', get_stylesheet_directory() );
 define( 'MDB_THEME_URI', get_stylesheet_directory_uri() );
 
@@ -110,34 +110,28 @@ function mdb_t( $fr ) {
 	}
 	static $en = array(
 		// Rubriques
-		'Restaurant'                 => 'Restaurant',
-		'Roof Top'                   => 'Roof Top',
-		'Séjour'                     => 'Accommodation',
+		'Le Restaurant'              => 'The Restaurant',
+		'Le Roof Top'                => 'The Roof Top',
 		'La Carte'                   => 'The Menu',
-		'Événements'                 => 'Events',
+		'Réceptions'                 => 'Private Events',
 		'La Maison'                  => 'About Us',
 		// Eyebrows
-		'La table'                   => 'The table',
-		'Le bar'                     => 'The bar',
-		"L'hébergement"              => 'Accommodation',
 		'Les saveurs'                => 'Flavours',
 		'Privatisation'              => 'Private hire',
 		'Notre histoire'             => 'Our story',
 		// Sous-liens
-		'Restaurant de Bacon'        => 'Restaurant de Bacon',
-		'La tradition Bacon'         => 'The Bacon tradition',
+		'Notre carte'                => 'Our menu',
 		"L'Esprit du midi"           => 'The Midday Spirit',
 		"L'Esprit du soir"           => 'The Evening Spirit',
-		'Le Rooftop Club Bacon'      => 'The Rooftop Club Bacon',
-		'Les En-K du bar'            => "The Bar's En-K",
-		"L'Appartement de Victor"    => "L'Appartement de Victor",
-		'Villa Les Roches de Bacon'  => 'Villa Les Roches de Bacon',
-		'Notre carte'                => 'Our menu',
+		'Tradition Bacon'            => 'The Bacon tradition',
 		'Desserts'                   => 'Desserts',
-		'Vos événements'             => 'Events',
-		'Votre devis événementiel'   => 'Get a quote',  // libellé du bouton discover
-		'Le Chef — Nicolas Davouze'  => 'The Chef — Nicolas Davouze',
+		'Les En-K du bar'            => "The Bar's En-K",
+		'Vos événements'             => 'Your events',
+		'Villa Les Roches de Bacon'  => 'Villa Les Roches de Bacon',
+		"L'Appartement de Victor"    => "L'Appartement de Victor",
+		'Le Chef Nicolas Davouze'    => 'The Chef Nicolas Davouze',
 		'Presse'                     => 'Press',
+		'Avis'                       => 'Reviews',
 		'Contact'                    => 'Contact',
 		// Boutons / divers
 		'Menu'                       => 'Menu',
@@ -161,52 +155,42 @@ function mdb_megamenu_data() {
 
 	$menu = array(
 		array(
-			'label'    => 'Restaurant',
-			'url'      => $base . '/restaurant-de-bacon/',
-			'eyebrow'  => 'La table',
-			'image_id' => 109523,
-			'children' => array(
-				array( 'label' => 'Restaurant de Bacon', 'url' => $base . '/restaurant-de-bacon/' ),
-				array( 'label' => "La tradition Bacon", 'url' => $base . '/tradition-bacon/' ),
-				array( 'label' => "L'Esprit du midi", 'url' => $base . '/lesprit-du-midi/' ),
-				array( 'label' => "L'Esprit du soir", 'url' => $base . '/lesprit-du-soir/' ),
-			),
+			// Lien direct : la page Restaurant met déjà en avant ses menus et les
+			// autres lieux ; un sous-panneau serait redondant.
+			'label' => 'Le Restaurant',
+			'url'   => $base . '/restaurant-de-bacon/',
 		),
 		array(
-			'label'    => 'Roof Top',
-			'url'      => $base . '/le-rooftop-club-bacon/',
-			'eyebrow'  => 'Le bar',
-			'image_id' => 109265,
-			'children' => array(
-				array( 'label' => 'Le Rooftop Club Bacon', 'url' => $base . '/le-rooftop-club-bacon/' ),
-				array( 'label' => "Les En-K du bar", 'url' => $base . '/les-en-k-du-bar/' ),
-			),
+			// Lien direct (même logique que Le Restaurant).
+			'label' => 'Le Roof Top',
+			'url'   => $base . '/le-rooftop-club-bacon/',
 		),
 		array(
-			'label'    => 'Séjour',
-			'url'      => $base . '/lappartement-de-victor/',
-			'eyebrow'  => "L'hébergement",
-			'image_id' => 109241,
-			'children' => array(
-				array( 'label' => "L'Appartement de Victor", 'url' => $base . '/lappartement-de-victor/' ),
-				array( 'label' => 'Villa Les Roches de Bacon', 'url' => $base . '/villa-les-roches-de-bacon/' ),
-			),
-		),
-		array(
+			// Hub des cartes : regroupe TOUS les menus, y compris la carte du bar.
 			'label'    => 'La Carte',
 			'url'      => $base . '/notre-carte/',
 			'eyebrow'  => 'Les saveurs',
 			'image_id' => 109101,
 			'children' => array(
 				array( 'label' => 'Notre carte', 'url' => $base . '/notre-carte/' ),
+				array( 'label' => "L'Esprit du midi", 'url' => $base . '/lesprit-du-midi/' ),
+				array( 'label' => "L'Esprit du soir", 'url' => $base . '/lesprit-du-soir/' ),
+				array( 'label' => 'Tradition Bacon', 'url' => $base . '/tradition-bacon/' ),
 				array( 'label' => 'Desserts', 'url' => $base . '/desserts/' ),
+				array( 'label' => 'Les En-K du bar', 'url' => $base . '/les-en-k-du-bar/' ),
 			),
 		),
 		array(
-			// Pas de sous-menu : la rubrique navigue directement vers la page
-			// Événements (le contenu d'un sous-panneau serait trop maigre).
-			'label' => 'Événements',
-			'url'   => $base . '/vos-evenements/',
+			// Privatisation : page devis + les 2 espaces privatisables.
+			'label'    => 'Réceptions',
+			'url'      => $base . '/vos-evenements/',
+			'eyebrow'  => 'Privatisation',
+			'image_id' => 109241,
+			'children' => array(
+				array( 'label' => 'Vos événements', 'url' => $base . '/vos-evenements/' ),
+				array( 'label' => 'Villa Les Roches de Bacon', 'url' => $base . '/villa-les-roches-de-bacon/' ),
+				array( 'label' => "L'Appartement de Victor", 'url' => $base . '/lappartement-de-victor/' ),
+			),
 		),
 		array(
 			'label'    => 'La Maison',
@@ -214,8 +198,9 @@ function mdb_megamenu_data() {
 			'eyebrow'  => 'Notre histoire',
 			'image_id' => 109528,
 			'children' => array(
-				array( 'label' => 'Le Chef — Nicolas Davouze', 'url' => $base . '/nicolas-davouze/' ),
+				array( 'label' => 'Le Chef Nicolas Davouze', 'url' => $base . '/nicolas-davouze/' ),
 				array( 'label' => 'Presse', 'url' => $base . '/presse/' ),
+				array( 'label' => 'Avis', 'url' => $base . '/avis/' ),
 				array( 'label' => 'Contact', 'url' => $base . '/contact/' ),
 			),
 		),
