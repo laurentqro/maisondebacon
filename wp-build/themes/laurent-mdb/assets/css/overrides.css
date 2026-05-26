@@ -1362,17 +1362,27 @@ html[lang^="en"] .elementor-element-5ba5eec4 .elementor-heading-title::before { 
 	pointer-events: none;
 	z-index: 5;
 }
-/* Colonne image : remplit toute sa moitié, à fond perdu. */
+/* Colonne image : on cale l'image en absolu pour qu'elle couvre TOUTE la
+   hauteur de la bande (object-fit:cover), sans dépendre de l'étirement flex
+   du widget. La colonne sert de cadre relatif plein écran de sa moitié. */
 .elementor-element-7e05eb5a {
 	padding: 0 !important;
 	align-self: stretch !important;
+	position: relative !important;
+	overflow: hidden;
 }
-.elementor-element-7e05eb5a > .e-con-inner,
-.elementor-element-603f6b34,
+.elementor-element-603f6b34 {
+	position: absolute !important;
+	inset: 0 !important;
+	margin: 0 !important;
+}
 .elementor-element-603f6b34 .elementor-widget-container {
-	height: 100% !important;
+	position: absolute !important;
+	inset: 0 !important;
 }
 .elementor-element-603f6b34 img {
+	position: absolute !important;
+	inset: 0 !important;
 	width: 100% !important;
 	height: 100% !important;
 	object-fit: cover;
