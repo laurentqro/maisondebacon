@@ -1222,33 +1222,28 @@ body.elementor-editor-active .mdb-sticky-cta {
 	text-align: center;
 }
 
-/* Les 3 cartes sont alignées PAR LE BAS (align-self: flex-end) : titres + CTA
-   sur la même ligne de base, et la différence de hauteur d'image (l'arche
-   Roof Top, générée, est très légèrement plus haute) est absorbée EN HAUT,
-   invisible sur le fond navy. Le titre « Nos Univers » (autre frère de la
-   rangée) n'est PAS ciblé -> on n'utilise pas align-items sur le parent. */
 .elementor-element-7a5faa3b,
 .elementor-element-6520f472,
 .elementor-element-4c990681 {
 	display: flex !important;
 	flex-direction: column !important;
 	align-items: center !important;
-	align-self: flex-end !important;
-	height: auto !important;
 	text-align: center;
 }
 
-/* Arches : gabarit IDENTIQUE pour les 3 (même ratio, même arrondi,
-   même liseré). On force un ratio portrait constant + recadrage cover,
-   donc les 3 images occupent exactement la même surface. */
-/* L'arche est BAKED-IN dans les PNG sources (750x1000 RGBA, coins
-   transparents). On laisse donc l'image à sa taille naturelle (pas de
-   recadrage cover, pas de border ni border-radius qui casseraient la
-   silhouette). Toutes les sources font 750x1000 -> gabarits identiques. */
+/* L'arche est baked-in dans les PNG (750x1000 RGBA, coins transparents).
+   Les fichiers servent des hauteurs légèrement différentes (le Roof Top,
+   ré-uploadé, rend ~20px plus haut) -> on impose la MÊME boîte aux 3 images
+   via aspect-ratio + object-fit:cover ancré en haut. La couronne de l'arche
+   (en haut) est préservée ; seul le bas plat (rangée 924/1000) est rogné de
+   quelques px, de façon identique -> les 3 arches s'alignent parfaitement. */
 .elementor-element-7170bb4c .elementor-widget-image img {
 	display: block;
 	width: 100% !important;
+	aspect-ratio: 3 / 4;
 	height: auto !important;
+	object-fit: cover;
+	object-position: top center;
 	transition: transform 1.2s var(--mdb-ease), filter 0.6s var(--mdb-ease);
 	filter: saturate(0.95) brightness(0.9);
 }
