@@ -10,11 +10,18 @@
    MENU (gauche) · logo (centre) · Carte cadeau + Réserver (droite)
    Cible le template Elementor MDB Header (classes .mdb-header*)
    ========================================================= */
+/* header.mdb-header (élément + classe) bat la spécificité des règles
+   .elementor-section d'Elementor. !important sur position/left/width pour
+   neutraliser le style inline « stretched » qu'Elementor pose en JS
+   (style="width:1920px;left:0px") et qui empêchait le header de rester collé. */
+header.mdb-header,
 .mdb-header {
-	position: fixed;
-	inset: 0 0 auto 0;
+	position: fixed !important;
+	top: 0;
+	left: 0 !important;
+	right: 0;
 	z-index: var(--mdb-z-nav);
-	width: 100%;
+	width: 100% !important;
 	max-width: 100vw;
 	overflow: hidden;
 	background: var(--mdb-navy-deep);
@@ -66,6 +73,21 @@ body.mdb-scrolled .mdb-header {
 .mdb-menu-toggle__bars span:last-child  { width: 16px; }
 .mdb-menu-toggle:hover .mdb-menu-toggle__bars span:last-child { width: 24px; }
 .mdb-menu-toggle:hover { color: #fff; }
+
+/* Hello Elementor (reset.css) applique `button:hover,button:focus{
+   background-color:#c36;color:#fff}` à TOUT <button> nu du site — d'où le fond
+   rose au survol (toggle MENU, croix du panneau, etc.). On neutralise ce reset
+   globalement : un bouton non stylé ne doit pas hériter d'un fond de couleur.
+   Les vrais boutons (Elementor, .mdb-btn) ont leurs propres styles plus
+   spécifiques et ne sont pas affectés. */
+button:hover,
+button:focus,
+[type="button"]:hover,
+[type="submit"]:hover,
+[type="submit"]:focus {
+	background-color: transparent;
+	color: inherit;
+}
 
 /* --- Boutons d'action (droite) --- */
 .mdb-header__actions {
@@ -187,9 +209,9 @@ body.mdb-scrolled .mdb-header {
 	line-height: 1;
 	color: var(--mdb-navy-deep);
 	opacity: 0.7;
-	transition: opacity 0.3s var(--mdb-ease);
+	transition: opacity 0.3s var(--mdb-ease), color 0.3s var(--mdb-ease);
 }
-.mdb-panel__close:hover { opacity: 1; }
+.mdb-panel__close:hover { opacity: 1; color: var(--mdb-gold-deep); }
 .mdb-panel__lang { font-size: 0.95rem; gap: 0.6rem; }
 .mdb-panel__lang .mdb-lang__item { color: rgba(20, 32, 44, 0.55); }
 .mdb-panel__lang .mdb-lang__item.is-active { color: var(--mdb-gold-deep); }
@@ -320,9 +342,9 @@ body.mdb-scrolled .mdb-header {
 	line-height: 1;
 	color: var(--mdb-navy-deep);
 	opacity: 0.7;
-	transition: opacity 0.3s var(--mdb-ease);
+	transition: opacity 0.3s var(--mdb-ease), color 0.3s var(--mdb-ease);
 }
-.mdb-panel__pane-close:hover { opacity: 1; }
+.mdb-panel__pane-close:hover { opacity: 1; color: var(--mdb-gold-deep); }
 
 .mdb-panel__media {
 	width: min(260px, 100%);
