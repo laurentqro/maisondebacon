@@ -133,8 +133,15 @@ body.mdb-scrolled .mdb-header {
 	z-index: var(--mdb-z-mobile-panel);
 	visibility: hidden;
 	pointer-events: none;
+	/* À la fermeture, on retarde le passage en visibility:hidden le temps que
+	   le panneau ait fini de glisser dehors (sinon il disparaîtrait net). */
+	transition: visibility 0s linear 0.55s;
 }
-.mdb-panel.is-open { visibility: visible; pointer-events: auto; }
+.mdb-panel.is-open {
+	visibility: visible;
+	pointer-events: auto;
+	transition: visibility 0s linear 0s;
+}
 
 .mdb-panel__overlay {
 	position: absolute;
