@@ -152,7 +152,9 @@ body.mdb-scrolled .mdb-header {
 }
 .mdb-panel.is-open .mdb-panel__overlay { opacity: 1; }
 
-/* Colonne rubriques (gauche) — crème, comme la référence */
+/* Colonne rubriques (gauche) — crème, comme la référence.
+   z-index supérieur au sous-panneau : ce dernier émerge de DERRIÈRE le nav en
+   glissant vers la droite (slide gauche→droite bien visible). */
 .mdb-panel__nav {
 	position: absolute;
 	top: 0;
@@ -167,6 +169,7 @@ body.mdb-scrolled .mdb-header {
 	transform: translateX(-100%);
 	transition: transform 0.55s var(--mdb-ease);
 	overflow-y: auto;
+	z-index: 2;
 }
 .mdb-panel.is-open .mdb-panel__nav { transform: translateX(0); }
 
@@ -244,7 +247,8 @@ body.mdb-scrolled .mdb-header {
 }
 .mdb-panel__foot .mdb-btn--ghost:hover .mdb-btn__dot { background: var(--mdb-gold); }
 
-/* Sous-panneau (droite) — blanc, aperçu de la rubrique active */
+/* Sous-panneau (droite) — blanc, aperçu de la rubrique active.
+   Glisse de la gauche vers la droite quand une rubrique est cliquée. */
 .mdb-panel__sub {
 	position: absolute;
 	top: 0;
@@ -256,12 +260,16 @@ body.mdb-scrolled .mdb-header {
 	padding: clamp(2.4rem, 4vw, 3.4rem) clamp(1.6rem, 3vw, 2.6rem);
 	transform: translateX(-100%);
 	opacity: 0;
-	transition: transform 0.55s var(--mdb-ease) 0.05s, opacity 0.4s var(--mdb-ease);
+	/* Hors écran et transparent, il recouvre la liste de rubriques (même bande) :
+	   sans ceci il intercepterait les clics. Réactivé quand il est ouvert. */
+	pointer-events: none;
+	transition: transform 0.55s var(--mdb-ease), opacity 0.4s var(--mdb-ease);
 	overflow-y: auto;
 }
 .mdb-panel.is-open .mdb-panel__sub.is-open {
 	transform: translateX(0);
 	opacity: 1;
+	pointer-events: auto;
 }
 .mdb-panel__pane[hidden] { display: none; }
 .mdb-panel__media {
@@ -298,12 +306,6 @@ body.mdb-scrolled .mdb-header {
 	transition: background 0.3s var(--mdb-ease), color 0.3s var(--mdb-ease);
 }
 .mdb-panel__discover:hover { background: var(--mdb-navy-deep); color: var(--mdb-cream); }
-
-/* Le sous-panneau passe sous la liste sur mobile */
-@media (max-width: 760px) {
-	.mdb-panel__nav { width: 100vw; }
-	.mdb-panel__sub { display: none; }
-}
 
 /* Verrouille le scroll du body quand le panneau est ouvert */
 body.mdb-panel-open { overflow: hidden; }

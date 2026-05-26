@@ -2,10 +2,10 @@
  * Maison de Bacon — mega-menu off-canvas (modèle Terre Blanche).
  *
  * Le bouton MENU de la barre ouvre un panneau latéral gauche (rubriques).
- * Survoler/cliquer une rubrique à sous-pages déploie un sous-panneau à droite
+ * Cliquer une rubrique à sous-pages affiche un sous-panneau à droite
  * (sous-liens + image + CTA). Fermeture par croix, overlay, ou Escape.
  *
- * Vanilla JS, aucune dépendance.
+ * Comportement identique desktop / mobile. Vanilla JS, aucune dépendance.
  */
 (function () {
 	'use strict';
@@ -41,10 +41,8 @@
 		panel.setAttribute('aria-hidden', 'false');
 		body.classList.add('mdb-panel-open');
 		openers.forEach(function (b) { b.setAttribute('aria-expanded', 'true'); });
-		// Pré-affiche la première rubrique à sous-pages pour ne pas laisser le sous-panneau vide.
-		if (!activeSection && sectionLinks.length) {
-			showPane(sectionLinks[0].getAttribute('data-mdb-section'));
-		}
+		// Pas de pré-affichage : le sous-panneau reste masqué jusqu'au 1er clic
+		// sur une rubrique.
 	}
 
 	function closePanel() {
@@ -70,7 +68,7 @@
 
 	sectionLinks.forEach(function (link) {
 		var id = link.getAttribute('data-mdb-section');
-		// Tout au clic : 1er clic sur une rubrique ouvre son sous-panneau (sans
+		// Tout au clic : 1er clic sur une rubrique affiche son sous-panneau (sans
 		// naviguer), 2e clic sur la rubrique déjà active navigue vers sa page.
 		link.addEventListener('click', function (e) {
 			if (activeSection !== id) {
