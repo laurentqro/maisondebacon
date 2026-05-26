@@ -1343,7 +1343,9 @@ html[lang^="en"] .elementor-element-5ba5eec4 .elementor-heading-title::before { 
 	max-width: none !important;     /* pleine largeur */
 	width: 100% !important;
 	margin: 0 !important;
-	padding: 0 !important;          /* annule le 100px hérité -> image à fond perdu */
+	/* Le contenu (image + texte) est calé À L'INTÉRIEUR du filet or intérieur :
+	   padding = retrait du filet (12px) + petite gouttière. */
+	padding: 22px !important;
 	align-items: stretch !important; /* image + texte = même hauteur */
 	min-height: clamp(28rem, 42vw, 40rem);
 	position: relative;
@@ -1353,8 +1355,8 @@ html[lang^="en"] .elementor-element-5ba5eec4 .elementor-heading-title::before { 
 	/* Trait OR extérieur épais. */
 	border: 3px solid var(--mdb-gold) !important;
 }
-/* 2e filet or (intérieur), en retrait, dessiné PAR-DESSUS l'image grâce à
-   un overlay absolu -> double-rule franc et bien lisible sur toute la bande. */
+/* 2e filet or (intérieur), en retrait, dessiné par-dessus -> double-rule
+   franc ; le contenu est ENTRE ce filet et le bord (cf. padding ci-dessus). */
 .elementor-element-611a8b9a > .e-con-inner::before {
 	content: "";
 	position: absolute;
