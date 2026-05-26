@@ -21,6 +21,7 @@
 	var sectionLinks = panel.querySelectorAll('[data-mdb-section]');
 	var panes = panel.querySelectorAll('[data-mdb-pane]');
 	var sub = panel.querySelector('[data-mdb-sub]');
+	var paneClosers = panel.querySelectorAll('[data-mdb-pane-close]');
 	var activeSection = null;
 
 	function showPane(id) {
@@ -34,6 +35,17 @@
 		});
 		if (sub) sub.classList.add('is-open');
 		activeSection = id;
+	}
+
+	// Réinitialise le sous-panneau (rubrique active désélectionnée). Appelé à la
+	// fermeture du panneau pour repartir d'un état propre à la réouverture.
+	function closePane() {
+		if (sub) sub.classList.remove('is-open');
+		sectionLinks.forEach(function (link) {
+			link.classList.remove('is-active');
+			link.closest('.mdb-panel__item').classList.remove('is-active');
+		});
+		activeSection = null;
 	}
 
 	function openPanel() {
@@ -50,6 +62,7 @@
 		panel.setAttribute('aria-hidden', 'true');
 		body.classList.remove('mdb-panel-open');
 		openers.forEach(function (b) { b.setAttribute('aria-expanded', 'false'); });
+		closePane();
 	}
 
 	openers.forEach(function (btn) {
@@ -63,6 +76,15 @@
 		btn.addEventListener('click', function (e) {
 			e.preventDefault();
 			closePanel();
+		});
+	});
+
+	// La croix du sous-panneau ramène à la liste des rubriques (ne ferme PAS tout
+	// le panneau) — surtout sur mobile où le sous-panneau recouvre la liste.
+	paneClosers.forEach(function (btn) {
+		btn.addEventListener('click', function (e) {
+			e.preventDefault();
+			closePane();
 		});
 	});
 

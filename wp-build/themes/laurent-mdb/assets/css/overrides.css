@@ -258,7 +258,7 @@ body.mdb-scrolled .mdb-header {
 	align-items: center;
 	gap: 1.3rem;
 }
-.mdb-panel__foot .mdb-btn--block { max-width: 320px; border-radius: 999px; }
+.mdb-panel__foot .mdb-btn--block { max-width: 320px; border-radius: 0; }
 
 .mdb-panel__social {
 	list-style: none;
@@ -303,6 +303,27 @@ body.mdb-scrolled .mdb-header {
 	pointer-events: auto;
 }
 .mdb-panel__pane[hidden] { display: none; }
+
+/* Croix de fermeture du sous-panneau — masquée sur desktop (les deux colonnes
+   sont visibles côte à côte, la croix du nav suffit), affichée sur mobile où le
+   sous-panneau recouvre la liste plein écran (modèle Terre Blanche). */
+.mdb-panel__pane-close {
+	display: none;
+	position: absolute;
+	top: clamp(1.2rem, 3vw, 1.8rem);
+	right: clamp(1.2rem, 3vw, 1.8rem);
+	z-index: 1;
+	background: none;
+	border: 0;
+	cursor: pointer;
+	font-size: 1.6rem;
+	line-height: 1;
+	color: var(--mdb-navy-deep);
+	opacity: 0.7;
+	transition: opacity 0.3s var(--mdb-ease);
+}
+.mdb-panel__pane-close:hover { opacity: 1; }
+
 .mdb-panel__media {
 	width: min(260px, 100%);
 	aspect-ratio: 4 / 5;
@@ -359,6 +380,23 @@ body.mdb-panel-open { overflow: hidden; }
 .mdb-lang__item:hover { color: var(--mdb-gold-bright); }
 .mdb-lang__item.is-active { color: var(--mdb-gold); }
 .mdb-lang__sep { color: var(--mdb-gold); opacity: 0.55; }
+
+/* MOBILE — le panneau et son sous-panneau remplissent l'écran. Le sous-panneau
+   glisse PAR-DESSUS la liste des rubriques (et non à côté, sinon il atterrit
+   hors écran à droite). Croix de fermeture en haut à droite. */
+@media (max-width: 768px) {
+	.mdb-panel__nav { width: 100%; }
+	.mdb-panel__sub {
+		left: 0;
+		width: 100%;
+		z-index: 3; /* au-dessus du nav (z-index: 2) */
+		/* Slide depuis la DROITE sur mobile (translateX positif → hors écran à
+		   droite). Sur desktop il glisse depuis la gauche, derrière le nav. */
+		transform: translateX(100%);
+	}
+	.mdb-panel.is-open .mdb-panel__sub.is-open { transform: translateX(0); }
+	.mdb-panel__pane-close { display: block; }
+}
 
 /* Le header est position:fixed → il sort du flux et recouvre le haut du
    contenu. Sur les pages dont la 1re section est un hero plein écran

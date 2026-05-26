@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'MDB_THEME_VERSION', '0.5.8' );
+define( 'MDB_THEME_VERSION', '0.6.2' );
 define( 'MDB_THEME_DIR', get_stylesheet_directory() );
 define( 'MDB_THEME_URI', get_stylesheet_directory_uri() );
 
@@ -284,6 +284,9 @@ add_action( 'wp_footer', function () {
 			<?php foreach ( $menu as $i => $item ) : ?>
 				<?php if ( empty( $item['children'] ) ) { continue; } ?>
 				<div class="mdb-panel__pane" data-mdb-pane="<?php echo esc_attr( $i ); ?>" hidden>
+					<button type="button" class="mdb-panel__pane-close" data-mdb-pane-close aria-label="Retour au menu">
+						<span aria-hidden="true">&times;</span>
+					</button>
 					<?php if ( ! empty( $item['image_id'] ) ) : ?>
 						<div class="mdb-panel__media">
 							<?php
