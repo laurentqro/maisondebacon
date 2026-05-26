@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'MDB_THEME_VERSION', '0.9.6' );
+define( 'MDB_THEME_VERSION', '0.9.22' );
 define( 'MDB_THEME_DIR', get_stylesheet_directory() );
 define( 'MDB_THEME_URI', get_stylesheet_directory_uri() );
 
@@ -67,26 +67,6 @@ add_action( 'wp_enqueue_scripts', function () {
 	);
 }, 20 );
 
-/**
- * Sticky reservation CTA — injecté en bas du <body> sur toutes les pages publiques.
- *
- * Cible : Zenchef restaurant. À adapter selon page (rooftop a un rid distinct).
- */
-add_action( 'wp_footer', function () {
-	if ( is_admin() ) {
-		return;
-	}
-
-	$default_url = 'https://bookings.zenchef.com/results?rid=354476&pid=1001';
-	$url         = apply_filters( 'mdb_reservation_url', $default_url );
-	$label       = apply_filters( 'mdb_reservation_label', mdb_t( 'Réserver' ) );
-	?>
-	<a class="mdb-sticky-cta" href="<?php echo esc_url( $url ); ?>" target="_blank" rel="noopener" data-mdb-sticky-cta>
-		<span class="mdb-sticky-cta__label"><?php echo esc_html( $label ); ?></span>
-		<span class="mdb-sticky-cta__arrow" aria-hidden="true">→</span>
-	</a>
-	<?php
-}, 5 );
 
 /**
  * Le site est-il rendu en anglais ? (TranslatePress positionne la locale

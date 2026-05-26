@@ -54,5 +54,17 @@
 		io.observe(reserverBlock);
 	}
 
+	// Masque aussi le CTA flottant quand le footer entre dans le viewport :
+	// il chevauchait la barre légale, et « Réserver » est déjà dans la barre nav.
+	var footer = document.querySelector('.elementor-108363, [data-elementor-type="footer"], footer');
+	if (footer && 'IntersectionObserver' in window) {
+		var ioFoot = new IntersectionObserver(function (entries) {
+			entries.forEach(function (entry) {
+				document.body.classList.toggle('mdb-footer-in-view', entry.isIntersecting);
+			});
+		}, { threshold: 0 });
+		ioFoot.observe(footer);
+	}
+
 	update();
 })();

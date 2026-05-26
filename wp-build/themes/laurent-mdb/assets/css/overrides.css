@@ -533,9 +533,11 @@ body.mdb-needs-header-offset .elementor-location-header + div[data-elementor-typ
 	transform: translateX(3px);
 }
 
-/* Masque la sticky CTA quand on est dans la section #reserver de la page,
- * pour éviter le doublon visuel avec le bouton principal de réservation. */
-body.mdb-reserver-in-view .mdb-sticky-cta {
+/* Masque la sticky CTA quand on est dans la section #reserver de la page OU
+ * quand le footer est visible (doublon avec le bouton Réserver de la barre nav,
+ * et chevauchement avec la barre légale). */
+body.mdb-reserver-in-view .mdb-sticky-cta,
+body.mdb-footer-in-view .mdb-sticky-cta {
 	transform: translateY(120%);
 	opacity: 0;
 	pointer-events: none;
@@ -545,6 +547,33 @@ body.mdb-reserver-in-view .mdb-sticky-cta {
 body.elementor-editor-active .mdb-sticky-cta {
 	display: none;
 }
+
+/* Badge reCAPTCHA v3 (chargé globalement par Contact Form 7) masqué.
+   Conformité Google : on affiche la mention légale via .mdb-recaptcha-note
+   (injectée dans le footer), comme l'autorisent les CGU reCAPTCHA. */
+.grecaptcha-badge {
+	visibility: hidden;
+}
+.mdb-recaptcha-note {
+	font-family: var(--mdb-font-body);
+	font-size: 0.7rem;
+	line-height: 1.5;
+	color: var(--mdb-cream);
+	opacity: 0.45;
+	text-align: center;
+	margin: 1.25rem auto 0;
+	white-space: nowrap;
+}
+/* Sur très petit écran, autoriser le retour à la ligne pour éviter le débordement. */
+@media (max-width: 600px) {
+	.mdb-recaptcha-note { white-space: normal; }
+}
+.mdb-recaptcha-note a {
+	color: inherit;
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+.mdb-recaptcha-note a:hover { color: var(--mdb-gold-bright); opacity: 1; }
 
 /* =========================================================
    HERO HOME — refonte façon concept (Univers grand-hôtel)
@@ -892,10 +921,12 @@ body.elementor-editor-active .mdb-sticky-cta {
 	border: 0 !important;
 }
 
-/* Une ligne d'événement = bloc aéré, séparé par un filet or fin. */
+/* Une ligne d'événement = bloc aéré, séparé par un filet or fin.
+   align-items: baseline → la ligne de base du grand chiffre « 20 » s'aligne
+   sur celle du titre (MAI/2026 retombent dessous). */
 .elementor-element-337ce1e .ectbe-inner-wrapper {
 	display: flex !important;
-	align-items: flex-start !important;
+	align-items: baseline !important;
 	gap: clamp(1.5rem, 4vw, 3.5rem) !important;
 	padding: clamp(1.75rem, 4vw, 2.75rem) 0 !important;
 	border-bottom: 1px solid var(--mdb-rule) !important;
@@ -909,8 +940,11 @@ body.elementor-editor-active .mdb-sticky-cta {
 	flex: 0 0 auto !important;
 	width: clamp(70px, 9vw, 104px) !important;
 	text-align: center !important;
-	padding-top: 0.35rem;
+	padding-top: 0 !important;
 	line-height: 1;
+	justify-content: flex-start !important;
+	height: auto !important;
+	min-height: 0 !important;
 }
 .elementor-element-337ce1e .ectbe-ev-day {
 	display: block !important;
@@ -970,43 +1004,45 @@ body.elementor-editor-active .mdb-sticky-cta {
 .elementor-element-337ce1e .ectbe-evt-time i,
 .elementor-element-337ce1e .ectbe-icon-clock { color: var(--mdb-gold) !important; }
 
+/* Excerpt + bloc « En savoir plus » masqués : le titre porte le lien. */
 .elementor-element-337ce1e .ectbe-evt-description,
-.elementor-element-337ce1e .ectbe-evt-description p {
-	font-family: var(--mdb-font-body) !important;
-	font-size: 1rem !important;
-	line-height: 1.65 !important;
-	color: var(--mdb-cream) !important;
-	opacity: 0.82;
-	max-width: 60ch;
-	margin: 0 !important;
-}
-.elementor-element-337ce1e .ectbe-evt-cost { color: var(--mdb-cream) !important; opacity: 0.7; margin-top: 0.5rem !important; }
-
-/* --- Colonne « Find out more » : plus de bloc blanc, lien or souligné --- */
+.elementor-element-337ce1e .ectbe-evt-cost,
 .elementor-element-337ce1e .ectbe-evt-more-box {
-	flex: 0 0 auto !important;
-	align-self: center !important;
-	width: auto !important;
-	min-width: 0 !important;
-	padding: 0 !important;
-	display: flex !important;
-	align-items: center !important;
+	display: none !important;
 }
-.elementor-element-337ce1e .ectbe-evt-read-more {
-	font-family: var(--mdb-font-eyebrow) !important;
-	font-size: var(--mdb-step--1) !important;
-	letter-spacing: 0.18em !important;
-	text-transform: uppercase !important;
-	color: var(--mdb-gold-bright) !important;
-	white-space: nowrap !important;
-	padding-bottom: 0.25rem !important;
-	border-bottom: 1px solid var(--mdb-rule) !important;
-	transition: color 0.3s var(--mdb-ease), border-color 0.3s var(--mdb-ease);
+
+/* Le titre EST le lien : affordance visible au repos (soulignement or
+   permanent + flèche), renforcée au survol (soulignement plein + blanc). */
+.elementor-element-337ce1e .ectbe-evt-title a,
+.elementor-element-337ce1e .ectbe-evt-url {
+	display: inline;
+	background-image: linear-gradient(var(--mdb-gold), var(--mdb-gold));
+	background-repeat: no-repeat;
+	background-position: 0 100%;
+	background-size: 100% 1px;
+	padding-bottom: 0.1em;
+	transition: color 0.3s var(--mdb-ease), background-size 0.4s var(--mdb-ease), opacity 0.3s var(--mdb-ease);
 }
-.elementor-element-337ce1e .ectbe-evt-read-more::after { content: " \2192"; }
-.elementor-element-337ce1e .ectbe-evt-read-more:hover {
+/* Flèche persistante pour signaler le clic, alignée au texte. */
+.elementor-element-337ce1e .ectbe-evt-title a::after,
+.elementor-element-337ce1e .ectbe-evt-url::after {
+	content: " \2192";
+	display: inline-block;
+	font-family: var(--mdb-font-eyebrow);
+	font-size: 0.6em;
+	vertical-align: middle;
+	margin-left: 0.4em;
+	transform: translateX(0);
+	transition: transform 0.3s var(--mdb-ease);
+}
+.elementor-element-337ce1e .ectbe-evt-title a:hover,
+.elementor-element-337ce1e .ectbe-evt-url:hover {
 	color: #fff !important;
-	border-color: var(--mdb-gold-bright) !important;
+	background-image: linear-gradient(#fff, #fff);
+}
+.elementor-element-337ce1e .ectbe-evt-title a:hover::after,
+.elementor-element-337ce1e .ectbe-evt-url:hover::after {
+	transform: translateX(0.25em);
 }
 
 /* Mobile : la colonne « Find out more » passe sous le contenu, date à gauche. */
@@ -1022,6 +1058,153 @@ body.elementor-editor-active .mdb-sticky-cta {
 /* --- a8f323f cartes promo (recrutement / RSE) : fond crème ---------- */
 .elementor-element-a8f323f {
 	background: var(--mdb-cream) !important;
+}
+
+/* Cartes « Blog Posts » ElementsKit (.elementskit-post-image-card) :
+   restyle premium éditorial pour s'accorder au reste de la home.
+   NB : les vignettes sources sont en 150×150 → object-fit:cover + ratio fixe
+   pour un cadrage propre (le vrai correctif serait de régénérer les miniatures
+   en plus grand côté média). */
+/* Une carte par ligne : mise en page horizontale magazine (image | texte),
+   l'image alternant de côté d'une carte à l'autre. */
+.elementor-element-a8f323f .post-items {
+	display: flex !important;
+	flex-direction: column !important;
+	gap: clamp(1.5rem, 4vw, 3rem) !important;
+}
+.elementor-element-a8f323f .post-items > [class*="col-"] {
+	width: 100% !important;
+	max-width: 100% !important;
+	flex: 0 0 100% !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+.elementor-element-a8f323f .elementskit-post-image-card {
+	background: var(--mdb-navy-deep) !important;
+	border-radius: 0 !important;
+	overflow: hidden !important;
+	box-shadow: 0 18px 48px -28px rgba(9, 26, 45, 0.55) !important;
+	display: flex !important;
+	flex-direction: row !important;
+	align-items: stretch !important;
+	height: 100% !important;
+	transition: transform 0.45s var(--mdb-ease), box-shadow 0.45s var(--mdb-ease);
+}
+/* Carte paire : image à droite (mise en page miroir). */
+.elementor-element-a8f323f .post-items > [class*="col-"]:nth-child(even) .elementskit-post-image-card {
+	flex-direction: row-reverse !important;
+}
+.elementor-element-a8f323f .elementskit-post-image-card:hover {
+	transform: translateY(-6px);
+	box-shadow: 0 28px 60px -26px rgba(9, 26, 45, 0.7) !important;
+}
+
+/* Vignette : moitié de la largeur, hauteur pleine, recadrage cover. */
+.elementor-element-a8f323f .elementskit-entry-header {
+	margin: 0 !important;
+	flex: 0 0 45% !important;
+	max-width: 45% !important;
+}
+.elementor-element-a8f323f .elementskit-entry-thumb {
+	display: block !important;
+	overflow: hidden !important;
+	height: 100% !important;
+	min-height: 300px;
+}
+.elementor-element-a8f323f .elementskit-entry-thumb img {
+	width: 100% !important;
+	height: 100% !important;
+	object-fit: cover !important;
+	object-position: center top !important;
+	display: block !important;
+	transition: transform 0.7s var(--mdb-ease);
+}
+.elementor-element-a8f323f .elementskit-post-image-card:hover .elementskit-entry-thumb img {
+	transform: scale(1.05);
+}
+
+/* Corps : occupe le reste, texte centré verticalement, padding généreux. */
+.elementor-element-a8f323f .elementskit-post-body {
+	flex: 1 1 auto !important;
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: flex-start !important;
+	justify-content: center !important;
+	padding: clamp(1.75rem, 4vw, 3rem) !important;
+}
+.elementor-element-a8f323f .entry-title {
+	margin: 0 0 1.25rem !important;
+}
+.elementor-element-a8f323f .entry-title a {
+	font-family: var(--mdb-font-display) !important;
+	font-weight: 400 !important;
+	font-size: clamp(1.3rem, 2.1vw, 1.7rem) !important;
+	line-height: 1.2 !important;
+	letter-spacing: -0.005em !important;
+	text-transform: none !important;
+	color: var(--mdb-cream) !important;
+	transition: color 0.3s var(--mdb-ease);
+}
+.elementor-element-a8f323f .entry-title a:hover { color: var(--mdb-gold-bright) !important; }
+
+/* Contenu de l'article sous le titre : Inter crème, lisible, aéré. */
+.elementor-element-a8f323f .elementskit-post-body > p {
+	font-family: var(--mdb-font-body) !important;
+	font-size: 1rem !important;
+	line-height: 1.7 !important;
+	color: var(--mdb-cream) !important;
+	opacity: 0.82;
+	margin: 0 0 1.5rem !important;
+	text-align: left !important;
+}
+.elementor-element-a8f323f .elementskit-post-body > p:last-of-type { margin-bottom: 1.75rem !important; }
+
+/* Bouton « Lire » : plus de pavé brass arrondi → lien or souligné + flèche. */
+.elementor-element-a8f323f .btn-wraper {
+	margin-top: auto !important;
+	text-align: left !important;
+}
+.elementor-element-a8f323f .elementskit-btn {
+	display: inline-block !important;
+	background: transparent !important;
+	border: 0 !important;
+	border-radius: 0 !important;
+	padding: 0.25rem 0 !important;
+	color: var(--mdb-gold-bright) !important;
+	font-family: var(--mdb-font-eyebrow) !important;
+	font-size: var(--mdb-step--1) !important;
+	letter-spacing: 0.2em !important;
+	text-transform: uppercase !important;
+	border-bottom: 1px solid var(--mdb-rule) !important;
+	transition: color 0.3s var(--mdb-ease), border-color 0.3s var(--mdb-ease);
+}
+.elementor-element-a8f323f .elementskit-btn::after {
+	content: " \2192";
+	display: inline-block;
+	transition: transform 0.3s var(--mdb-ease);
+}
+.elementor-element-a8f323f .elementskit-btn:hover {
+	color: #fff !important;
+	border-color: var(--mdb-gold-bright) !important;
+	background: transparent !important;
+}
+.elementor-element-a8f323f .elementskit-btn:hover::after { transform: translateX(0.25em); }
+
+/* Mobile : la carte horizontale repasse en vertical (image au-dessus). */
+@media (max-width: 767px) {
+	.elementor-element-a8f323f .elementskit-post-image-card,
+	.elementor-element-a8f323f .post-items > [class*="col-"]:nth-child(even) .elementskit-post-image-card {
+		flex-direction: column !important;
+	}
+	.elementor-element-a8f323f .elementskit-entry-header {
+		flex: 0 0 auto !important;
+		max-width: 100% !important;
+	}
+	.elementor-element-a8f323f .elementskit-entry-thumb {
+		min-height: 0 !important;
+		aspect-ratio: 4 / 3;
+	}
 }
 
 /* --- 7170bb4c « Nos Univers » : section navy, cartes arche --------- */
@@ -1106,4 +1289,197 @@ body.elementor-editor-active .mdb-sticky-cta {
 	height: 1px;
 	background: var(--mdb-gold);
 	opacity: 0.7;
+}
+
+/* =========================================================
+   FOOTER (refonte concept) — template Elementor 108363
+   4 colonnes : Marque · La Maison · Privé & Événements · Contact
+   + barre légale.
+   NB : Elementor n'émet PAS les _css_classes posées sur les CONTAINERS
+   (mdb-footer/mdb-foot-top/col), mais les émet sur les WIDGETS. On scope
+   donc au wrapper stable .elementor-108363 et on cible la structure
+   .e-con pour la grille ; les classes widget (.mdb-foot-*) restent valides.
+   ========================================================= */
+.elementor.elementor-108363 {
+	background: var(--mdb-navy-deep) !important;
+	color: var(--mdb-cream) !important;
+	padding: clamp(3.5rem, 7vw, 6rem) var(--mdb-gutter) clamp(1.5rem, 3vw, 2.5rem) !important;
+}
+/* Structure réelle :
+   .elementor-108363 > .e-con(full) > [ .e-con(boxed)=rangée haut, .e-con(boxed)=bas ]
+   La rangée du haut contient un .e-con-inner avec 4 colonnes (.e-con). */
+.elementor-108363 > .e-con > .e-con:first-child > .e-con-inner {
+	max-width: var(--mdb-wrap-max) !important;
+	margin-inline: auto !important;
+	display: grid !important;
+	grid-template-columns: 1.6fr 1fr 1fr 1fr !important;
+	gap: clamp(2rem, 5vw, 4.5rem) !important;
+	align-items: start !important;
+}
+/* Chaque colonne (conteneur enfant de la grille) en pile verticale. */
+.elementor-108363 > .e-con > .e-con:first-child > .e-con-inner > .e-con {
+	display: flex !important;
+	flex-direction: column !important;
+	width: 100% !important;
+}
+/* Barre légale : la 2e rangée (.e-con-inner) prend la largeur max + filet haut. */
+.elementor-108363 > .e-con > .e-con:last-child > .e-con-inner {
+	max-width: var(--mdb-wrap-max) !important;
+	margin-inline: auto !important;
+}
+
+/* --- Colonne marque --- */
+.elementor-108363 .mdb-foot-logo { text-align: left !important; }
+.elementor-108363 .mdb-foot-logo .elementor-widget-container { text-align: left !important; }
+.elementor-108363 .mdb-foot-logo img {
+	width: auto !important;
+	max-width: 210px !important;
+	height: auto !important;
+	margin: 0 0 1.5rem 0 !important;
+}
+.elementor-108363 .mdb-foot-tagline p {
+	font-family: var(--mdb-font-display) !important;
+	font-style: italic !important;
+	font-size: clamp(1.05rem, 1.6vw, 1.3rem) !important;
+	line-height: 1.5 !important;
+	color: var(--mdb-cream) !important;
+	opacity: 0.92;
+	margin: 0 0 1.5rem !important;
+	max-width: 30ch;
+}
+.elementor-108363 .mdb-foot-address p {
+	font-family: var(--mdb-font-body) !important;
+	font-size: 0.98rem !important;
+	line-height: 1.7 !important;
+	color: var(--mdb-cream) !important;
+	opacity: 0.75;
+	margin: 0 !important;
+}
+
+/* Icônes réseaux sous l'adresse : filet or discret, sobre. */
+.elementor-108363 .mdb-foot-social { margin-top: 1.5rem !important; }
+.elementor-108363 .mdb-foot-social .elementor-social-icons-wrapper {
+	display: flex !important;
+	justify-content: flex-start !important;
+	gap: 0.75rem !important;
+}
+.elementor-108363 .mdb-foot-social .elementor-icon.elementor-social-icon {
+	background-color: transparent !important;
+	border: 1px solid var(--mdb-rule) !important;
+	color: var(--mdb-cream) !important;
+	width: 40px !important;
+	height: 40px !important;
+	border-radius: 0 !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	font-size: 0.95rem !important;
+	transition: color 0.3s var(--mdb-ease), border-color 0.3s var(--mdb-ease), background-color 0.3s var(--mdb-ease) !important;
+}
+.elementor-108363 .mdb-foot-social .elementor-icon.elementor-social-icon:hover {
+	color: var(--mdb-navy-deep) !important;
+	background-color: var(--mdb-gold) !important;
+	border-color: var(--mdb-gold) !important;
+}
+.elementor-108363 .mdb-foot-social .elementor-icon.elementor-social-icon i { color: inherit !important; }
+
+/* --- Eyebrows de colonne (Tenor, or, espacé) --- */
+.elementor-108363 .mdb-foot-eyebrow .elementor-heading-title,
+.elementor-108363 .mdb-foot-eyebrow {
+	font-family: var(--mdb-font-eyebrow) !important;
+	font-size: 0.82rem !important;
+	font-weight: 400 !important;
+	letter-spacing: 0.28em !important;
+	text-transform: uppercase !important;
+	color: var(--mdb-gold) !important;
+	margin: 0 0 1.75rem !important;
+}
+
+/* --- Listes de liens --- */
+.elementor-108363 .mdb-foot-links {
+	list-style: none !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+.elementor-108363 .mdb-foot-links li { margin: 0 0 0.95rem !important; }
+.elementor-108363 .mdb-foot-links li:last-child { margin-bottom: 0 !important; }
+.elementor-108363 .mdb-foot-links a {
+	font-family: var(--mdb-font-body) !important;
+	font-size: 1.02rem !important;
+	color: var(--mdb-cream) !important;
+	opacity: 0.85;
+	text-decoration: none !important;
+	transition: color 0.3s var(--mdb-ease), opacity 0.3s var(--mdb-ease);
+}
+.elementor-108363 .mdb-foot-links a:hover { color: var(--mdb-gold-bright) !important; opacity: 1; }
+
+/* --- Colonne contact --- */
+.elementor-108363 .mdb-foot-sub {
+	font-family: var(--mdb-font-eyebrow) !important;
+	font-size: 0.72rem !important;
+	letter-spacing: 0.24em !important;
+	text-transform: uppercase !important;
+	color: var(--mdb-gold) !important;
+	opacity: 0.85;
+	margin: 0 0 0.5rem !important;
+}
+.elementor-108363 .mdb-foot-contact,
+.elementor-108363 .mdb-foot-hours { margin-bottom: 1.5rem !important; }
+.elementor-108363 .mdb-foot-contact p:not(.mdb-foot-sub),
+.elementor-108363 .mdb-foot-hours p:not(.mdb-foot-sub) {
+	font-family: var(--mdb-font-body) !important;
+	font-size: 1.02rem !important;
+	line-height: 1.7 !important;
+	color: var(--mdb-cream) !important;
+	opacity: 0.9;
+	margin: 0 0 1rem !important;
+}
+.elementor-108363 .mdb-foot-contact a {
+	color: var(--mdb-cream) !important;
+	text-decoration: none !important;
+	transition: color 0.3s var(--mdb-ease);
+}
+.elementor-108363 .mdb-foot-contact a:hover { color: var(--mdb-gold-bright) !important; }
+
+/* --- Barre légale --- */
+.elementor-108363 .mdb-foot-legal-wrap {
+	max-width: var(--mdb-wrap-max) !important;
+	margin: clamp(2.5rem, 5vw, 4rem) auto 0 !important;
+	padding-top: 1.75rem !important;
+	border-top: 1px solid var(--mdb-rule) !important;
+}
+.elementor-108363 .mdb-foot-legal {
+	display: flex !important;
+	justify-content: space-between !important;
+	align-items: center !important;
+	flex-wrap: wrap !important;
+	gap: 1rem !important;
+	font-family: var(--mdb-font-eyebrow) !important;
+	font-size: 0.72rem !important;
+	letter-spacing: 0.18em !important;
+	text-transform: uppercase !important;
+	color: var(--mdb-cream) !important;
+}
+.elementor-108363 .mdb-foot-legal > span:first-child { opacity: 0.6; }
+.elementor-108363 .mdb-foot-legal-links {
+	display: flex !important;
+	gap: clamp(1rem, 3vw, 2.5rem) !important;
+	flex-wrap: wrap;
+}
+.elementor-108363 .mdb-foot-legal-links a {
+	color: var(--mdb-cream) !important;
+	opacity: 0.7;
+	text-decoration: none !important;
+	transition: color 0.3s var(--mdb-ease), opacity 0.3s var(--mdb-ease);
+}
+.elementor-108363 .mdb-foot-legal-links a:hover { color: var(--mdb-gold-bright) !important; opacity: 1; }
+
+/* --- Responsive --- */
+@media (max-width: 1024px) {
+	.elementor-108363 .mdb-foot-top { grid-template-columns: 1fr 1fr !important; gap: 2.5rem !important; }
+	.elementor-108363 .mdb-foot-col--brand { grid-column: 1 / -1 !important; }
+}
+@media (max-width: 600px) {
+	.elementor-108363 .mdb-foot-top { grid-template-columns: 1fr !important; }
+	.elementor-108363 .mdb-foot-legal { flex-direction: column !important; align-items: flex-start !important; }
 }
