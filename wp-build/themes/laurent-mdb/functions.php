@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'MDB_THEME_VERSION', '0.8.7' );
+define( 'MDB_THEME_VERSION', '0.9.6' );
 define( 'MDB_THEME_DIR', get_stylesheet_directory() );
 define( 'MDB_THEME_URI', get_stylesheet_directory_uri() );
 
@@ -510,6 +510,24 @@ add_filter( 'mdb_reservation_url', function ( $url ) {
 	}
 	return $url;
 } );
+
+/**
+ * Localise en français les chaînes anglaises codées en dur du widget
+ * événements ECTBE (plugin events-widgets-for-elementor-and-the-events-calendar).
+ * Le site est en fr_FR (langue par défaut) mais le plugin n'embarque pas de
+ * traduction FR pour ces libellés → ils s'affichaient en anglais sur la home FR
+ * (« Find out more », « All day »). La version EN reste gérée par TranslatePress.
+ */
+add_filter( 'gettext_events-widgets-for-elementor-and-the-events-calendar', function ( $translated, $text ) {
+	if ( mdb_is_en() ) {
+		return $translated; // laisser TRP gérer l'anglais
+	}
+	$fr = array(
+		'Find out more' => 'En savoir plus',
+		'All day'       => 'Toute la journée',
+	);
+	return $fr[ $text ] ?? $translated;
+}, 10, 2 );
 
 /**
  * Hook réservé pour les corrections de hiérarchie de titres (point #3 du brief).

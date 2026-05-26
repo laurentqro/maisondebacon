@@ -731,3 +731,379 @@ body.elementor-editor-active .mdb-sticky-cta {
 			linear-gradient(180deg, rgba(9,26,45,0.55) 0%, rgba(9,26,45,0.30) 45%, rgba(9,26,45,0.66) 100%);
 	}
 }
+
+/* =========================================================
+   HOME — refonte des sections sous le hero (esprit concept)
+   Scellé par ID de section Elementor. Restyle CSS uniquement :
+   typographie, eyebrows, filets héraldiques, rythme de padding,
+   alternance navy/cream, traitements images & CTA. Le contenu et la
+   structure Elementor restent inchangés (réversible).
+
+   Sections (ordre) :
+     7bacf566  « Le renouveau »      -> cream, intro éditoriale
+     337ce1e   « Prochains événements» -> navy-deep, strip sombre
+     a8f323f   cartes promo (RS/recrutement) -> cream
+     7170bb4c  « Nos Univers »        -> navy, cartes arche
+     611a8b9a  « Bon Cadeau »         -> cream
+   ========================================================= */
+
+/* --- Helpers communs : rythme de section + titres ------------------- */
+.elementor-element-7bacf566,
+.elementor-element-337ce1e,
+.elementor-element-a8f323f,
+.elementor-element-7170bb4c,
+.elementor-element-611a8b9a {
+	padding-block: clamp(3.5rem, 8vw, 7rem) !important;
+	position: relative;
+}
+
+/* Titres de section : Cormorant, taille éditoriale, interligne serré. */
+.elementor-element-7bacf566 .elementor-widget-heading .elementor-heading-title,
+.elementor-element-337ce1e .elementor-widget-heading .elementor-heading-title,
+.elementor-element-7170bb4c .elementor-widget-heading .elementor-heading-title,
+.elementor-element-611a8b9a .elementor-widget-heading .elementor-heading-title {
+	font-family: var(--mdb-font-display);
+	font-weight: 400;
+	line-height: 1.02;
+	letter-spacing: -0.012em;
+}
+
+/* CTA façon concept : bouton plein or, angles droits, label espacé.
+   On cible les boutons Elementor de ces sections. */
+.elementor-element-7bacf566 .elementor-button,
+.elementor-element-337ce1e .elementor-button,
+.elementor-element-7170bb4c .elementor-button,
+.elementor-element-611a8b9a .elementor-button {
+	border-radius: 0 !important;
+	font-family: var(--mdb-font-eyebrow);
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	font-size: 0.72rem;
+	transition: background 0.4s var(--mdb-ease), color 0.4s var(--mdb-ease), border-color 0.4s var(--mdb-ease);
+}
+
+/* --- 7bacf566 « Le renouveau » : intro crème éditoriale ------------- */
+.elementor-element-7bacf566 {
+	background: var(--mdb-cream) !important;
+}
+.elementor-element-7bacf566 .elementor-heading-title {
+	color: var(--mdb-navy) !important;
+	font-size: var(--mdb-step-4) !important;
+	max-width: 16ch;
+}
+/* Eyebrow Tenor Sans au-dessus du titre via ::before. */
+.elementor-element-7bacf566 .elementor-widget-heading:first-of-type .elementor-heading-title::before {
+	content: "Notre histoire";
+	display: block;
+	font-family: var(--mdb-font-eyebrow);
+	font-size: var(--mdb-step--1);
+	letter-spacing: 0.34em;
+	text-transform: uppercase;
+	color: var(--mdb-gold-deep);
+	margin-bottom: 1.1rem;
+}
+.elementor-element-7bacf566 .elementor-widget-text-editor {
+	color: rgba(20, 32, 44, 0.86) !important;
+	font-size: var(--mdb-step-0);
+	line-height: 1.65;
+	max-width: 54ch;
+}
+.elementor-element-7bacf566 .elementor-widget-text-editor strong { color: var(--mdb-gold-deep); }
+/* Le toggle « En Savoir Plus » : lien sobre souligné or, pas de boîte rose. */
+.elementor-element-7bacf566 .elementor-toggle-title,
+.elementor-element-7bacf566 .elementor-tab-title {
+	font-family: var(--mdb-font-eyebrow) !important;
+	font-size: 0.72rem !important;
+	letter-spacing: 0.24em !important;
+	text-transform: uppercase !important;
+	color: var(--mdb-gold-deep) !important;
+}
+
+/* --- 337ce1e « Prochains événements » : strip navy ------------------ */
+/* Le fond navy doit couvrir la section ET son conteneur interne / overlay :
+   selon le cas Elementor peint le fond sur .e-con-inner ou via un overlay, ce
+   qui laissait apparaître un gris. On force le navy sur les trois. */
+.elementor-element-337ce1e,
+.elementor-element-337ce1e > .e-con-inner,
+.elementor-element-337ce1e > .elementor-background-overlay {
+	background: var(--mdb-navy-deep) !important;
+	background-color: var(--mdb-navy-deep) !important;
+	background-image: none !important;
+}
+/* Un ::before plein peint la section en BLANC (défaut prod : section blanche).
+   Il recouvrait le navy → rendu grisâtre. On le neutralise. */
+.elementor-element-337ce1e::before {
+	background: transparent !important;
+	background-color: transparent !important;
+	background-image: none !important;
+}
+.elementor-element-337ce1e {
+	color: var(--mdb-cream) !important;
+}
+.elementor-element-337ce1e .elementor-heading-title {
+	font-family: var(--mdb-font-display) !important;
+	font-weight: 400 !important;
+	font-size: var(--mdb-step-4) !important;
+	letter-spacing: -0.01em !important;
+	text-transform: none !important;
+	color: var(--mdb-cream) !important;
+	text-align: center;
+}
+/* Texte/lignes d'événements lisibles sur navy. */
+.elementor-element-337ce1e,
+.elementor-element-337ce1e p,
+.elementor-element-337ce1e a:not(.elementor-button),
+.elementor-element-337ce1e span,
+.elementor-element-337ce1e .tribe-events-calendar-list__event-title,
+.elementor-element-337ce1e h3 {
+	color: var(--mdb-cream);
+}
+.elementor-element-337ce1e a:not(.elementor-button):hover { color: var(--mdb-gold-bright); }
+/* La date en exergue passe en or italique Cormorant. */
+.elementor-element-337ce1e .tribe-events-calendar-list__event-date-tag,
+.elementor-element-337ce1e .tribe-event-date-start {
+	color: var(--mdb-gold-bright) !important;
+}
+.elementor-element-337ce1e .elementor-button {
+	background: var(--mdb-gold) !important;
+	color: var(--mdb-navy-deep) !important;
+	border-color: var(--mdb-gold) !important;
+}
+.elementor-element-337ce1e .elementor-button:hover {
+	background: var(--mdb-gold-bright) !important;
+	border-color: var(--mdb-gold-bright) !important;
+}
+/* ====================================================================
+   AGENDA ÉVÉNEMENTS (ElementsKit .ectbe-*) — refonte éditoriale.
+   Structure réelle d'une ligne :
+     .ectbe-inner-wrapper.ectbe-simple-event   (flex row)
+       .ectbe-date-area      → jour / mois / année empilés
+       .ectbe-content-box     → titre / heure / description / coût
+       .ectbe-evt-more-box    → lien « Find out more » (était un bloc BLANC)
+   On compose une liste « agenda d'hôtel » sur le navy : grand chiffre or
+   Cormorant, libellés Tenor, filets or, lien souligné — pas de blocs blancs. */
+
+/* Conteneur : pas de fond, espace généreux. */
+.elementor-element-337ce1e .ectbe-wrapper,
+.elementor-element-337ce1e .ectbe-content-box,
+.elementor-element-337ce1e .ectbe-evt-more-box {
+	background: transparent !important;
+	box-shadow: none !important;
+	border: 0 !important;
+}
+
+/* Une ligne d'événement = bloc aéré, séparé par un filet or fin. */
+.elementor-element-337ce1e .ectbe-inner-wrapper {
+	display: flex !important;
+	align-items: flex-start !important;
+	gap: clamp(1.5rem, 4vw, 3.5rem) !important;
+	padding: clamp(1.75rem, 4vw, 2.75rem) 0 !important;
+	border-bottom: 1px solid var(--mdb-rule) !important;
+	transition: opacity 0.4s var(--mdb-ease);
+}
+.elementor-element-337ce1e .ectbe-inner-wrapper:first-child { border-top: 1px solid var(--mdb-rule) !important; }
+.elementor-element-337ce1e .ectbe-inner-wrapper:hover { opacity: 0.96; }
+
+/* --- Colonne DATE : grand jour or italique Cormorant, mois/année Tenor --- */
+.elementor-element-337ce1e .ectbe-date-area {
+	flex: 0 0 auto !important;
+	width: clamp(70px, 9vw, 104px) !important;
+	text-align: center !important;
+	padding-top: 0.35rem;
+	line-height: 1;
+}
+.elementor-element-337ce1e .ectbe-ev-day {
+	display: block !important;
+	font-family: var(--mdb-font-display) !important;
+	font-style: italic !important;
+	font-weight: 400 !important;
+	font-size: clamp(2.6rem, 5vw, 3.6rem) !important;
+	color: var(--mdb-gold-bright) !important;
+	letter-spacing: -0.01em;
+}
+.elementor-element-337ce1e .ectbe-ev-mo,
+.elementor-element-337ce1e .ectbe-ev-yr {
+	display: block !important;
+	font-family: var(--mdb-font-eyebrow) !important;
+	font-size: var(--mdb-step--1) !important;
+	letter-spacing: 0.22em !important;
+	text-transform: uppercase !important;
+	color: var(--mdb-cream) !important;
+	opacity: 0.7;
+	margin-top: 0.35rem;
+}
+.elementor-element-337ce1e .ectbe-ev-yr { opacity: 0.5; }
+
+/* --- Colonne CONTENU --- */
+.elementor-element-337ce1e .ectbe-content-box {
+	flex: 1 1 auto !important;
+	display: block !important;
+	padding: 0 !important;
+}
+.elementor-element-337ce1e .ectbe-evt-title { margin: 0 0 0.55rem !important; }
+.elementor-element-337ce1e .ectbe-evt-title a,
+.elementor-element-337ce1e .ectbe-evt-url {
+	font-family: var(--mdb-font-display) !important;
+	font-weight: 400 !important;
+	font-size: clamp(1.35rem, 2.4vw, 1.85rem) !important;
+	line-height: 1.18 !important;
+	letter-spacing: -0.005em !important;
+	color: var(--mdb-gold-bright) !important;
+	text-transform: none !important;
+	transition: color 0.3s var(--mdb-ease);
+}
+.elementor-element-337ce1e .ectbe-evt-title a:hover { color: #fff !important; }
+
+/* Heure : petite ligne Tenor, icône or. */
+.elementor-element-337ce1e .ectbe-evt-time {
+	font-family: var(--mdb-font-eyebrow) !important;
+	font-size: var(--mdb-step--1) !important;
+	letter-spacing: 0.12em !important;
+	text-transform: uppercase !important;
+	color: var(--mdb-cream) !important;
+	opacity: 0.7;
+	margin: 0 0 0.85rem !important;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+.elementor-element-337ce1e .ectbe-evt-time i,
+.elementor-element-337ce1e .ectbe-icon-clock { color: var(--mdb-gold) !important; }
+
+.elementor-element-337ce1e .ectbe-evt-description,
+.elementor-element-337ce1e .ectbe-evt-description p {
+	font-family: var(--mdb-font-body) !important;
+	font-size: 1rem !important;
+	line-height: 1.65 !important;
+	color: var(--mdb-cream) !important;
+	opacity: 0.82;
+	max-width: 60ch;
+	margin: 0 !important;
+}
+.elementor-element-337ce1e .ectbe-evt-cost { color: var(--mdb-cream) !important; opacity: 0.7; margin-top: 0.5rem !important; }
+
+/* --- Colonne « Find out more » : plus de bloc blanc, lien or souligné --- */
+.elementor-element-337ce1e .ectbe-evt-more-box {
+	flex: 0 0 auto !important;
+	align-self: center !important;
+	width: auto !important;
+	min-width: 0 !important;
+	padding: 0 !important;
+	display: flex !important;
+	align-items: center !important;
+}
+.elementor-element-337ce1e .ectbe-evt-read-more {
+	font-family: var(--mdb-font-eyebrow) !important;
+	font-size: var(--mdb-step--1) !important;
+	letter-spacing: 0.18em !important;
+	text-transform: uppercase !important;
+	color: var(--mdb-gold-bright) !important;
+	white-space: nowrap !important;
+	padding-bottom: 0.25rem !important;
+	border-bottom: 1px solid var(--mdb-rule) !important;
+	transition: color 0.3s var(--mdb-ease), border-color 0.3s var(--mdb-ease);
+}
+.elementor-element-337ce1e .ectbe-evt-read-more::after { content: " \2192"; }
+.elementor-element-337ce1e .ectbe-evt-read-more:hover {
+	color: #fff !important;
+	border-color: var(--mdb-gold-bright) !important;
+}
+
+/* Mobile : la colonne « Find out more » passe sous le contenu, date à gauche. */
+@media (max-width: 767px) {
+	.elementor-element-337ce1e .ectbe-inner-wrapper { flex-wrap: wrap !important; gap: 1rem 1.25rem !important; }
+	.elementor-element-337ce1e .ectbe-date-area { width: auto !important; display: flex !important; align-items: baseline; gap: 0.5rem; text-align: left !important; }
+	.elementor-element-337ce1e .ectbe-ev-day { font-size: 2.2rem !important; }
+	.elementor-element-337ce1e .ectbe-ev-mo, .elementor-element-337ce1e .ectbe-ev-yr { margin-top: 0 !important; }
+	.elementor-element-337ce1e .ectbe-content-box { flex: 1 1 100% !important; }
+	.elementor-element-337ce1e .ectbe-evt-more-box { flex: 0 0 auto !important; align-self: flex-start !important; }
+}
+
+/* --- a8f323f cartes promo (recrutement / RSE) : fond crème ---------- */
+.elementor-element-a8f323f {
+	background: var(--mdb-cream) !important;
+}
+
+/* --- 7170bb4c « Nos Univers » : section navy, cartes arche --------- */
+.elementor-element-7170bb4c {
+	background: var(--mdb-navy) !important;
+	color: var(--mdb-cream) !important;
+}
+.elementor-element-7170bb4c .elementor-widget-heading:first-of-type .elementor-heading-title {
+	color: var(--mdb-cream) !important;
+	font-size: var(--mdb-step-4) !important;
+	text-align: center;
+}
+/* Sous-titres des cartes (RESTAURANT DE BACON, etc.) : eyebrow doré. */
+.elementor-element-7170bb4c .elementor-widget-heading:not(:first-of-type) .elementor-heading-title {
+	font-family: var(--mdb-font-eyebrow) !important;
+	font-size: 0.82rem !important;
+	letter-spacing: 0.28em !important;
+	text-transform: uppercase !important;
+	color: var(--mdb-gold-bright) !important;
+}
+/* Images des univers : léger liseré + coin arrondi haut, hover zoom. */
+.elementor-element-7170bb4c .elementor-widget-image img {
+	border: 1px solid rgba(177, 137, 84, 0.35);
+	transition: transform 1.2s var(--mdb-ease), filter 0.6s var(--mdb-ease);
+	filter: saturate(0.95) brightness(0.9);
+}
+.elementor-element-7170bb4c .elementor-widget-image:hover img {
+	transform: scale(1.03);
+	filter: saturate(1) brightness(1);
+}
+/* CTA des univers : ghost crème -> se remplit d'or au survol. */
+.elementor-element-7170bb4c .elementor-button {
+	background: transparent !important;
+	color: var(--mdb-cream) !important;
+	border: 1px solid rgba(244, 236, 220, 0.45) !important;
+}
+.elementor-element-7170bb4c .elementor-button:hover {
+	background: var(--mdb-gold) !important;
+	color: var(--mdb-navy-deep) !important;
+	border-color: var(--mdb-gold) !important;
+}
+
+/* --- 611a8b9a « Bon Cadeau » : fond crème, déjà proche concept ------ */
+.elementor-element-611a8b9a {
+	background: var(--mdb-cream) !important;
+}
+.elementor-element-611a8b9a .elementor-heading-title {
+	color: var(--mdb-navy) !important;
+	font-size: var(--mdb-step-3) !important;
+}
+.elementor-element-611a8b9a .elementor-widget-heading .elementor-heading-title::before {
+	content: "Offrir";
+	display: block;
+	font-family: var(--mdb-font-eyebrow);
+	font-size: var(--mdb-step--1);
+	letter-spacing: 0.34em;
+	text-transform: uppercase;
+	color: var(--mdb-gold-deep);
+	margin-bottom: 0.8rem;
+}
+.elementor-element-611a8b9a .elementor-button {
+	background: var(--mdb-navy) !important;
+	color: var(--mdb-cream) !important;
+	border-color: var(--mdb-navy) !important;
+}
+.elementor-element-611a8b9a .elementor-button:hover {
+	background: var(--mdb-gold) !important;
+	color: var(--mdb-navy-deep) !important;
+	border-color: var(--mdb-gold) !important;
+}
+
+/* Filet héraldique entre deux sections claires/sombres : fine ligne or
+   centrée en tête des sections crème qui suivent une section sombre. */
+.elementor-element-a8f323f::before,
+.elementor-element-611a8b9a::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 64px;
+	height: 1px;
+	background: var(--mdb-gold);
+	opacity: 0.7;
+}
