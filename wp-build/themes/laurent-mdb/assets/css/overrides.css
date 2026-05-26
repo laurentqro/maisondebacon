@@ -190,6 +190,7 @@ body.mdb-scrolled .mdb-header {
 	transition: opacity 0.3s var(--mdb-ease);
 }
 .mdb-panel__close:hover { opacity: 1; }
+.mdb-panel__lang { font-size: 0.95rem; gap: 0.6rem; }
 .mdb-panel__lang .mdb-lang__item { color: rgba(20, 32, 44, 0.55); }
 .mdb-panel__lang .mdb-lang__item.is-active { color: var(--mdb-gold-deep); }
 .mdb-panel__lang .mdb-lang__sep { color: var(--mdb-gold-deep); }
@@ -227,25 +228,55 @@ body.mdb-scrolled .mdb-header {
 	opacity: 0.6;
 }
 
-.mdb-panel__foot {
-	margin-top: auto;
-	padding-top: 1.6rem;
+/* Liens secondaires (Carte cadeau, Nous trouver) — juste sous le menu, séparés
+   par un filet, comme la référence Terre Blanche. Pas collés au bas du panneau. */
+.mdb-panel__secondary {
+	list-style: none;
+	margin: 1.6rem 0 1.6rem;
+	padding: 1.6rem 0 0;
+	border-top: 1px solid var(--mdb-rule);
 	display: flex;
 	flex-direction: column;
-	gap: 0.7rem;
+	gap: 0.55rem;
 }
-/* Bouton fantôme du pied : sur fond crème, on inverse les tons (la variante
-   .mdb-btn--ghost par défaut est pensée pour le fond navy de la barre). */
-.mdb-panel__foot .mdb-btn--ghost {
+.mdb-panel__secondary a {
+	text-decoration: none;
 	color: var(--mdb-navy-deep);
-	border-color: var(--mdb-rule);
+	font-family: var(--mdb-font-display);
+	font-size: 1.15rem;
+	transition: color 0.3s var(--mdb-ease);
 }
-.mdb-panel__foot .mdb-btn--ghost:hover {
-	background: var(--mdb-navy-deep);
-	color: var(--mdb-cream);
-	border-color: var(--mdb-navy-deep);
+.mdb-panel__secondary a:hover { color: var(--mdb-gold-deep); }
+
+/* Bloc CTA + réseaux — directement sous les liens secondaires, séparé par un
+   filet. Pas de margin-top: auto : on ne le pousse PAS au bas du panneau. */
+.mdb-panel__foot {
+	padding-top: 1.6rem;
+	border-top: 1px solid var(--mdb-rule);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1.3rem;
 }
-.mdb-panel__foot .mdb-btn--ghost:hover .mdb-btn__dot { background: var(--mdb-gold); }
+.mdb-panel__foot .mdb-btn--block { max-width: 320px; border-radius: 999px; }
+
+.mdb-panel__social {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	gap: 1.1rem;
+	justify-content: center;
+}
+.mdb-panel__social a {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--mdb-navy-deep);
+	opacity: 0.75;
+	transition: opacity 0.3s var(--mdb-ease), color 0.3s var(--mdb-ease);
+}
+.mdb-panel__social a:hover { opacity: 1; color: var(--mdb-gold-deep); }
 
 /* Sous-panneau (droite) — blanc, aperçu de la rubrique active.
    Glisse de la gauche vers la droite quand une rubrique est cliquée. */

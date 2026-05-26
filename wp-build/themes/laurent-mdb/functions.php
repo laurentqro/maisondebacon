@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'MDB_THEME_VERSION', '0.5.4' );
+define( 'MDB_THEME_VERSION', '0.5.8' );
 define( 'MDB_THEME_DIR', get_stylesheet_directory() );
 define( 'MDB_THEME_URI', get_stylesheet_directory_uri() );
 
@@ -137,6 +137,7 @@ function mdb_t( $fr ) {
 		'Menu'                       => 'Menu',
 		'Réserver'                   => 'Book',
 		'Carte cadeau'               => 'Gift card',
+		'Nous trouver'               => 'Find us',
 	);
 	return isset( $en[ $fr ] ) ? $en[ $fr ] : $fr;
 }
@@ -222,6 +223,7 @@ add_action( 'wp_footer', function () {
 
 	$menu        = mdb_megamenu_data();
 	$reserve_url = apply_filters( 'mdb_reservation_url', 'https://bookings.zenchef.com/results?rid=354476&pid=1001' );
+	$map_url     = 'https://www.google.com/maps/place/MAISON+DE+BACON/@43.5724048,7.1259668,4456m/data=!3m1!1e3!4m6!3m5!1s0x12cc2ad378559aab:0x90769c5d8f4a5c19!8m2!3d43.5695936!4d7.1391162!16s%2Fg%2F1tm1mnnz';
 	?>
 	<div class="mdb-panel" id="mdb-panel" aria-hidden="true">
 		<div class="mdb-panel__overlay" data-mdb-menu-close></div>
@@ -256,9 +258,25 @@ add_action( 'wp_footer', function () {
 				<?php endforeach; ?>
 			</ul>
 
+			<ul class="mdb-panel__secondary">
+				<li><a href="https://maisondebacon.bonkdo.com/fr/" target="_blank" rel="noopener"><?php echo esc_html( mdb_t( 'Carte cadeau' ) ); ?></a></li>
+				<li><a href="<?php echo esc_url( $map_url ); ?>" target="_blank" rel="noopener"><?php echo esc_html( mdb_t( 'Nous trouver' ) ); ?></a></li>
+			</ul>
+
 			<div class="mdb-panel__foot">
-				<a class="mdb-btn mdb-btn--ghost mdb-btn--block" href="https://maisondebacon.bonkdo.com/fr/" target="_blank" rel="noopener"><span class="mdb-btn__dot" aria-hidden="true"></span><?php echo esc_html( mdb_t( 'Carte cadeau' ) ); ?></a>
 				<a class="mdb-btn mdb-btn--solid mdb-btn--block" href="<?php echo esc_url( $reserve_url ); ?>" target="_blank" rel="noopener"><?php echo esc_html( mdb_t( 'Réserver' ) ); ?></a>
+				<ul class="mdb-panel__social" aria-label="Réseaux sociaux">
+					<li>
+						<a href="https://www.facebook.com/maisondebacon" target="_blank" rel="noopener" aria-label="Facebook">
+							<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07c0 6.02 4.39 11.02 10.13 11.93v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.09 24 18.09 24 12.07Z"/></svg>
+						</a>
+					</li>
+					<li>
+						<a href="https://www.instagram.com/maisondebacon/" target="_blank" rel="noopener" aria-label="Instagram">
+							<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.72 3.72 0 0 1-1.38-.9 3.72 3.72 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16ZM12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.31-1.46.72-2.12 1.38C1.36 2.67.95 3.34.63 4.14.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.8.72 1.47 1.38 2.13.66.66 1.33 1.07 2.12 1.38.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.88 5.88 0 0 0 2.13-1.38 5.88 5.88 0 0 0 1.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.88 5.88 0 0 0-1.38-2.12A5.88 5.88 0 0 0 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0Zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32ZM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm6.41-10.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88Z"/></svg>
+						</a>
+					</li>
+				</ul>
 			</div>
 		</aside>
 
