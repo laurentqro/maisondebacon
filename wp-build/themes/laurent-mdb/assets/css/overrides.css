@@ -1343,6 +1343,7 @@ html[lang^="en"] .elementor-element-5ba5eec4 .elementor-heading-title::before { 
 	max-width: none !important;     /* pleine largeur */
 	width: 100% !important;
 	margin: 0 !important;
+	padding: 0 !important;          /* annule le 100px hérité -> image à fond perdu */
 	align-items: stretch !important; /* image + texte = même hauteur */
 	min-height: clamp(28rem, 42vw, 40rem);
 	position: relative;
