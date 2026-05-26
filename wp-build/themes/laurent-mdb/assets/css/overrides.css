@@ -336,7 +336,7 @@ button:focus,
 	overflow-y: auto;
 	transform: translateX(-100%);
 	opacity: 0;
-	transition: transform 0.42s var(--mdb-ease), opacity 0.34s var(--mdb-ease);
+	transition: transform 0.54s var(--mdb-ease), opacity 0.44s var(--mdb-ease);
 	will-change: transform;
 }
 .mdb-panel__pane[hidden] { display: none; }

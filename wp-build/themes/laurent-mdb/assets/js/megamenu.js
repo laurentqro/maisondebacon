@@ -25,7 +25,7 @@
 	var activeSection = null;
 
 	// Durée de la transition CSS d'un volet (transform), voir overrides.css.
-	var PANE_SLIDE_MS = 420;
+	var PANE_SLIDE_MS = 540;
 	var leaveTimer = null;
 
 	// Marque la rubrique active dans la colonne de gauche (sans toucher aux volets).
