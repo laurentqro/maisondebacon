@@ -1222,23 +1222,20 @@ body.elementor-editor-active .mdb-sticky-cta {
 	text-align: center;
 }
 
-/* Les 3 cartes = conteneurs frères ; hauteur égale, contenu réparti pour
-   que les CTA s'alignent en bas quelle que soit la longueur du titre. */
+/* Les 3 cartes sont alignées PAR LE BAS (align-self: flex-end) : titres + CTA
+   sur la même ligne de base, et la différence de hauteur d'image (l'arche
+   Roof Top, générée, est très légèrement plus haute) est absorbée EN HAUT,
+   invisible sur le fond navy. Le titre « Nos Univers » (autre frère de la
+   rangée) n'est PAS ciblé -> on n'utilise pas align-items sur le parent. */
 .elementor-element-7a5faa3b,
 .elementor-element-6520f472,
 .elementor-element-4c990681 {
 	display: flex !important;
 	flex-direction: column !important;
 	align-items: center !important;
-	height: 100% !important;
+	align-self: flex-end !important;
+	height: auto !important;
 	text-align: center;
-}
-/* Le bouton (dernier enfant) est poussé en bas -> CTA alignés. */
-.elementor-element-7a5faa3b > .elementor-widget-button,
-.elementor-element-6520f472 > .elementor-widget-button,
-.elementor-element-4c990681 > .elementor-widget-button {
-	margin-top: auto !important;
-	padding-top: 1.6rem;
 }
 
 /* Arches : gabarit IDENTIQUE pour les 3 (même ratio, même arrondi,
