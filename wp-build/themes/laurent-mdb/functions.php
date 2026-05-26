@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'MDB_THEME_VERSION', '0.6.6' );
+define( 'MDB_THEME_VERSION', '0.7.6' );
 define( 'MDB_THEME_DIR', get_stylesheet_directory() );
 define( 'MDB_THEME_URI', get_stylesheet_directory_uri() );
 
@@ -98,6 +98,38 @@ function mdb_is_en() {
 }
 
 /**
+ * URLs FR/EN de la PAGE COURANTE pour le sélecteur de langue du mega-menu.
+ *
+ * Demande à TranslatePress la version traduite de l'URL courante (et non
+ * l'accueil). Fallback sûr ('/' et '/en/') si TRP est absent — ainsi le
+ * sélecteur ne casse jamais, même hors contexte multilingue.
+ */
+function mdb_lang_switch_urls() {
+	$fallback = array( 'fr' => home_url( '/' ), 'en' => home_url( '/en/' ) );
+
+	if ( ! class_exists( 'TRP_Translate_Press' ) ) {
+		return $fallback;
+	}
+
+	$trp = TRP_Translate_Press::get_trp_instance();
+	if ( ! $trp ) {
+		return $fallback;
+	}
+
+	$converter = $trp->get_component( 'url_converter' );
+	if ( ! $converter || ! method_exists( $converter, 'get_url_for_language' ) ) {
+		return $fallback;
+	}
+
+	$current = $converter->cur_page_url();
+
+	return array(
+		'fr' => $converter->get_url_for_language( 'fr_FR', $current ) ?: $fallback['fr'],
+		'en' => $converter->get_url_for_language( 'en_US', $current ) ?: $fallback['en'],
+	);
+}
+
+/**
  * Traduit un libellé du chrome (nav, boutons, footer) géré par le thème.
  *
  * Le contenu éditorial des pages reste traduit par TranslatePress ; ici on ne
@@ -126,6 +158,7 @@ function mdb_t( $fr ) {
 		'Tradition Bacon'            => 'The Bacon tradition',
 		'Desserts'                   => 'Desserts',
 		'Les En-K du bar'            => "The Bar's En-K",
+		'Menu Fête des mères'        => "Mother's Day menu",
 		'Vos événements'             => 'Your events',
 		'Villa Les Roches de Bacon'  => 'Villa Les Roches de Bacon',
 		"L'Appartement de Victor"    => "L'Appartement de Victor",
@@ -139,7 +172,27 @@ function mdb_t( $fr ) {
 		'Carte cadeau'               => 'Gift card',
 		'Nous trouver'               => 'Find us',
 	);
-	return isset( $en[ $fr ] ) ? $en[ $fr ] : $fr;
+
+	// Match direct.
+	if ( isset( $en[ $fr ] ) ) {
+		return $en[ $fr ];
+	}
+
+	// Tolérance : les titres saisis dans WP (menus, pages) utilisent souvent une
+	// apostrophe typographique (’) et une casse variable (« Soir » vs « soir »).
+	// On normalise l'apostrophe puis on tente une recherche insensible à la casse
+	// pour que la traduction tienne quel que soit le libellé exact de l'éditrice.
+	$norm = str_replace( array( '’', '&rsquo;' ), "'", $fr );
+	if ( isset( $en[ $norm ] ) ) {
+		return $en[ $norm ];
+	}
+	foreach ( $en as $key => $val ) {
+		if ( strcasecmp( $key, $norm ) === 0 ) {
+			return $val;
+		}
+	}
+
+	return $fr;
 }
 
 /**
@@ -151,6 +204,51 @@ function mdb_t( $fr ) {
  *
  * Filtrable via `mdb_megamenu` pour adaptation future (ACF, options…).
  */
+
+/**
+ * Emplacement de menu dédié au sous-panneau « La Carte » du mega-menu.
+ * L'éditrice gère les liens via Apparence → Menus (menu « Mega-menu — La Carte »),
+ * sans toucher au code. Voir mdb_megamenu_location_items().
+ */
+add_action( 'after_setup_theme', function () {
+	register_nav_menus( array(
+		'mdb_carte' => 'Mega-menu — La Carte',
+	) );
+} );
+
+/**
+ * Retourne les sous-liens (label + url) d'un emplacement de menu WordPress, au
+ * format attendu par le sous-panneau du mega-menu. Renvoie un tableau vide si
+ * aucun menu n'est assigné à l'emplacement (l'appelant utilise alors son
+ * fallback codé en dur — rien ne casse tant que l'éditrice n'a pas créé le menu).
+ *
+ * On ne prend que les items de premier niveau (le sous-panneau est plat).
+ */
+function mdb_megamenu_location_items( $location ) {
+	$locations = get_nav_menu_locations();
+	if ( empty( $locations[ $location ] ) ) {
+		return array();
+	}
+
+	$items = wp_get_nav_menu_items( $locations[ $location ] );
+	if ( empty( $items ) ) {
+		return array();
+	}
+
+	$children = array();
+	foreach ( $items as $item ) {
+		if ( (int) $item->menu_item_parent !== 0 ) {
+			continue; // on ignore la sous-hiérarchie : sous-panneau plat
+		}
+		$children[] = array(
+			'label' => $item->title,
+			'url'   => $item->url,
+		);
+	}
+
+	return $children;
+}
+
 function mdb_megamenu_data() {
 	$base = 'https://staging.maisondebacon.fr';
 
@@ -168,11 +266,14 @@ function mdb_megamenu_data() {
 		),
 		array(
 			// Hub des cartes : regroupe TOUS les menus, y compris la carte du bar.
+			// Les sous-liens proviennent du menu WordPress « Mega-menu — La Carte »
+			// (Apparence → Menus) si l'éditrice en a assigné un ; sinon on retombe
+			// sur la liste codée en dur ci-dessous.
 			'label'    => 'La Carte',
 			'url'      => $base . '/notre-carte/',
 			'eyebrow'  => 'Les saveurs',
 			'image_id' => 109101,
-			'children' => array(
+			'children' => mdb_megamenu_location_items( 'mdb_carte' ) ?: array(
 				array( 'label' => 'Notre carte', 'url' => $base . '/notre-carte/' ),
 				array( 'label' => "L'Esprit du midi", 'url' => $base . '/lesprit-du-midi/' ),
 				array( 'label' => "L'Esprit du soir", 'url' => $base . '/lesprit-du-soir/' ),
@@ -224,6 +325,10 @@ add_action( 'wp_footer', function () {
 	$menu        = mdb_megamenu_data();
 	$reserve_url = apply_filters( 'mdb_reservation_url', 'https://bookings.zenchef.com/results?rid=354476&pid=1001' );
 	$map_url     = 'https://www.google.com/maps/place/MAISON+DE+BACON/@43.5724048,7.1259668,4456m/data=!3m1!1e3!4m6!3m5!1s0x12cc2ad378559aab:0x90769c5d8f4a5c19!8m2!3d43.5695936!4d7.1391162!16s%2Fg%2F1tm1mnnz';
+
+	// Liens FR/EN : version traduite de la PAGE COURANTE (via TranslatePress),
+	// pas l'accueil. Fallback codé en dur si TRP indisponible.
+	$lang = mdb_lang_switch_urls();
 	?>
 	<div class="mdb-panel" id="mdb-panel" aria-hidden="true">
 		<div class="mdb-panel__overlay" data-mdb-menu-close></div>
@@ -234,9 +339,9 @@ add_action( 'wp_footer', function () {
 					<span aria-hidden="true">&times;</span>
 				</button>
 				<div class="mdb-lang mdb-panel__lang">
-					<a href="/" class="mdb-lang__item is-active" hreflang="fr">FR</a>
+					<a href="<?php echo esc_url( $lang['fr'] ); ?>" class="mdb-lang__item<?php echo mdb_is_en() ? '' : ' is-active'; ?>" hreflang="fr">FR</a>
 					<span class="mdb-lang__sep">·</span>
-					<a href="/en/" class="mdb-lang__item" hreflang="en">EN</a>
+					<a href="<?php echo esc_url( $lang['en'] ); ?>" class="mdb-lang__item<?php echo mdb_is_en() ? ' is-active' : ''; ?>" hreflang="en">EN</a>
 				</div>
 			</div>
 

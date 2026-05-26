@@ -71,8 +71,13 @@ body.mdb-scrolled .mdb-header {
 }
 .mdb-menu-toggle__bars span:first-child { width: 24px; }
 .mdb-menu-toggle__bars span:last-child  { width: 16px; }
+/* Au survol : seules les BARRES réagissent (la 2e s'allonge). Le TEXTE « MENU »
+   ne bouge pas — on verrouille sa couleur sur la teinte de repos car le reset
+   Hello (button:hover{color:#fff}) le passait en blanc. */
+.mdb-menu-toggle,
+.mdb-menu-toggle:hover,
+.mdb-menu-toggle:focus { color: var(--mdb-cream); }
 .mdb-menu-toggle:hover .mdb-menu-toggle__bars span:last-child { width: 24px; }
-.mdb-menu-toggle:hover { color: #fff; }
 
 /* Hello Elementor (reset.css) applique `button:hover,button:focus{
    background-color:#c36;color:#fff}` à TOUT <button> nu du site — d'où le fond
@@ -86,7 +91,9 @@ button:focus,
 [type="submit"]:hover,
 [type="submit"]:focus {
 	background-color: transparent;
-	color: inherit;
+	/* On ne touche PAS à la couleur ici : `color: inherit` forçait certains
+	   boutons (ex. toggle MENU) à hériter du #333 de leur conteneur Elementor au
+	   survol. Chaque bouton gère sa propre couleur. */
 }
 
 /* --- Boutons d'action (droite) --- */
@@ -140,9 +147,11 @@ button:focus,
 }
 .mdb-btn--block { width: 100%; justify-content: center; padding-block: 0.95rem; }
 
-/* Sur petit écran, on masque la carte cadeau et le label du MENU */
+/* Sur petit écran : on masque tous les CTA du header (Carte cadeau + Réserver)
+   et le label du MENU. Le « Réserver » est déjà présent dans le hero + le CTA
+   flottant, donc redondant dans la barre. */
 @media (max-width: 880px) {
-	.mdb-btn--ghost { display: none; }
+	.mdb-header__actions { display: none; }
 	.mdb-menu-toggle__label { display: none; }
 }
 
