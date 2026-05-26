@@ -1330,6 +1330,67 @@ html[lang^="en"] .elementor-element-5ba5eec4 .elementor-heading-title::before { 
 	border-color: var(--mdb-gold) !important;
 }
 
+/* --- Bon Cadeau : la colonne texte devient une CARTE « bon cadeau » ---
+   Cue subtil de chèque-cadeau : panneau ivoire, double filet or (cadre
+   extérieur + liseré intérieur via box-shadow inset), large padding, et une
+   micro-ligne « série » discrète sous le bouton. Centré verticalement face
+   à l'image, largeur calibrée -> supprime le vide à droite.
+   Colonnes : 7e05eb5a (image) · 7b368fcb (carte texte). */
+.elementor-element-7b368fcb {
+	display: flex !important;
+	flex-direction: column !important;
+	justify-content: center !important;
+	align-items: center !important;
+	text-align: center;
+	max-width: 30rem;
+	margin-inline: auto !important;
+	/* la carte : panneau ivoire + double filet or */
+	background:
+		linear-gradient(180deg, rgba(255, 252, 244, 0.9), rgba(247, 240, 226, 0.9)) !important;
+	border: 1px solid rgba(177, 137, 84, 0.55) !important;
+	box-shadow: inset 0 0 0 1px rgba(177, 137, 84, 0.28) !important; /* liseré intérieur */
+	border-radius: 3px !important;
+	padding: clamp(2.25rem, 4vw, 3.25rem) clamp(1.75rem, 3.5vw, 3rem) !important;
+}
+/* Eyebrow doré recentré dans la carte. */
+.elementor-element-611a8b9a .elementor-widget-heading .elementor-heading-title::before {
+	text-align: center;
+}
+.elementor-element-611a8b9a .elementor-widget-text-editor {
+	max-width: 36ch;
+	margin-inline: auto;
+}
+/* CTA rapproché du texte. */
+.elementor-element-611a8b9a .elementor-widget-button {
+	margin-top: 0.75rem !important;
+}
+.elementor-element-611a8b9a .elementor-button {
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	font-size: 0.82rem;
+	padding: 1rem 2.2rem !important;
+}
+/* Micro-ligne « série » de chèque-cadeau, sous le bouton. */
+.elementor-element-7b368fcb::after {
+	content: "BON CADEAU · MAISON DE BACON · CAP D’ANTIBES";
+	display: block;
+	margin-top: 1.75rem;
+	padding-top: 1.1rem;
+	border-top: 1px dashed rgba(177, 137, 84, 0.4); /* faux bord perforé */
+	width: 100%;
+	font-family: var(--mdb-font-eyebrow);
+	font-size: 0.6rem;
+	letter-spacing: 0.28em;
+	text-transform: uppercase;
+	color: var(--mdb-gold-deep);
+	opacity: 0.7;
+}
+/* Image : liseré or discret, façon cadre assorti à la carte. */
+.elementor-element-603f6b34 img {
+	border: 1px solid rgba(177, 137, 84, 0.4);
+	border-radius: 3px;
+}
+
 /* Filet héraldique entre deux sections claires/sombres : fine ligne or
    centrée en tête des sections crème qui suivent une section sombre. */
 .elementor-element-a8f323f::before,
