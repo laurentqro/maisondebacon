@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'MDB_THEME_VERSION', '0.4.7' );
+define( 'MDB_THEME_VERSION', '0.5.3' );
 define( 'MDB_THEME_DIR', get_stylesheet_directory() );
 define( 'MDB_THEME_URI', get_stylesheet_directory_uri() );
 
@@ -79,7 +79,7 @@ add_action( 'wp_footer', function () {
 
 	$default_url = 'https://bookings.zenchef.com/results?rid=354476&pid=1001';
 	$url         = apply_filters( 'mdb_reservation_url', $default_url );
-	$label       = apply_filters( 'mdb_reservation_label', __( 'Réserver', 'laurent-mdb' ) );
+	$label       = apply_filters( 'mdb_reservation_label', mdb_t( 'Réserver' ) );
 	?>
 	<a class="mdb-sticky-cta" href="<?php echo esc_url( $url ); ?>" target="_blank" rel="noopener" data-mdb-sticky-cta>
 		<span class="mdb-sticky-cta__label"><?php echo esc_html( $label ); ?></span>
@@ -87,6 +87,65 @@ add_action( 'wp_footer', function () {
 	</a>
 	<?php
 }, 5 );
+
+/**
+ * Le site est-il rendu en anglais ? (TranslatePress positionne la locale
+ * courante à en_US sous /en/.) Sert à traduire le « chrome » géré par le thème.
+ */
+function mdb_is_en() {
+	$loc = function_exists( 'get_locale' ) ? get_locale() : 'fr_FR';
+	return strpos( $loc, 'en' ) === 0;
+}
+
+/**
+ * Traduit un libellé du chrome (nav, boutons, footer) géré par le thème.
+ *
+ * Le contenu éditorial des pages reste traduit par TranslatePress ; ici on ne
+ * couvre QUE les chaînes générées par le code, pour éviter les soucis
+ * d'encodage (apostrophes, entités) côté dictionnaire TRP.
+ */
+function mdb_t( $fr ) {
+	if ( ! mdb_is_en() ) {
+		return $fr;
+	}
+	static $en = array(
+		// Rubriques
+		'Restaurant'                 => 'Restaurant',
+		'Roof Top'                   => 'Roof Top',
+		'Séjour'                     => 'Accommodation',
+		'La Carte'                   => 'The Menu',
+		'Événements'                 => 'Events',
+		'La Maison'                  => 'About Us',
+		// Eyebrows
+		'La table'                   => 'The table',
+		'Le bar'                     => 'The bar',
+		"L'hébergement"              => 'Accommodation',
+		'Les saveurs'                => 'Flavours',
+		'Privatisation'              => 'Private hire',
+		'Notre histoire'             => 'Our story',
+		// Sous-liens
+		'Restaurant de Bacon'        => 'Restaurant de Bacon',
+		'La tradition Bacon'         => 'The Bacon tradition',
+		"L'Esprit du midi"           => 'The Midday Spirit',
+		"L'Esprit du soir"           => 'The Evening Spirit',
+		'Le Rooftop Club Bacon'      => 'The Rooftop Club Bacon',
+		'Les En-K du bar'            => "The Bar's En-K",
+		"L'Appartement de Victor"    => "L'Appartement de Victor",
+		'Villa Les Roches de Bacon'  => 'Villa Les Roches de Bacon',
+		'Notre carte'                => 'Our menu',
+		'Desserts'                   => 'Desserts',
+		'Vos événements'             => 'Events',
+		'Votre devis événementiel'   => 'Get a quote',  // libellé du bouton discover
+		'Le Chef — Nicolas Davouze'  => 'The Chef — Nicolas Davouze',
+		'Presse'                     => 'Press',
+		'Contact'                    => 'Contact',
+		// Boutons / divers
+		'Menu'                       => 'Menu',
+		'Réserver'                   => 'Book',
+		'Carte cadeau'               => 'Gift card',
+	);
+	return isset( $en[ $fr ] ) ? $en[ $fr ] : $fr;
+}
 
 /**
  * Structure du mega-menu off-canvas (modèle Terre Blanche).
@@ -144,14 +203,10 @@ function mdb_megamenu_data() {
 			),
 		),
 		array(
-			'label'    => 'Événements',
-			'url'      => $base . '/vos-evenements/',
-			'eyebrow'  => 'Privatisation',
-			'image_id' => 109522,
-			'children' => array(
-				array( 'label' => 'Vos événements', 'url' => $base . '/vos-evenements/' ),
-				array( 'label' => 'Votre devis événementiel', 'url' => $base . '/votre-devis-evenementiel/' ),
-			),
+			// Pas de sous-menu : la rubrique navigue directement vers la page
+			// Événements (le contenu d'un sous-panneau serait trop maigre).
+			'label' => 'Événements',
+			'url'   => $base . '/vos-evenements/',
 		),
 		array(
 			'label'    => 'La Maison',
@@ -198,7 +253,7 @@ add_action( 'wp_footer', function () {
 				</div>
 			</div>
 
-			<p class="mdb-panel__eyebrow">Menu</p>
+			<p class="mdb-panel__eyebrow"><?php echo esc_html( mdb_t( 'Menu' ) ); ?></p>
 			<ul class="mdb-panel__list">
 				<?php foreach ( $menu as $i => $item ) : ?>
 					<li class="mdb-panel__item<?php echo empty( $item['children'] ) ? '' : ' has-children'; ?>">
@@ -207,7 +262,7 @@ add_action( 'wp_footer', function () {
 							<?php if ( ! empty( $item['children'] ) ) : ?>
 							data-mdb-section="<?php echo esc_attr( $i ); ?>"
 							<?php endif; ?>>
-							<span><?php echo esc_html( $item['label'] ); ?></span>
+							<span><?php echo esc_html( mdb_t( $item['label'] ) ); ?></span>
 							<?php if ( ! empty( $item['children'] ) ) : ?>
 								<span class="mdb-panel__chevron" aria-hidden="true">&rsaquo;</span>
 							<?php endif; ?>
@@ -217,8 +272,8 @@ add_action( 'wp_footer', function () {
 			</ul>
 
 			<div class="mdb-panel__foot">
-				<a class="mdb-btn mdb-btn--ghost mdb-btn--block" href="https://maisondebacon.bonkdo.com/fr/" target="_blank" rel="noopener"><span class="mdb-btn__dot" aria-hidden="true"></span>Carte cadeau</a>
-				<a class="mdb-btn mdb-btn--solid mdb-btn--block" href="<?php echo esc_url( $reserve_url ); ?>" target="_blank" rel="noopener">Réserver</a>
+				<a class="mdb-btn mdb-btn--ghost mdb-btn--block" href="https://maisondebacon.bonkdo.com/fr/" target="_blank" rel="noopener"><span class="mdb-btn__dot" aria-hidden="true"></span><?php echo esc_html( mdb_t( 'Carte cadeau' ) ); ?></a>
+				<a class="mdb-btn mdb-btn--solid mdb-btn--block" href="<?php echo esc_url( $reserve_url ); ?>" target="_blank" rel="noopener"><?php echo esc_html( mdb_t( 'Réserver' ) ); ?></a>
 			</div>
 		</aside>
 
@@ -240,16 +295,15 @@ add_action( 'wp_footer', function () {
 						</div>
 					<?php endif; ?>
 					<?php if ( ! empty( $item['eyebrow'] ) ) : ?>
-						<p class="mdb-panel__eyebrow"><?php echo esc_html( $item['eyebrow'] ); ?></p>
+						<p class="mdb-panel__eyebrow"><?php echo esc_html( mdb_t( $item['eyebrow'] ) ); ?></p>
 					<?php endif; ?>
 					<ul class="mdb-panel__sublist">
 						<?php foreach ( $item['children'] as $child ) : ?>
 							<li>
-								<a href="<?php echo esc_url( $child['url'] ); ?>" class="mdb-panel__sublink"><?php echo esc_html( $child['label'] ); ?></a>
+								<a href="<?php echo esc_url( $child['url'] ); ?>" class="mdb-panel__sublink"><?php echo esc_html( mdb_t( $child['label'] ) ); ?></a>
 							</li>
 						<?php endforeach; ?>
 					</ul>
-					<a href="<?php echo esc_url( $item['url'] ); ?>" class="mdb-panel__discover"><?php echo esc_html( $item['label'] ); ?> &rarr;</a>
 				</div>
 			<?php endforeach; ?>
 		</div>
