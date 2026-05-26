@@ -2,3 +2,11 @@
 .claude/
 *.log
 node_modules/
+
+# Backups de données (dumps DB, arbo WP, exports _elementor_data) — pas dans git.
+# Les scripts de rejeu (.php) dans site-backup/elementor-kit/ SONT versionnés.
+*.sql
+*.sql.gz
+site-backup/www/
+site-backup/**/*.json
+site-backup/**/*.zip
