@@ -88,6 +88,7 @@ body.mdb-scrolled .mdb-header {
 button:hover,
 button:focus,
 [type="button"]:hover,
+[type="button"]:focus,
 [type="submit"]:hover,
 [type="submit"]:focus {
 	background-color: transparent;
@@ -309,31 +310,58 @@ button:focus,
 }
 .mdb-panel__social a:hover { opacity: 1; color: var(--mdb-gold-deep); }
 
-/* Sous-panneau (droite) — blanc, aperçu de la rubrique active.
-   Glisse de la gauche vers la droite quand une rubrique est cliquée. */
+/* Sous-panneau (droite) — conteneur de la bande blanche. Il définit la zone
+   (position/taille) et masque le débordement ; les VOLETS à l'intérieur portent
+   le fond blanc et glissent. Le conteneur lui-même ne glisse plus : ce sont les
+   volets qui animent l'entrée/sortie/changement. */
 .mdb-panel__sub {
 	position: absolute;
 	top: 0;
 	left: min(420px, 88vw);
 	height: 100%;
 	width: min(420px, 80vw);
+	pointer-events: none;
+	overflow: hidden;            /* coupe les volets qui sortent à gauche */
+}
+.mdb-panel.is-open .mdb-panel__sub.is-open { pointer-events: auto; }
+
+/* Chaque VOLET = une couche plein-format dans le sous-panneau. Au repos il est
+   hors écran à gauche et masqué. */
+.mdb-panel__pane {
+	position: absolute;
+	inset: 0;
 	background: #fff;
 	color: var(--mdb-navy-deep);
 	padding: clamp(2.4rem, 4vw, 3.4rem) clamp(1.6rem, 3vw, 2.6rem);
+	overflow-y: auto;
 	transform: translateX(-100%);
 	opacity: 0;
-	/* Hors écran et transparent, il recouvre la liste de rubriques (même bande) :
-	   sans ceci il intercepterait les clics. Réactivé quand il est ouvert. */
-	pointer-events: none;
-	transition: transform 0.55s var(--mdb-ease), opacity 0.4s var(--mdb-ease);
-	overflow-y: auto;
-}
-.mdb-panel.is-open .mdb-panel__sub.is-open {
-	transform: translateX(0);
-	opacity: 1;
-	pointer-events: auto;
+	transition: transform 0.42s var(--mdb-ease), opacity 0.34s var(--mdb-ease);
+	will-change: transform;
 }
 .mdb-panel__pane[hidden] { display: none; }
+
+/* Volet courant : en place, opaque, interactif. */
+.mdb-panel__pane.is-current {
+	transform: translateX(0);
+	opacity: 1;
+	z-index: 2;
+}
+/* Volet entrant : point de départ hors écran à gauche, AU-DESSUS du sortant,
+   prêt à glisser vers translateX(0) (passe is-current la frame suivante). */
+.mdb-panel__pane.is-entering {
+	transform: translateX(-100%);
+	opacity: 1;
+	z-index: 3;
+}
+/* Volet sortant : repart vers la gauche en se fondant, EN DESSOUS de l'entrant.
+   Comme l'entrant démarre aussi à gauche mais le recouvre (z-index sup.), on lit
+   bien le nouveau volet qui pousse l'ancien — même couloir, mouvements croisés. */
+.mdb-panel__pane.is-leaving {
+	transform: translateX(-100%);
+	opacity: 0;
+	z-index: 1;
+}
 
 /* Croix de fermeture du sous-panneau — masquée sur desktop (les deux colonnes
    sont visibles côte à côte, la croix du nav suffit), affichée sur mobile où le
@@ -412,20 +440,17 @@ body.mdb-panel-open { overflow: hidden; }
 .mdb-lang__item.is-active { color: var(--mdb-gold); }
 .mdb-lang__sep { color: var(--mdb-gold); opacity: 0.55; }
 
-/* MOBILE — le panneau et son sous-panneau remplissent l'écran. Le sous-panneau
-   glisse PAR-DESSUS la liste des rubriques (et non à côté, sinon il atterrit
-   hors écran à droite). Croix de fermeture en haut à droite. */
+/* MOBILE — le panneau et son sous-panneau remplissent l'écran. Le conteneur du
+   sous-panneau recouvre la liste des rubriques (plein écran) ; ce sont les
+   VOLETS à l'intérieur qui glissent (même couloir que desktop). Croix de
+   fermeture en haut à droite. */
 @media (max-width: 768px) {
 	.mdb-panel__nav { width: 100%; }
 	.mdb-panel__sub {
 		left: 0;
 		width: 100%;
 		z-index: 3; /* au-dessus du nav (z-index: 2) */
-		/* Slide depuis la DROITE sur mobile (translateX positif → hors écran à
-		   droite). Sur desktop il glisse depuis la gauche, derrière le nav. */
-		transform: translateX(100%);
 	}
-	.mdb-panel.is-open .mdb-panel__sub.is-open { transform: translateX(0); }
 	.mdb-panel__pane-close { display: block; }
 }
 
@@ -519,4 +544,190 @@ body.mdb-reserver-in-view .mdb-sticky-cta {
 /* Cache la sticky CTA dans le back-office Elementor (édition en direct) */
 body.elementor-editor-active .mdb-sticky-cta {
 	display: none;
+}
+
+/* =========================================================
+   HERO HOME — refonte façon concept (Univers grand-hôtel)
+   La section hero = container Elementor #167c86ed (vidéo de fond conservée).
+   On scelle au sélecteur d'ID Elementor stable (.elementor-element-167c86ed)
+   car les classes custom des CONTAINERS Elementor ne sortent pas toujours dans
+   le HTML ; les classes mdb-hero__* des WIDGETS, elles, sortent bien.
+   Contenu : widgets eyebrow / titre / lede / CTA / lien — texte réel dans
+   .elementor-heading-title / .elementor-button.
+   ========================================================= */
+
+/* Overlay sombre posé UNIQUEMENT sur la vidéo de fond (jamais sur le contenu).
+   La structure réelle : #167c86ed > [.elementor-background-video-container(z0),
+   .elementor-element-57e6219 (le contenu)]. On assombrit la vidéo via son
+   ::after (reste en z0, derrière tout) et on remonte explicitement le contenu
+   en z2 → le texte garde sa pleine luminosité. */
+.elementor-element-167c86ed { position: relative; }
+.elementor-element-167c86ed .elementor-background-video-container::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	pointer-events: none;
+	background:
+		linear-gradient(90deg, rgba(9,26,45,0.70) 0%, rgba(9,26,45,0.45) 45%, rgba(9,26,45,0.35) 100%),
+		linear-gradient(180deg, rgba(9,26,45,0.35) 0%, rgba(9,26,45,0.20) 45%, rgba(9,26,45,0.55) 100%);
+}
+/* Le contenu (container 57e6219) passe explicitement au-dessus de la vidéo. */
+.elementor-element-167c86ed > .elementor-element-57e6219 {
+	position: relative;
+	z-index: 2;
+}
+
+/* Colonne de contenu alignée à gauche, façon concept. Le container boxed
+   57e6219 (850px) est centré par défaut dans la section ; on le pousse à
+   gauche (margin-inline-start: 0) et on aligne ses items à flex-start. */
+.elementor-element-167c86ed > .elementor-element-57e6219 {
+	margin-inline: 0 auto !important;
+	align-items: flex-start !important;
+	text-align: left;
+}
+.elementor-element-167c86ed > .elementor-element-57e6219 > .e-con-inner {
+	align-items: flex-start !important;
+	gap: clamp(1.1rem, 2.6vh, 2rem) !important;
+}
+/* Chaque widget du hero : aligné à gauche, largeur auto (pas pleine largeur) */
+.elementor-element-167c86ed .mdb-hero__eyebrow,
+.elementor-element-167c86ed .mdb-hero__title,
+.elementor-element-167c86ed .mdb-hero__lede,
+.elementor-element-167c86ed .mdb-hero__cta,
+.elementor-element-167c86ed .mdb-hero__link {
+	text-align: left !important;
+	align-self: flex-start !important;
+	width: auto !important;
+	max-width: 100%;
+}
+.elementor-element-167c86ed .mdb-hero__eyebrow .elementor-heading-title,
+.elementor-element-167c86ed .mdb-hero__title .elementor-heading-title,
+.elementor-element-167c86ed .mdb-hero__lede .elementor-heading-title {
+	text-align: left !important;
+}
+
+/* Eyebrow : filet + texte Tenor Sans espacé, crème translucide */
+.mdb-hero__eyebrow .elementor-heading-title {
+	font-family: var(--mdb-font-eyebrow);
+	font-size: var(--mdb-step--1);
+	letter-spacing: 0.32em;
+	text-transform: uppercase;
+	color: rgba(244, 236, 220, 0.82);
+	font-weight: 400;
+	line-height: 1.4;
+	display: inline-flex;
+	align-items: center;
+	gap: 1rem;
+}
+.mdb-hero__eyebrow .elementor-heading-title::before {
+	content: "";
+	width: 56px;
+	height: 1px;
+	background: var(--mdb-gold);
+	flex-shrink: 0;
+}
+
+/* Titre géant Cormorant ; "de Bacon" en italique or via <em> */
+.mdb-hero__title .elementor-heading-title {
+	font-family: var(--mdb-font-display);
+	font-weight: 300;
+	font-size: var(--mdb-step-6);
+	line-height: 0.92;
+	letter-spacing: -0.015em;
+	color: var(--mdb-cream);
+	margin: 0;
+}
+.mdb-hero__title .elementor-heading-title em {
+	display: block;
+	font-style: italic;
+	font-weight: 300;
+	color: var(--mdb-gold-bright);
+}
+
+/* Lede italique : "Cuisine marine du Chef Nicolas Davouze" */
+.mdb-hero__lede .elementor-heading-title {
+	font-family: var(--mdb-font-display);
+	font-style: italic;
+	font-weight: 400;
+	font-size: var(--mdb-step-2);
+	line-height: 1.3;
+	color: var(--mdb-cream);
+	margin: 0;
+}
+.mdb-hero__lede .elementor-heading-title em {
+	font-style: italic;
+	color: var(--mdb-gold-bright);
+}
+
+/* CTA primaire or plein, angles droits, flèche concept */
+.mdb-hero__cta .elementor-button,
+.mdb-hero__cta a.elementor-button {
+	display: inline-flex;
+	align-items: center;
+	gap: 1rem;
+	padding: 1.05rem 1.8rem;
+	background: var(--mdb-gold);
+	color: var(--mdb-navy-deep);
+	border-radius: 0;
+	font-family: var(--mdb-font-eyebrow);
+	font-size: 0.78rem;
+	letter-spacing: 0.32em;
+	text-transform: uppercase;
+	font-weight: 400;
+	transition: background 0.4s var(--mdb-ease), transform 0.4s var(--mdb-ease);
+}
+.mdb-hero__cta .elementor-button:hover {
+	background: var(--mdb-gold-bright);
+	transform: translateY(-2px);
+}
+.mdb-hero__cta .elementor-button-text::after {
+	content: "→";
+	margin-left: 0.9rem;
+	font-family: var(--mdb-font-body);
+}
+
+/* Lien secondaire : texte souligné or, pas de boîte (concept .chef__more) */
+.mdb-hero__link .elementor-button,
+.mdb-hero__link a.elementor-button {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.55rem;
+	padding: 0;
+	background: transparent;
+	border: 0;
+	border-radius: 0;
+	color: var(--mdb-cream);
+	font-family: var(--mdb-font-eyebrow);
+	font-size: 0.72rem;
+	letter-spacing: 0.28em;
+	text-transform: uppercase;
+}
+.mdb-hero__link .elementor-button-text {
+	border-bottom: 1px solid var(--mdb-gold);
+	padding-bottom: 4px;
+	transition: color 0.3s var(--mdb-ease), border-color 0.3s var(--mdb-ease);
+}
+.mdb-hero__link .elementor-button:hover .elementor-button-text {
+	color: var(--mdb-gold-bright);
+	border-color: var(--mdb-gold-bright);
+}
+
+/* Mobile : titre un cran plus petit, contenu dégagé du header fixe, overlay
+   un peu plus dense (vidéo souvent très claire sur petit écran). */
+@media (max-width: 768px) {
+	.mdb-hero__title .elementor-heading-title { font-size: clamp(3.2rem, 16vw, 5rem); }
+	.mdb-hero__eyebrow .elementor-heading-title { letter-spacing: 0.22em; }
+	.mdb-hero__eyebrow .elementor-heading-title::before { width: 32px; }
+	/* Pousse le bloc sous le header fixe pour éviter que le titre soit coupé */
+	.elementor-element-167c86ed > .elementor-element-57e6219 {
+		padding-top: clamp(96px, 16vh, 140px) !important;
+		padding-bottom: clamp(2rem, 8vh, 4rem) !important;
+		justify-content: flex-start !important;
+	}
+	/* Voile vidéo un peu plus dense sur mobile (footage souvent très clair) */
+	.elementor-element-167c86ed .elementor-background-video-container::after {
+		background:
+			linear-gradient(180deg, rgba(9,26,45,0.55) 0%, rgba(9,26,45,0.30) 45%, rgba(9,26,45,0.66) 100%);
+	}
 }

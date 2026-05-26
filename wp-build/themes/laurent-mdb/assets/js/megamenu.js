@@ -24,23 +24,100 @@
 	var paneClosers = panel.querySelectorAll('[data-mdb-pane-close]');
 	var activeSection = null;
 
-	function showPane(id) {
-		panes.forEach(function (pane) {
-			pane.hidden = pane.getAttribute('data-mdb-pane') !== id;
-		});
+	// Durée de la transition CSS d'un volet (transform), voir overrides.css.
+	var PANE_SLIDE_MS = 420;
+	var leaveTimer = null;
+
+	// Marque la rubrique active dans la colonne de gauche (sans toucher aux volets).
+	function markActiveSection(id) {
 		sectionLinks.forEach(function (link) {
 			var isActive = link.getAttribute('data-mdb-section') === id;
 			link.classList.toggle('is-active', isActive);
 			link.closest('.mdb-panel__item').classList.toggle('is-active', isActive);
 		});
-		if (sub) sub.classList.add('is-open');
 		activeSection = id;
+	}
+
+	function paneById(id) {
+		for (var i = 0; i < panes.length; i++) {
+			if (panes[i].getAttribute('data-mdb-pane') === id) return panes[i];
+		}
+		return null;
+	}
+
+	// Repli des volets dans leur état de repos (hors écran à gauche, cachés).
+	function resetPanes() {
+		clearTimeout(leaveTimer);
+		panes.forEach(function (p) {
+			p.classList.remove('is-current', 'is-leaving', 'is-entering');
+			p.hidden = true;
+		});
+	}
+
+	function showPane(id) {
+		var next = paneById(id);
+		if (!next) return;
+		var current = null;
+		panes.forEach(function (p) { if (p.classList.contains('is-current')) current = p; });
+
+		var alreadyOpen = sub && sub.classList.contains('is-open');
+
+		if (!alreadyOpen || !current) {
+			// Premier affichage : le volet entre depuis la gauche. On le rend
+			// visible à sa position de repos (hors écran), reflow, puis is-current
+			// la frame suivante pour déclencher la transition (sinon il saute).
+			clearTimeout(leaveTimer);
+			if (sub) sub.classList.add('is-open');
+			next.hidden = false;
+			next.classList.remove('is-leaving', 'is-current');
+			next.classList.add('is-entering');
+			void next.offsetWidth;
+			requestAnimationFrame(function () {
+				next.classList.remove('is-entering');
+				next.classList.add('is-current');
+			});
+			markActiveSection(id);
+			return;
+		}
+
+		if (current === next) return; // déjà affiché
+
+		// Changement de rubrique : les DEUX volets bougent EN MÊME TEMPS, même
+		// couloir (vers la gauche). L'ancien sort par la gauche, le nouveau entre
+		// depuis la gauche en le recouvrant → ils se croisent.
+		clearTimeout(leaveTimer);
+
+		// Volet entrant : positionné hors écran à gauche, prêt, AU-DESSUS.
+		next.hidden = false;
+		next.classList.remove('is-leaving', 'is-current');
+		next.classList.add('is-entering');
+		void next.offsetWidth; // reflow : fige la position de départ
+
+		// Volet sortant : quitte l'état courant pour partir vers la gauche.
+		current.classList.remove('is-current');
+		current.classList.add('is-leaving');
+
+		// Frame suivante : l'entrant prend la place (is-current → translateX(0)).
+		requestAnimationFrame(function () {
+			next.classList.remove('is-entering');
+			next.classList.add('is-current');
+		});
+
+		markActiveSection(id);
+
+		// Nettoyer le volet sortant une fois sa sortie finie.
+		var leaving = current;
+		leaveTimer = setTimeout(function () {
+			leaving.classList.remove('is-leaving');
+			leaving.hidden = true;
+		}, PANE_SLIDE_MS + 60);
 	}
 
 	// Réinitialise le sous-panneau (rubrique active désélectionnée). Appelé à la
 	// fermeture du panneau pour repartir d'un état propre à la réouverture.
 	function closePane() {
 		if (sub) sub.classList.remove('is-open');
+		resetPanes();
 		sectionLinks.forEach(function (link) {
 			link.classList.remove('is-active');
 			link.closest('.mdb-panel__item').classList.remove('is-active');
