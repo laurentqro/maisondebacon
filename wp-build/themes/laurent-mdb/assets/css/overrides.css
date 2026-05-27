@@ -1981,37 +1981,46 @@ html[lang^="en"] .elementor-element-5ba5eec4 .elementor-heading-title::before { 
 	object-position: left center;
 }
 
-/* Horaires -> ligne meta type eyebrow, filet brass devant. */
+/* Bloc info hero (jours / horaires / tenue). Markup : 3 <p> avec classes
+   .mdb-rt-days / .mdb-rt-hours / .mdb-rt-dress (cf. roof-hero-hours.php).
+   - jours + tenue : eyebrow Tenor crème, espacé
+   - horaires : Cormorant italique brass, encadré de deux filets fins */
 .elementor-106766 .elementor-element-7488ca8 {
 	align-self: flex-start !important;
 	width: auto !important;
 	max-width: 100%;
 	order: 3;
 }
-.elementor-106766 .elementor-element-7488ca8 p,
-.elementor-106766 .elementor-element-7488ca8 b,
-.elementor-106766 .elementor-element-7488ca8 strong {
+.elementor-106766 .elementor-element-7488ca8 p { margin: 0 !important; }
+
+.elementor-106766 .elementor-element-7488ca8 .mdb-rt-days,
+.elementor-106766 .elementor-element-7488ca8 .mdb-rt-dress {
 	font-family: var(--mdb-font-eyebrow) !important;
 	font-weight: 400 !important;
-	font-size: 0.78rem !important;
-	letter-spacing: 0.26em !important;
+	font-size: 0.8rem !important;
+	letter-spacing: 0.28em !important;
 	text-transform: uppercase !important;
-	color: rgba(244, 236, 220, 0.82) !important;
+	color: rgba(244, 236, 220, 0.85) !important;
 	text-align: left !important;
-	line-height: 1.7 !important;
-	margin: 0 !important;
+	line-height: 1.5 !important;
 }
-.elementor-106766 .elementor-element-7488ca8 p:first-child {
-	display: flex;
-	align-items: center;
-	gap: 0.9rem;
-}
-.elementor-106766 .elementor-element-7488ca8 p:first-child::before {
-	content: "";
-	width: 48px;
-	height: 1px;
-	background: var(--mdb-gold);
-	flex-shrink: 0;
+/* Horaires en exergue : Cormorant italique brass, filet fin au-dessus/dessous */
+.elementor-106766 .elementor-element-7488ca8 .mdb-rt-hours {
+	display: inline-flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.55rem;
+	font-family: var(--mdb-font-display) !important;
+	font-style: italic;
+	font-weight: 400 !important;
+	font-size: var(--mdb-step-2) !important;
+	line-height: 1 !important;
+	color: var(--mdb-gold-bright) !important;
+	text-align: left !important;
+	margin: 0.8rem 0 !important;
+	padding: 0.7rem 0 !important;
+	border-top: 1px solid var(--mdb-rule);
+	border-bottom: 1px solid var(--mdb-rule);
 }
 
 /* CTA hero : « Réserver sa table » brass plein, téléphone en lien discret. */
@@ -2211,5 +2220,5 @@ html[lang^="en"] .elementor-element-5ba5eec4 .elementor-heading-title::before { 
 		grid-template-columns: 1fr !important;
 		gap: 1.5rem !important;
 	}
-	.elementor-106766 .elementor-element-7488ca8 p:first-child::before { width: 30px; }
+	.elementor-106766 .elementor-element-7488ca8 .mdb-rt-hours { font-size: var(--mdb-step-1) !important; }
 }
