@@ -154,6 +154,30 @@ button:focus,
 @media (max-width: 880px) {
 	.mdb-header__actions { display: none; }
 	.mdb-menu-toggle__label { display: none; }
+
+	/* Barre plus fine sur mobile : on réduit le padding du header et on borne
+	   le logo. Le surcroît de hauteur venait de la colonne logo (~142px pour
+	   une image de 69px) : on supprime les marges/paddings verticaux du widget
+	   logo et on cale le logo sur une hauteur compacte, centré verticalement. */
+	header.mdb-header,
+	.mdb-header { padding-top: 8px !important; padding-bottom: 8px !important; }
+	.mdb-header > .elementor-container { align-items: center !important; }
+	.mdb-header__logo,
+	.mdb-header__logo .elementor-widget-container {
+		margin-top: 0 !important;
+		margin-bottom: 0 !important;
+		padding-top: 0 !important;
+		padding-bottom: 0 !important;
+	}
+	/* Logo SVG (viewBox seul, sans width/height) : on fixe une LARGEUR explicite
+	   — max-height + width:auto le faisait s'effondrer à 0 (logo invisible).
+	   247×138 → ~84px de large ≈ 47px de haut, compact mais lisible. */
+	.mdb-header__logo img {
+		width: 84px !important;
+		max-width: 84px !important;
+		height: auto !important;
+		margin-block: 0 !important;
+	}
 }
 
 /* =========================================================
