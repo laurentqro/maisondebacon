@@ -2513,17 +2513,40 @@ body.elementor-editor-active .mdb-sticky-cta {
 .mdb-review {
 	display: flex;
 	flex-direction: column;
-	gap: 1rem;
+	gap: 0.85rem;
 	margin: 0;
 	padding: clamp(1.5rem, 2.5vw, 2.25rem);
 	background: rgba(244, 236, 220, 0.04);
 	border: 1px solid var(--mdb-rule-soft);
+}
+/* en-tête carte : nom à gauche, note globale à droite */
+.mdb-review__head {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 1rem;
+}
+.mdb-review__name {
+	font-family: var(--mdb-font-eyebrow);
+	font-size: var(--mdb-step--1);
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: rgba(244, 236, 220, 0.92);
 }
 .mdb-review__stars {
 	font-size: var(--mdb-step-0);
 	letter-spacing: 0.16em;
 	color: var(--mdb-gold-bright);
 	line-height: 1;
+	white-space: nowrap;
+}
+/* ligne de réservation : date · heure · couverts */
+.mdb-review__booking {
+	margin: 0;
+	font-family: var(--mdb-font-body);
+	font-size: 0.78rem;
+	letter-spacing: 0.02em;
+	color: rgba(244, 236, 220, 0.5);
 }
 .mdb-review__body {
 	margin: 0;
@@ -2534,24 +2557,44 @@ body.elementor-editor-active .mdb-sticky-cta {
 	color: var(--mdb-cream);
 	flex: 1 0 auto;
 }
-.mdb-review__meta {
-	display: flex;
-	flex-direction: column;
-	gap: 0.15rem;
+/* notes par catégorie */
+.mdb-review__cats {
+	list-style: none;
+	margin: 0;
 	padding-top: 0.85rem;
 	border-top: 1px solid var(--mdb-rule-soft);
+	display: grid;
+	gap: 0.45rem;
 }
-.mdb-review__name {
-	font-family: var(--mdb-font-eyebrow);
-	font-size: var(--mdb-step--1);
-	letter-spacing: 0.14em;
-	text-transform: uppercase;
-	color: rgba(244, 236, 220, 0.9);
+.mdb-review__cat {
+	display: grid;
+	grid-template-columns: 6.5rem 1fr 1.9rem;
+	align-items: center;
+	gap: 0.7rem;
 }
-.mdb-review__date {
+.mdb-review__cat-label {
 	font-family: var(--mdb-font-body);
-	font-size: 0.78rem;
-	color: rgba(244, 236, 220, 0.5);
+	font-size: 0.74rem;
+	letter-spacing: 0.04em;
+	color: rgba(244, 236, 220, 0.62);
+}
+.mdb-review__cat-bar {
+	position: relative;
+	height: 2px;
+	background: rgba(177, 137, 84, 0.2);
+	display: block;
+}
+.mdb-review__cat-bar > span {
+	position: absolute;
+	inset: 0 auto 0 0;
+	background: var(--mdb-gold);
+	display: block;
+}
+.mdb-review__cat-val {
+	font-family: var(--mdb-font-body);
+	font-size: 0.74rem;
+	color: var(--mdb-gold-bright);
+	text-align: right;
 }
 
 /* Lien Zenchef (crédibilité) — label + logo de marque masqué (teinte laiton) */

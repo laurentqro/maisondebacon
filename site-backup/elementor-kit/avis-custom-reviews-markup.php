@@ -59,6 +59,7 @@ $markup = <<<'HTML'
     fail:'Find all our reviews on Zenchef.',
     sourceLabel:'See all reviews on',
     anon:'Guest', outOf:'out of 5',
+    covers:function(n){ return n + (n>1?' guests':' guest'); },
     bd:{service:'Service', ambiance:'Atmosphere', menu:'The menu', vfm:'Value for money'}
   } : {
     locale:'fr-FR', dec:',',
@@ -68,6 +69,7 @@ $markup = <<<'HTML'
     fail:'Retrouvez tous nos avis sur Zenchef.',
     sourceLabel:'Voir tous les avis sur',
     anon:'Client', outOf:'sur 5',
+    covers:function(n){ return n + (n>1?' couverts':' couvert'); },
     bd:{service:'Service', ambiance:'Ambiance', menu:'La carte', vfm:'Qualité / prix'}
   };
   var API = 'https://api.zenchef.com/api/v1/restaurants/'+RID;
@@ -102,13 +104,36 @@ $markup = <<<'HTML'
     sum.setAttribute('data-state','ready');
   }
 
+  function fmtTime(t){ if(!t) return ''; var m=String(t).match(/^(\d{1,2}):(\d{2})/); if(!m) return ''; return T.dec===',' ? (m[1]+'h'+m[2]) : (m[1]+':'+m[2]); }
+
+  function cat(label, v){
+    v = v||0; var pct=Math.max(0,Math.min(100,v/5*100));
+    return '<li class="mdb-review__cat"><span class="mdb-review__cat-label">'+esc(label)+'</span>'
+      +'<span class="mdb-review__cat-bar"><span style="width:'+pct.toFixed(0)+'%"></span></span>'
+      +'<span class="mdb-review__cat-val">'+num(v)+'</span></li>';
+  }
+
   function card(r){
     var b=r.booking||{}; var body=(r.body||'').trim();
+    /* ligne de réservation : date · heure · couverts */
+    var bits=[];
+    var dt=fmtDate(b.day||r.source_date||r.created_at); if(dt) bits.push(esc(dt));
+    var tm=fmtTime(b.time); if(tm) bits.push(esc(tm));
+    if(b.nb_guests) bits.push(esc(T.covers(b.nb_guests)));
+    var bookingLine = bits.length ? '<p class="mdb-review__booking">'+bits.join(' · ')+'</p>' : '';
+    /* notes par catégorie */
+    var cats='<ul class="mdb-review__cats">'
+      +cat(T.bd.service,r.service)+cat(T.bd.ambiance,r.ambiance)
+      +cat(T.bd.menu,r.menu)+cat(T.bd.vfm,r.value_for_money)+'</ul>';
+
     return '<figure class="mdb-review">'
-      +'<div class="mdb-review__stars" aria-label="'+(r.global||0)+' '+T.outOf+'">'+stars(r.global)+'</div>'
-      +'<blockquote class="mdb-review__body">'+esc(body)+'</blockquote>'
-      +'<figcaption class="mdb-review__meta"><span class="mdb-review__name">'+esc(name(b))+'</span>'
-      +'<span class="mdb-review__date">'+esc(fmtDate(r.source_date||r.created_at))+'</span></figcaption>'
+      +'<div class="mdb-review__head">'
+        +'<span class="mdb-review__name">'+esc(name(b))+'</span>'
+        +'<span class="mdb-review__stars" aria-label="'+(r.global||0)+' '+T.outOf+'">'+stars(r.global)+'</span>'
+      +'</div>'
+      + bookingLine
+      + (body ? '<blockquote class="mdb-review__body">'+esc(body)+'</blockquote>' : '')
+      + cats
       +'</figure>';
   }
 
