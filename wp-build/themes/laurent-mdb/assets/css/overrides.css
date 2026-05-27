@@ -1779,6 +1779,18 @@ body.elementor-editor-active .mdb-sticky-cta {
 	opacity: 0.75;
 	margin: 0 !important;
 }
+/* Adresse avec épingle de localisation discrète */
+.elementor-108363 .mdb-foot-address .mdb-foot-address__line {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.6rem;
+}
+.elementor-108363 .mdb-foot-pin {
+	flex: 0 0 auto;
+	margin-top: 0.35rem;
+	color: var(--mdb-gold);
+	opacity: 0.9;
+}
 
 /* Icônes réseaux sous l'adresse : filet or discret, sobre. */
 .elementor-108363 .mdb-foot-social { margin-top: 1.5rem !important; }
@@ -2451,6 +2463,19 @@ body.elementor-editor-active .mdb-sticky-cta {
 	text-transform: uppercase;
 	color: rgba(244, 236, 220, 0.7);
 	margin: 0;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4em;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+.mdb-reviews__count-logo {
+	display: inline-block;
+	width: 4.8em;
+	height: 1.4em;
+	background: var(--mdb-gold-bright);
+	-webkit-mask: url("../img/zenchef-logo.svg") left center / contain no-repeat;
+	        mask: url("../img/zenchef-logo.svg") left center / contain no-repeat;
 }
 .mdb-reviews__breakdown {
 	list-style: none;
@@ -2597,44 +2622,22 @@ body.elementor-editor-active .mdb-sticky-cta {
 	text-align: right;
 }
 
-/* Lien Zenchef (crédibilité) — label + logo de marque masqué (teinte laiton) */
-.mdb-reviews__source,
-.mdb-reviews__source:hover,
-.mdb-reviews__source:focus {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.7rem;
-	text-decoration: none !important;
-	box-shadow: none !important;
-	border: 1px solid var(--mdb-rule);
-	border-bottom: 1px solid var(--mdb-rule);
-	background-image: none !important;
-	padding: 0.95rem 1.9rem;
-	transition: background-color 0.3s ease;
-}
-.mdb-reviews__source-label {
+/* Bouton « Voir plus d'avis » (pagination) */
+.mdb-reviews__more {
 	font-family: var(--mdb-font-eyebrow);
 	font-size: var(--mdb-step--1);
-	letter-spacing: 0.2em;
+	letter-spacing: 0.22em;
 	text-transform: uppercase;
-	color: rgba(244, 236, 220, 0.75);
-	border-bottom: 0 !important;
-	box-shadow: none !important;
-	text-decoration: none !important;
+	color: var(--mdb-cream);
+	background: transparent;
+	border: 1px solid var(--mdb-rule);
+	padding: 1rem 2.4rem;
+	cursor: pointer;
+	transition: background-color 0.3s ease, color 0.3s ease, opacity 0.3s ease;
 }
-/* L'<img> SVG ignore `color` ; on le masque pour le teinter en laiton et
-   le faire réagir au hover via background-color. */
-.mdb-reviews__source-logo {
-	width: 86px;
-	height: 25px;
-	background: var(--mdb-gold-bright);
-	-webkit-mask: url("../img/zenchef-logo.svg") center / contain no-repeat;
-	        mask: url("../img/zenchef-logo.svg") center / contain no-repeat;
-	transition: background-color 0.3s ease;
-}
-.mdb-reviews__source:hover { background: var(--mdb-gold); }
-.mdb-reviews__source:hover .mdb-reviews__source-label { color: var(--mdb-navy-deep); }
-.mdb-reviews__source:hover .mdb-reviews__source-logo { background: var(--mdb-navy-deep); }
+.mdb-reviews__more:hover { background: rgba(177, 137, 84, 0.12); color: var(--mdb-gold-bright); }
+.mdb-reviews__more:disabled { opacity: 0.5; cursor: default; }
+.mdb-reviews__more[hidden] { display: none; }
 
 @media (max-width: 1024px) {
 	.mdb-reviews__grid { grid-template-columns: repeat(2, 1fr); }
