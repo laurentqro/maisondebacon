@@ -1607,61 +1607,98 @@ body.elementor-editor-active .mdb-sticky-cta {
 	color: var(--mdb-cream) !important;
 	padding: clamp(3.5rem, 7vw, 6rem) var(--mdb-gutter) clamp(1.5rem, 3vw, 2.5rem) !important;
 }
-/* Structure réelle :
-   .elementor-108363 > .e-con(full) > [ (strip horaires 97020d4), rangée colonnes
-   303d9d2, rangée légale 878265c ]. On cible par ID stable (et NON par
-   :first/:last-child, car le strip pré-footer décale l'ordre). */
+/* Structure réelle (après restructuration en tiers) :
+   .elementor-108363 > .e-con(full) > [
+     TIER 1 strip 97020d4 = [ marque 5a1bc48 | horaires resto | horaires roof ],
+     TIER 2 rangée 303d9d2 = 3 colonnes (La Maison | Événements | Contact),
+     TIER 3 légale 878265c ].
+   On cible par ID stable (et NON par :first/:last-child). */
+
+/* --- TIER 1 : bandeau haut (marque + horaires + réservations) — 97020d4 --- */
+.elementor-108363 .elementor-element-97020d4 > .e-con-inner {
+	max-width: var(--mdb-wrap-max) !important;
+	margin-inline: auto !important;
+	display: grid !important;
+	grid-template-columns: 1.4fr 1fr 1fr !important;
+	gap: clamp(2rem, 4vw, 4rem) !important;
+	align-items: start !important;
+	padding-bottom: clamp(2.5rem, 5vw, 4rem) !important;
+	margin-bottom: clamp(2.5rem, 5vw, 4rem) !important;
+	border-bottom: 1px solid var(--mdb-rule) !important;
+	text-align: left !important;
+}
+.elementor-108363 .elementor-element-97020d4 > .e-con-inner > .e-con {
+	display: flex !important;
+	flex-direction: column !important;
+	width: 100% !important;
+}
+/* Filets verticaux : avant chaque bloc horaires (2e et 3e cellule).
+   align-self:start garde le filet à la hauteur du contenu, pas de la rangée. */
+.elementor-108363 .mdb-foot-hours--rest,
+.elementor-108363 .mdb-foot-hours--roof {
+	align-self: start !important;
+	padding-left: clamp(2rem, 4vw, 4rem) !important;
+	border-left: 1px solid var(--mdb-rule) !important;
+}
+.elementor-108363 .mdb-foot-hours-strip .mdb-foot-sub {
+	margin-bottom: 0.6rem !important;
+}
+
+/* --- TIER 2 : 3 colonnes de navigation — 303d9d2 --- */
 .elementor-108363 .elementor-element-303d9d2 > .e-con-inner {
 	max-width: var(--mdb-wrap-max) !important;
 	margin-inline: auto !important;
 	display: grid !important;
-	grid-template-columns: 1.6fr 1fr 1fr 1fr !important;
+	grid-template-columns: 1fr 1fr 1fr !important;
 	gap: clamp(2rem, 5vw, 4.5rem) !important;
 	align-items: start !important;
 }
-/* Chaque colonne (conteneur enfant de la grille) en pile verticale. */
 .elementor-108363 .elementor-element-303d9d2 > .e-con-inner > .e-con {
 	display: flex !important;
 	flex-direction: column !important;
 	width: 100% !important;
 }
-/* Barre légale : la rangée prend la largeur max + filet haut. */
-.elementor-108363 .elementor-element-878265c > .e-con-inner {
-	max-width: var(--mdb-wrap-max) !important;
-	margin-inline: auto !important;
-}
-
-/* --- Strip horaires (pré-footer horizontal) — conteneur 97020d4 ---
-   Bandeau « réserver » : aligné à gauche sur la colonne marque, filet
-   horizontal dessous (sépare réservation / navigation) + filet vertical
-   entre les deux établissements. */
-.elementor-108363 .elementor-element-97020d4 > .e-con-inner {
+/* --- TIER 2.5 : bandeau newsletter centré — 09fb99f ---
+   « Restez informés » sorti de la colonne marque, en bande pleine largeur
+   centrée, filet haut pour cadrer le tier. NB : conteneur e-con-full -> pas
+   de .e-con-inner, on cible le conteneur directement. */
+.elementor-108363 .elementor-element-09fb99f {
 	max-width: var(--mdb-wrap-max) !important;
 	margin-inline: auto !important;
 	display: flex !important;
-	flex-direction: row !important;
-	flex-wrap: wrap !important;
-	justify-content: flex-start !important;
-	align-items: stretch !important;
+	flex-direction: column !important;
+	align-items: center !important;
+	justify-content: center !important;
+	text-align: center !important;
 	gap: 0 !important;
-	padding-bottom: clamp(2.25rem, 4vw, 3.25rem) !important;
-	margin-bottom: clamp(2.5rem, 5vw, 4rem) !important;
-	border-bottom: 1px solid var(--mdb-rule) !important;
-	text-align: left !important;
+	min-height: 0 !important;
+	margin-top: clamp(2rem, 4vw, 3rem) !important;
+	padding-top: clamp(2rem, 4vw, 3rem) !important;
+	border-top: 1px solid var(--mdb-rule) !important;
 }
-.elementor-108363 .mdb-foot-hours--rest,
-.elementor-108363 .mdb-foot-hours--roof {
-	width: auto !important;
-	flex: 0 1 auto !important;
-	padding: 0 clamp(2rem, 4vw, 3.5rem) !important;
+/* Pas de padding parasite sur les wrappers de widget du bandeau. */
+.elementor-108363 .elementor-element-09fb99f > .elementor-widget > .elementor-widget-container {
+	padding: 0 !important;
 }
-.elementor-108363 .mdb-foot-hours--rest { padding-left: 0 !important; }
-/* Filet vertical entre Restaurant et Le Roof Top. */
-.elementor-108363 .mdb-foot-hours--roof {
-	border-left: 1px solid var(--mdb-rule) !important;
+.elementor-108363 .mdb-foot-nl-band .mdb-foot-eyebrow--nl,
+.elementor-108363 .mdb-foot-nl-band .mdb-foot-eyebrow--nl .elementor-heading-title {
+	margin: 0 0 1.1rem !important;
 }
-.elementor-108363 .mdb-foot-hours-strip .mdb-foot-sub {
-	margin-bottom: 0.6rem !important;
+.elementor-108363 .mdb-foot-nl-band .mdb-foot-newsletter {
+	margin: 0 !important;
+}
+.elementor-108363 .mdb-foot-nl-band .mdb-foot-newsletter .wpcf7 {
+	margin-inline: auto !important;
+}
+.elementor-108363 .mdb-foot-nl-band .mdb-foot-newsletter .wpcf7-acceptance,
+.elementor-108363 .mdb-foot-nl-band .mdb-foot-newsletter .wpcf7-list-item-label {
+	justify-content: center !important;
+}
+
+/* --- TIER 3 : barre légale — 878265c --- */
+.elementor-108363 .elementor-element-878265c > .e-con-inner {
+	max-width: var(--mdb-wrap-max) !important;
+	margin-inline: auto !important;
 }
 .elementor-108363 .mdb-foot-hours-strip p:not(.mdb-foot-sub):not(.mdb-foot-btn-wrap) {
 	font-family: var(--mdb-font-body) !important;
@@ -1689,22 +1726,6 @@ body.elementor-editor-active .mdb-sticky-cta {
 	background-color: var(--mdb-gold) !important;
 	border-color: var(--mdb-gold) !important;
 	color: var(--mdb-navy-deep) !important;
-}
-@media (max-width: 600px) {
-	.elementor-108363 .elementor-element-97020d4 > .e-con-inner {
-		flex-direction: column !important;
-		gap: 0 !important;
-	}
-	.elementor-108363 .mdb-foot-hours--rest,
-	.elementor-108363 .mdb-foot-hours--roof {
-		padding: 1.5rem 0 !important;
-	}
-	.elementor-108363 .mdb-foot-hours--rest { padding-top: 0 !important; }
-	/* En pile : le filet redevient horizontal entre les deux blocs. */
-	.elementor-108363 .mdb-foot-hours--roof {
-		border-left: 0 !important;
-		border-top: 1px solid var(--mdb-rule) !important;
-	}
 }
 
 /* --- Colonne marque --- */
@@ -1898,10 +1919,12 @@ body.elementor-editor-active .mdb-sticky-cta {
 }
 .elementor-108363 .mdb-foot-contact a:hover { color: var(--mdb-gold-bright) !important; }
 
-/* --- Barre légale --- */
+/* --- Barre légale ---
+   Marge haute réduite : le bandeau newsletter au-dessus fournit déjà l'espace
+   de séparation, on évite d'empiler deux grands écarts. */
 .elementor-108363 .mdb-foot-legal-wrap {
 	max-width: var(--mdb-wrap-max) !important;
-	margin: clamp(2.5rem, 5vw, 4rem) auto 0 !important;
+	margin: clamp(2rem, 4vw, 3rem) auto 0 !important;
 	padding-top: 1.75rem !important;
 	border-top: 1px solid var(--mdb-rule) !important;
 }
@@ -1937,17 +1960,40 @@ body.elementor-editor-active .mdb-sticky-cta {
    mise en place ligne ~1485. Sans ça, la grille 4 colonnes restait figée sur
    mobile et chaque mot passait à la ligne. */
 @media (max-width: 1024px) {
-	.elementor-108363 > .e-con > .e-con:first-child > .e-con-inner {
+	/* TIER 1 : marque pleine largeur, les 2 horaires côte à côte dessous. */
+	.elementor-108363 .elementor-element-97020d4 > .e-con-inner {
+		grid-template-columns: 1fr 1fr !important;
+		gap: clamp(1.5rem, 4vw, 3rem) !important;
+	}
+	.elementor-108363 .elementor-element-97020d4 > .e-con-inner > .e-con:first-child {
+		grid-column: 1 / -1 !important;
+		margin-bottom: 1rem !important;
+	}
+	.elementor-108363 .mdb-foot-hours--rest {
+		padding-left: 0 !important;
+		border-left: 0 !important;
+	}
+	/* TIER 2 : 3 -> 2 colonnes. */
+	.elementor-108363 .elementor-element-303d9d2 > .e-con-inner {
 		grid-template-columns: 1fr 1fr !important;
 		gap: clamp(2rem, 5vw, 3rem) !important;
 	}
-	/* La colonne marque (1re de la grille) passe pleine largeur. */
-	.elementor-108363 > .e-con > .e-con:first-child > .e-con-inner > .e-con:first-child {
-		grid-column: 1 / -1 !important;
-	}
 }
 @media (max-width: 600px) {
-	.elementor-108363 > .e-con > .e-con:first-child > .e-con-inner {
+	/* TIER 1 : tout en pile, filet horizontal entre les 2 blocs horaires. */
+	.elementor-108363 .elementor-element-97020d4 > .e-con-inner {
+		grid-template-columns: 1fr !important;
+		gap: 0 !important;
+	}
+	.elementor-108363 .mdb-foot-hours--rest,
+	.elementor-108363 .mdb-foot-hours--roof {
+		padding: 1.75rem 0 0 !important;
+		border-left: 0 !important;
+		border-top: 1px solid var(--mdb-rule) !important;
+		margin-top: 1.75rem !important;
+	}
+	/* TIER 2 : une seule colonne. */
+	.elementor-108363 .elementor-element-303d9d2 > .e-con-inner {
 		grid-template-columns: 1fr !important;
 		gap: 2.5rem !important;
 	}
