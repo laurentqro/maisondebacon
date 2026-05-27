@@ -1890,3 +1890,319 @@ html[lang^="en"] .elementor-element-5ba5eec4 .elementor-heading-title::before { 
 	}
 	.elementor-108363 .mdb-foot-legal { flex-direction: column !important; align-items: flex-start !important; }
 }
+
+/* =========================================================
+   PAGE « LE ROOF TOP » (106766) — remise dans la charte
+   (header/footer/home : Cormorant + Tenor + Inter, navy/cream/brass).
+   Page héritée de l'ancien thème, 100% orange. On restyle en place,
+   scellé au wrapper .elementor-106766 + IDs Elementor stables.
+   Structure (après nettoyage DB roof-cleanup-junk.php) :
+     651e311  hero (photo ROOFTO4 en bg) > grille 34da85ec
+              [titre bfabdc5 « Le Roof Top », logo orange 34a8c93 (masqué),
+               btn Réserver ad86369, btn tél 454470c, texte horaires 7488ca8]
+     34e7f20  rangée 3 boutons (Restaurant / Carte cocktails / Carte mets)
+     039f6cd  heading « LE CONCEPT »
+     fd01a52  grille [vidéo YouTube d4b8bba + texte concept e801010]
+     adca52d  heading « Rejoignez-nous sur Instagram »
+     0f371ac  sous-texte instagram
+     61fe278  bouton « Instagram Le Roof Top »
+   ========================================================= */
+
+/* --- HERO : photo conservée + scrim navy + contenu bas-gauche -------------- */
+.elementor-106766 > .elementor-element-651e311 {
+	position: relative;
+	min-height: 86svh !important;
+	display: flex !important;
+	align-items: flex-end !important;
+	overflow: hidden;
+	padding: 0 !important;
+}
+/* Scrim dégradé navy posé sur la photo de fond (jamais sur le contenu). */
+.elementor-106766 > .elementor-element-651e311::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	pointer-events: none;
+	/* Assombrissement façon hero home : voile navy uniforme sur toute l'image
+	   + dégradé directionnel (haut/bas) pour ancrer le bloc titre en bas-gauche. */
+	background:
+		linear-gradient(
+			180deg,
+			rgba(9, 26, 45, 0.55) 0%,
+			rgba(9, 26, 45, 0.30) 35%,
+			rgba(9, 26, 45, 0.45) 65%,
+			rgba(9, 26, 45, 0.90) 100%
+		),
+		linear-gradient(90deg, rgba(9, 26, 45, 0.45) 0%, rgba(9, 26, 45, 0.28) 50%, rgba(9, 26, 45, 0.20) 100%);
+}
+/* La grille interne du hero : colonne, alignée bas-gauche, dégagée du header.
+   Elementor pose le contenu dans .e-con-inner (display:grid 4 col par défaut) :
+   c'est CE nœud qu'il faut passer en flex-column, pas le .e-con extérieur. */
+.elementor-106766 .elementor-element-34da85ec {
+	position: relative !important;
+	z-index: 2 !important;
+	width: 100%;
+	background: transparent !important;
+	inset: auto !important;
+}
+.elementor-106766 .elementor-element-34da85ec > .e-con-inner {
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: flex-start !important;
+	grid-template-columns: none !important;
+	gap: clamp(1.1rem, 2.4vh, 1.8rem) !important;
+	width: 100%;
+	max-width: var(--mdb-wrap-max);
+	margin: 0 auto !important;
+	padding: clamp(150px, 22vh, 220px) var(--mdb-gutter) clamp(2.5rem, 7vh, 4.5rem) !important;
+}
+/* Logo orange : masqué (le titre Cormorant le remplace). */
+.elementor-106766 .elementor-element-34a8c93 { display: none !important; }
+
+/* Titre Cormorant géant, crème. */
+.elementor-106766 .elementor-element-bfabdc5 { align-self: flex-start !important; }
+.elementor-106766 .elementor-element-bfabdc5 .elementor-heading-title {
+	font-family: var(--mdb-font-display) !important;
+	font-weight: 300 !important;
+	font-size: var(--mdb-step-6) !important;
+	line-height: 0.92 !important;
+	letter-spacing: -0.01em !important;
+	color: var(--mdb-cream) !important;
+	text-align: left !important;
+	margin: 0 !important;
+	text-transform: none !important;
+}
+
+/* Horaires -> ligne meta type eyebrow, filet brass devant. */
+.elementor-106766 .elementor-element-7488ca8 {
+	align-self: flex-start !important;
+	width: auto !important;
+	max-width: 100%;
+	order: 3;
+}
+.elementor-106766 .elementor-element-7488ca8 p,
+.elementor-106766 .elementor-element-7488ca8 b,
+.elementor-106766 .elementor-element-7488ca8 strong {
+	font-family: var(--mdb-font-eyebrow) !important;
+	font-weight: 400 !important;
+	font-size: 0.78rem !important;
+	letter-spacing: 0.26em !important;
+	text-transform: uppercase !important;
+	color: rgba(244, 236, 220, 0.82) !important;
+	text-align: left !important;
+	line-height: 1.7 !important;
+	margin: 0 !important;
+}
+.elementor-106766 .elementor-element-7488ca8 p:first-child {
+	display: flex;
+	align-items: center;
+	gap: 0.9rem;
+}
+.elementor-106766 .elementor-element-7488ca8 p:first-child::before {
+	content: "";
+	width: 48px;
+	height: 1px;
+	background: var(--mdb-gold);
+	flex-shrink: 0;
+}
+
+/* CTA hero : « Réserver sa table » brass plein, téléphone en lien discret. */
+.elementor-106766 .elementor-element-ad86369,
+.elementor-106766 .elementor-element-454470c {
+	align-self: flex-start !important;
+	width: auto !important;
+	order: 4;
+}
+.elementor-106766 .elementor-element-ad86369 .elementor-button {
+	display: inline-flex !important;
+	align-items: center;
+	gap: 0.8rem;
+	padding: 1.05rem 1.8rem !important;
+	background: var(--mdb-gold) !important;
+	color: var(--mdb-navy-deep) !important;
+	border: 0 !important;
+	border-radius: 0 !important;
+	font-family: var(--mdb-font-eyebrow) !important;
+	font-size: 0.78rem !important;
+	letter-spacing: 0.3em !important;
+	text-transform: uppercase !important;
+	font-weight: 400 !important;
+	transition: background 0.4s var(--mdb-ease), transform 0.4s var(--mdb-ease);
+}
+.elementor-106766 .elementor-element-ad86369 .elementor-button:hover {
+	background: var(--mdb-gold-bright) !important;
+	transform: translateY(-2px);
+}
+.elementor-106766 .elementor-element-454470c .elementor-button {
+	display: inline-flex !important;
+	align-items: center;
+	gap: 0.6rem;
+	padding: 0.4rem 0 !important;
+	background: transparent !important;
+	border: 0 !important;
+	border-radius: 0 !important;
+	color: var(--mdb-cream) !important;
+	font-family: var(--mdb-font-eyebrow) !important;
+	font-size: 0.74rem !important;
+	letter-spacing: 0.24em !important;
+	text-transform: uppercase !important;
+}
+.elementor-106766 .elementor-element-454470c .elementor-button:hover { color: var(--mdb-gold-bright) !important; }
+/* Côte à côte sur desktop (le hero étant en flex-column, on regroupe via wrap). */
+@media (min-width: 600px) {
+	.elementor-106766 .elementor-element-ad86369,
+	.elementor-106766 .elementor-element-454470c { order: 4; }
+}
+
+/* --- RANGÉE BOUTONS (Restaurant / Carte cocktails / Carte mets) ------------ */
+.elementor-106766 .elementor-element-34e7f20 {
+	background: var(--mdb-navy-deep) !important;
+	padding: clamp(2rem, 5vw, 3.2rem) var(--mdb-gutter) !important;
+	display: flex !important;
+	flex-wrap: wrap;
+	justify-content: center !important;
+	align-items: center;
+	gap: 1rem !important;
+}
+.elementor-106766 .elementor-element-34e7f20 .elementor-widget-button { width: auto !important; }
+.elementor-106766 .elementor-element-34e7f20 .elementor-button {
+	display: inline-flex !important;
+	align-items: center;
+	justify-content: center;
+	padding: 0.95rem 1.8rem !important;
+	background: transparent !important;
+	color: var(--mdb-cream) !important;
+	border: 1px solid var(--mdb-gold) !important;
+	border-radius: 0 !important;
+	font-family: var(--mdb-font-eyebrow) !important;
+	font-size: 0.74rem !important;
+	letter-spacing: 0.26em !important;
+	text-transform: uppercase !important;
+	font-weight: 400 !important;
+	transition: background 0.4s var(--mdb-ease), color 0.4s var(--mdb-ease);
+}
+.elementor-106766 .elementor-element-34e7f20 .elementor-button:hover {
+	background: var(--mdb-gold) !important;
+	color: var(--mdb-navy-deep) !important;
+}
+
+/* --- LE CONCEPT : section cream, eyebrow brass + titre Cormorant ----------- */
+.elementor-106766 .elementor-element-039f6cd {
+	background: var(--mdb-cream) !important;
+	padding: clamp(3.5rem, 8vw, 6rem) var(--mdb-gutter) clamp(1rem, 3vw, 2rem) !important;
+	text-align: center;
+}
+.elementor-106766 .elementor-element-37a9128 .elementor-heading-title {
+	font-family: var(--mdb-font-eyebrow) !important;
+	font-size: 0.8rem !important;
+	letter-spacing: 0.34em !important;
+	text-transform: uppercase !important;
+	color: var(--mdb-gold-deep) !important;
+	font-weight: 400 !important;
+}
+/* Grille vidéo + texte (fd01a52) sur le même fond cream, 2 colonnes alignées.
+   On vise la grille interne réelle (.e-con-inner) comme pour le hero. */
+.elementor-106766 .elementor-element-fd01a52 {
+	background: var(--mdb-cream) !important;
+	padding: clamp(0.5rem, 2vw, 1.5rem) var(--mdb-gutter) clamp(3.5rem, 8vw, 6rem) !important;
+}
+.elementor-106766 .elementor-element-fd01a52 > .e-con-inner {
+	max-width: var(--mdb-wrap-max);
+	margin: 0 auto !important;
+	display: grid !important;
+	grid-template-columns: 1.05fr 1fr !important;
+	gap: clamp(1.5rem, 4vw, 3.5rem) !important;
+	align-items: center !important;
+}
+.elementor-106766 .elementor-element-d4b8bba .elementor-custom-embed-image-overlay,
+.elementor-106766 .elementor-element-d4b8bba .elementor-wrapper { border-radius: 0 !important; }
+/* Filet brass façon concept autour de la vidéo. */
+.elementor-106766 .elementor-element-d4b8bba .elementor-wrapper { position: relative; }
+.elementor-106766 .elementor-element-d4b8bba .elementor-wrapper::after {
+	content: "";
+	position: absolute;
+	inset: 12px;
+	border: 1px solid rgba(177, 137, 84, 0.55);
+	pointer-events: none;
+}
+.elementor-106766 .elementor-element-e801010 { color: var(--mdb-ink) !important; }
+.elementor-106766 .elementor-element-e801010 p {
+	font-family: var(--mdb-font-body) !important;
+	color: var(--mdb-ink) !important;
+	font-size: var(--mdb-step-0) !important;
+	line-height: 1.7 !important;
+	margin: 0 0 0.9rem !important;
+}
+.elementor-106766 .elementor-element-e801010 p:first-child {
+	font-family: var(--mdb-font-display) !important;
+	font-style: italic;
+	font-size: var(--mdb-step-2) !important;
+	line-height: 1.3 !important;
+	color: var(--mdb-navy) !important;
+}
+
+/* --- INSTAGRAM : bloc de clôture navy, centré --------------------------- */
+.elementor-106766 .elementor-element-adca52d {
+	background: var(--mdb-navy) !important;
+	padding: clamp(3.5rem, 8vw, 6rem) var(--mdb-gutter) 0.5rem !important;
+	text-align: center;
+}
+.elementor-106766 .elementor-element-fc86a06 .elementor-heading-title {
+	font-family: var(--mdb-font-display) !important;
+	font-weight: 400 !important;
+	font-size: var(--mdb-step-3) !important;
+	line-height: 1.05 !important;
+	color: var(--mdb-cream) !important;
+	text-transform: none !important;
+}
+.elementor-106766 .elementor-element-0f371ac {
+	background: var(--mdb-navy) !important;
+	padding: 0 var(--mdb-gutter) 1.8rem !important;
+	text-align: center;
+}
+.elementor-106766 .elementor-element-9d1f8e5 p {
+	font-family: var(--mdb-font-eyebrow) !important;
+	font-size: 0.8rem !important;
+	letter-spacing: 0.18em !important;
+	text-transform: uppercase !important;
+	color: rgba(244, 236, 220, 0.7) !important;
+	margin: 0 !important;
+}
+.elementor-106766 .elementor-element-61fe278 {
+	background: var(--mdb-navy) !important;
+	padding: 0 var(--mdb-gutter) clamp(3.5rem, 8vw, 6rem) !important;
+	text-align: center;
+}
+.elementor-106766 .elementor-element-61fe278 .elementor-button {
+	display: inline-flex !important;
+	align-items: center;
+	gap: 0.8rem;
+	padding: 1rem 1.9rem !important;
+	background: transparent !important;
+	color: var(--mdb-cream) !important;
+	border: 1px solid var(--mdb-gold) !important;
+	border-radius: 0 !important;
+	font-family: var(--mdb-font-eyebrow) !important;
+	font-size: 0.76rem !important;
+	letter-spacing: 0.28em !important;
+	text-transform: uppercase !important;
+	transition: background 0.4s var(--mdb-ease), color 0.4s var(--mdb-ease);
+}
+.elementor-106766 .elementor-element-61fe278 .elementor-button:hover {
+	background: var(--mdb-gold) !important;
+	color: var(--mdb-navy-deep) !important;
+}
+
+/* --- Roof Top : mobile --------------------------------------------------- */
+@media (max-width: 768px) {
+	.elementor-106766 > .elementor-element-651e311 { min-height: 100svh !important; }
+	.elementor-106766 .elementor-element-bfabdc5 .elementor-heading-title {
+		font-size: clamp(3.2rem, 16vw, 5rem) !important;
+	}
+	.elementor-106766 .elementor-element-fd01a52 {
+		grid-template-columns: 1fr !important;
+		gap: 1.5rem !important;
+	}
+	.elementor-106766 .elementor-element-7488ca8 p:first-child::before { width: 30px; }
+}
