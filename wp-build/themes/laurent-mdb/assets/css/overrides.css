@@ -159,6 +159,10 @@ button:focus,
 /* =========================================================
    MEGA-MENU OFF-CANVAS (panneau latéral)
    ========================================================= */
+.mdb-panel,
+.mdb-panel *,
+.mdb-panel *::before,
+.mdb-panel *::after { box-sizing: border-box; }
 .mdb-panel {
 	position: fixed;
 	inset: 0;
