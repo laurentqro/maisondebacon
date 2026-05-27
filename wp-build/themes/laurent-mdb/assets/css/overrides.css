@@ -1614,13 +1614,16 @@ body.elementor-editor-active .mdb-sticky-cta {
      TIER 3 légale 878265c ].
    On cible par ID stable (et NON par :first/:last-child). */
 
-/* --- TIER 1 : bandeau haut (marque + horaires + réservations) — 97020d4 --- */
+/* --- TIER 1 : bandeau haut (marque + horaires + réservations) — 97020d4 ---
+   MÊME grille 3 colonnes que le tier nav (303d9d2) pour que marque / horaires
+   resto / horaires roof s'alignent verticalement avec La Maison / Événements /
+   Contact en dessous. */
 .elementor-108363 .elementor-element-97020d4 > .e-con-inner {
 	max-width: var(--mdb-wrap-max) !important;
 	margin-inline: auto !important;
 	display: grid !important;
-	grid-template-columns: 1.4fr 1fr 1fr !important;
-	gap: clamp(2rem, 4vw, 4rem) !important;
+	grid-template-columns: 1fr 1fr 1fr !important;
+	gap: clamp(2rem, 5vw, 4.5rem) !important;
 	align-items: start !important;
 	padding-bottom: clamp(2.5rem, 5vw, 4rem) !important;
 	margin-bottom: clamp(2.5rem, 5vw, 4rem) !important;
@@ -1712,6 +1715,7 @@ body.elementor-editor-active .mdb-sticky-cta {
 .elementor-108363 .mdb-foot-btn-wrap { margin: 1.1rem 0 0 !important; }
 .elementor-108363 a.mdb-foot-btn {
 	display: inline-block !important;
+	white-space: nowrap !important;
 	font-family: var(--mdb-font-eyebrow) !important;
 	font-size: 0.7rem !important;
 	letter-spacing: 0.22em !important;
