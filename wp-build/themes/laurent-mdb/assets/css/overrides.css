@@ -298,10 +298,10 @@ button:focus,
 	border-top: 1px solid var(--mdb-rule);
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	align-items: stretch;
 	gap: 1.3rem;
 }
-.mdb-panel__foot .mdb-btn--block { max-width: 320px; border-radius: 0; }
+.mdb-panel__foot .mdb-btn--block { width: 100%; max-width: 100%; border-radius: 0; }
 
 .mdb-panel__social {
 	list-style: none;
@@ -459,8 +459,12 @@ body.mdb-panel-open { overflow: hidden; }
 /* MOBILE — le panneau et son sous-panneau remplissent l'écran. Le conteneur du
    sous-panneau recouvre la liste des rubriques (plein écran) ; ce sont les
    VOLETS à l'intérieur qui glissent (même couloir que desktop). Croix de
-   fermeture en haut à droite. */
-@media (max-width: 768px) {
+   fermeture en haut à droite.
+   Breakpoint à 880px : c'est là que le label du toggle disparaît (l.154) et que
+   le hamburger devient la nav principale ; le panneau doit donc être plein écran
+   jusqu'à cette largeur, sinon il reste coincé à 420px sur les grands mobiles /
+   petites tablettes (bouton décentré, filets qui débordent). */
+@media (max-width: 880px) {
 	.mdb-panel__nav { width: 100%; }
 	.mdb-panel__sub {
 		left: 0;
@@ -1721,12 +1725,25 @@ html[lang^="en"] .elementor-element-5ba5eec4 .elementor-heading-title::before { 
 }
 .elementor-108363 .mdb-foot-legal-links a:hover { color: var(--mdb-gold-bright) !important; opacity: 1; }
 
-/* --- Responsive --- */
+/* --- Responsive ---
+   Elementor n'émet PAS .mdb-foot-top (classe posée sur le CONTAINER) : on
+   recible donc la grille réelle (.e-con-inner de la 1re rangée), comme à la
+   mise en place ligne ~1485. Sans ça, la grille 4 colonnes restait figée sur
+   mobile et chaque mot passait à la ligne. */
 @media (max-width: 1024px) {
-	.elementor-108363 .mdb-foot-top { grid-template-columns: 1fr 1fr !important; gap: 2.5rem !important; }
-	.elementor-108363 .mdb-foot-col--brand { grid-column: 1 / -1 !important; }
+	.elementor-108363 > .e-con > .e-con:first-child > .e-con-inner {
+		grid-template-columns: 1fr 1fr !important;
+		gap: clamp(2rem, 5vw, 3rem) !important;
+	}
+	/* La colonne marque (1re de la grille) passe pleine largeur. */
+	.elementor-108363 > .e-con > .e-con:first-child > .e-con-inner > .e-con:first-child {
+		grid-column: 1 / -1 !important;
+	}
 }
 @media (max-width: 600px) {
-	.elementor-108363 .mdb-foot-top { grid-template-columns: 1fr !important; }
+	.elementor-108363 > .e-con > .e-con:first-child > .e-con-inner {
+		grid-template-columns: 1fr !important;
+		gap: 2.5rem !important;
+	}
 	.elementor-108363 .mdb-foot-legal { flex-direction: column !important; align-items: flex-start !important; }
 }
