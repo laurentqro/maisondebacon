@@ -807,11 +807,21 @@ body.elementor-editor-active .mdb-sticky-cta {
 	.mdb-hero__title .elementor-heading-title { font-size: clamp(3.2rem, 16vw, 5rem); }
 	.mdb-hero__eyebrow .elementor-heading-title { letter-spacing: 0.22em; }
 	.mdb-hero__eyebrow .elementor-heading-title::before { width: 32px; }
-	/* Pousse le bloc sous le header fixe pour éviter que le titre soit coupé */
+	/* Hero quasi plein écran sur mobile : la section remplit toute la hauteur
+	   visible (le header fixe la recouvre par-dessus, c'est voulu). Le contenu
+	   est poussé sous le header (padding-top qui dégage la barre ~150px + marge)
+	   puis centré dans l'espace restant — l'eyebrow ne touche jamais la barre et
+	   le titre n'est jamais rogné. */
+	.elementor-element-167c86ed {
+		min-height: 100svh !important;
+		display: flex !important;
+		align-items: stretch !important;
+	}
 	.elementor-element-167c86ed > .elementor-element-57e6219 {
-		padding-top: clamp(96px, 16vh, 140px) !important;
-		padding-bottom: clamp(2rem, 8vh, 4rem) !important;
-		justify-content: flex-start !important;
+		flex: 1 1 auto !important;
+		padding-top: clamp(170px, 24vh, 230px) !important;
+		padding-bottom: clamp(2.5rem, 8vh, 4.5rem) !important;
+		justify-content: center !important;
 	}
 	/* Voile vidéo un peu plus dense sur mobile (footage souvent très clair) */
 	.elementor-element-167c86ed .elementor-background-video-container::after {
