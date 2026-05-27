@@ -1975,7 +1975,7 @@ html[lang^="en"] .elementor-element-5ba5eec4 .elementor-heading-title::before { 
 .elementor-106766 .elementor-element-34a8c93 a { margin: 0 !important; }
 .elementor-106766 .elementor-element-34a8c93 img {
 	width: auto !important;
-	height: clamp(120px, 18vw, 220px) !important;
+	height: clamp(240px, 34vw, 460px) !important;
 	max-width: 100% !important;
 	object-fit: contain;
 	object-position: left center;
@@ -2205,7 +2205,7 @@ html[lang^="en"] .elementor-element-5ba5eec4 .elementor-heading-title::before { 
 @media (max-width: 768px) {
 	.elementor-106766 > .elementor-element-651e311 { min-height: 100svh !important; }
 	.elementor-106766 .elementor-element-34a8c93 img {
-		height: clamp(100px, 32vw, 170px) !important;
+		height: clamp(200px, 52vw, 320px) !important;
 	}
 	.elementor-106766 .elementor-element-fd01a52 {
 		grid-template-columns: 1fr !important;
