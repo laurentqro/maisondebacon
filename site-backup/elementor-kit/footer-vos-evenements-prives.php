@@ -8,7 +8,7 @@ $APPLY    = getenv('MDB_APPLY') === '1';
 $POST     = 108363;
 $EYEBROW  = '8f4441e';
 $LINKS    = '54c71db';
-$NEW_EYE  = 'Vos Événements Privés';
+$NEW_EYE  = 'Événements Privés';
 $NEW_LI   = '<li><a href="https://staging.maisondebacon.fr/le-rooftop-club-bacon/">Le Roof Top Club Bacon</a></li>';
 
 $data = get_post_meta($POST, '_elementor_data', true);
