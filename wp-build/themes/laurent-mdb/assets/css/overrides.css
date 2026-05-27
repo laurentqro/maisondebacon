@@ -1335,6 +1335,18 @@ body.elementor-editor-active .mdb-sticky-cta {
 	flex-direction: column !important;
 	align-items: center !important;
 	text-align: center;
+	/* Les 3 colonnes s'ancrent en HAUT de la rangée : les arches s'alignent
+	   parfaitement quel que soit le nombre de lignes de la légende en dessous
+	   (Appartement est sur 2 lignes). Remplace le hack de _padding en DB sur le
+	   titre Roof Top (5ba5eec4), fragile et dépendant du contenu. */
+	align-self: flex-start !important;
+	justify-content: flex-start !important;
+}
+/* La rangée (e-con-inner qui contient les 3 colonnes) aligne ses items en haut
+   plutôt que de les étirer, pour que les images restent calées en haut. */
+.elementor-element-7170bb4c > .e-con-inner,
+.elementor-element-7170bb4c > .e-con-inner > .e-flex {
+	align-items: flex-start !important;
 }
 
 /* L'arche est baked-in dans les PNG (750x1000 RGBA, coins transparents).
@@ -1362,10 +1374,10 @@ body.elementor-editor-active .mdb-sticky-cta {
    Texte décoratif en CSS -> TRP ne le traduit pas : variantes EN explicites. */
 .elementor-element-265c21d5 .elementor-heading-title::before { content: "Le restaurant"; }
 .elementor-element-728a3929 .elementor-heading-title::before { content: "Réception privée"; }
-.elementor-element-5ba5eec4 .elementor-heading-title::before { content: "Le rooftop"; }
+.elementor-element-5ba5eec4 .elementor-heading-title::before { content: "Réception privée"; }
 html[lang^="en"] .elementor-element-265c21d5 .elementor-heading-title::before { content: "The restaurant"; }
 html[lang^="en"] .elementor-element-728a3929 .elementor-heading-title::before { content: "Private events"; }
-html[lang^="en"] .elementor-element-5ba5eec4 .elementor-heading-title::before { content: "The rooftop"; }
+html[lang^="en"] .elementor-element-5ba5eec4 .elementor-heading-title::before { content: "Private events"; }
 .elementor-element-265c21d5 .elementor-heading-title::before,
 .elementor-element-728a3929 .elementor-heading-title::before,
 .elementor-element-5ba5eec4 .elementor-heading-title::before {
@@ -1383,13 +1395,23 @@ html[lang^="en"] .elementor-element-5ba5eec4 .elementor-heading-title::before { 
    On abandonne les capitales ultra-espacées d'origine. */
 .elementor-element-7170bb4c .elementor-widget-heading:not(:first-of-type) .elementor-heading-title {
 	font-family: var(--mdb-font-display) !important;
-	font-size: clamp(1.35rem, 2.2vw, 1.75rem) !important;
+	/* Taille réduite pour que « L'Appartement de Victor » (le plus long) tienne
+	   sur UNE ligne dans la colonne — sinon il passait à 2 lignes et son CTA
+	   décrochait. (nowrap desktop ajouté plus bas, en min-width.) */
+	font-size: clamp(1.2rem, 1.4vw, 1.35rem) !important;
 	font-weight: 500 !important;
 	letter-spacing: 0.01em !important;
 	text-transform: none !important;
 	color: var(--mdb-cream) !important;
 	line-height: 1.2 !important;
 	margin: 1.25rem 0 0 !important;
+}
+/* Desktop : on verrouille les titres de carte sur une seule ligne (les 3 cartes
+   restent ainsi de hauteur égale). Sur mobile (≤767px) on laisse wrapper. */
+@media (min-width: 768px) {
+	.elementor-element-7170bb4c .elementor-widget-heading:not(:first-of-type) .elementor-heading-title {
+		white-space: nowrap !important;
+	}
 }
 
 /* CTA des univers : ghost crème -> se remplit d'or au survol.
@@ -1405,7 +1427,7 @@ html[lang^="en"] .elementor-element-5ba5eec4 .elementor-heading-title::before { 
 	padding: 0.7rem 1.5rem !important;
 	background: transparent !important;
 	color: var(--mdb-cream) !important;
-	border: 1px solid rgba(244, 236, 220, 0.45) !important;
+	border: 1px solid var(--mdb-gold) !important;
 	letter-spacing: 0.12em !important;
 	text-transform: uppercase !important;
 	font-size: 0.8rem !important;
