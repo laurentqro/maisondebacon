@@ -1141,6 +1141,22 @@ body.elementor-editor-active .mdb-sticky-cta {
 	/* Intro éditoriale : titre + corps un cran plus petits sur mobile. */
 	.elementor-element-7bacf566 .elementor-heading-title { font-size: clamp(2rem, 9vw, 2.6rem) !important; }
 	.elementor-element-7bacf566 .elementor-widget-text-editor { font-size: 1rem !important; line-height: 1.6 !important; }
+
+	/* Nos Univers : sur mobile (cartes empilées) le légende était trop loin de
+	   son image. On resserre la pile : image collée à l'eyebrow/titre, marges
+	   verticales des widgets neutralisées, espace contrôlé. */
+	.elementor-element-7170bb4c .elementor-widget-image { margin-bottom: 0 !important; }
+	.elementor-element-7170bb4c .elementor-widget-image .elementor-widget-container { margin-bottom: 0 !important; }
+	.elementor-element-7170bb4c .elementor-widget-heading:not(:first-of-type) .elementor-heading-title {
+		margin-top: 0.85rem !important;
+	}
+	.elementor-element-7170bb4c .elementor-widget-heading:not(:first-of-type) {
+		margin-top: 0 !important;
+	}
+	/* Espace réduit sous chaque carte (entre une carte et la suivante). */
+	.elementor-element-7a5faa3b,
+	.elementor-element-6520f472,
+	.elementor-element-4c990681 { gap: 0.25rem !important; margin-bottom: 1.5rem !important; }
 }
 
 /* --- a8f323f cartes promo (recrutement / RSE) : fond crème ---------- */
