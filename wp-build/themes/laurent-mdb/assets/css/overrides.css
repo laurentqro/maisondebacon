@@ -1614,16 +1614,17 @@ body.elementor-editor-active .mdb-sticky-cta {
      TIER 3 légale 878265c ].
    On cible par ID stable (et NON par :first/:last-child). */
 
-/* --- TIER 1 : bandeau haut (marque + horaires + réservations) — 97020d4 ---
-   MÊME grille 3 colonnes que le tier nav (303d9d2) pour que marque / horaires
-   resto / horaires roof s'alignent verticalement avec La Maison / Événements /
-   Contact en dessous. */
+/* --- TIER 1 : bandeau « réserver » — 97020d4 ---
+   Logo + adresse + réseaux retirés de ce tier (demande client) : il ne reste
+   que les 2 blocs horaires + boutons. On garde la MÊME grille 3 colonnes que
+   le tier nav pour que Horaires Restaurant / Horaires Le Roof Top s'alignent
+   sous La Maison / Événements ; la 3e colonne reste vide (sous Contact). */
 .elementor-108363 .elementor-element-97020d4 > .e-con-inner {
 	max-width: var(--mdb-wrap-max) !important;
 	margin-inline: auto !important;
 	display: grid !important;
-	grid-template-columns: 1fr 1fr 1fr !important;
-	gap: clamp(2rem, 5vw, 4.5rem) !important;
+	grid-template-columns: 1fr 1fr 1fr 1fr !important;
+	gap: clamp(1.5rem, 3.5vw, 3.5rem) !important;
 	align-items: start !important;
 	padding-bottom: clamp(2.5rem, 5vw, 4rem) !important;
 	margin-bottom: clamp(2.5rem, 5vw, 4rem) !important;
@@ -1635,11 +1636,12 @@ body.elementor-editor-active .mdb-sticky-cta {
 	flex-direction: column !important;
 	width: 100% !important;
 }
-/* Filets verticaux : avant chaque bloc horaires (2e et 3e cellule).
-   align-self:start garde le filet à la hauteur du contenu, pas de la rangée. */
+/* Filet vertical uniquement entre les deux blocs (avant Le Roof Top). */
 .elementor-108363 .mdb-foot-hours--rest,
 .elementor-108363 .mdb-foot-hours--roof {
 	align-self: start !important;
+}
+.elementor-108363 .mdb-foot-hours--roof {
 	padding-left: clamp(2rem, 4vw, 4rem) !important;
 	border-left: 1px solid var(--mdb-rule) !important;
 }
@@ -1647,13 +1649,14 @@ body.elementor-editor-active .mdb-sticky-cta {
 	margin-bottom: 0.6rem !important;
 }
 
-/* --- TIER 2 : 3 colonnes de navigation — 303d9d2 --- */
+/* --- TIER 2 : 4 colonnes de navigation — 303d9d2 ---
+   La Maison | Événements | Nous Contacter | Restez Informés (newsletter). */
 .elementor-108363 .elementor-element-303d9d2 > .e-con-inner {
 	max-width: var(--mdb-wrap-max) !important;
 	margin-inline: auto !important;
 	display: grid !important;
-	grid-template-columns: 1fr 1fr 1fr !important;
-	gap: clamp(2rem, 5vw, 4.5rem) !important;
+	grid-template-columns: 1fr 1fr 1fr 1fr !important;
+	gap: clamp(1.5rem, 3.5vw, 3.5rem) !important;
 	align-items: start !important;
 }
 .elementor-108363 .elementor-element-303d9d2 > .e-con-inner > .e-con {
@@ -1661,47 +1664,59 @@ body.elementor-editor-active .mdb-sticky-cta {
 	flex-direction: column !important;
 	width: 100% !important;
 }
-/* --- TIER 2.5 : bandeau newsletter centré — 09fb99f ---
-   « Restez informés » sorti de la colonne marque, en bande pleine largeur
-   centrée, filet haut pour cadrer le tier. NB : conteneur e-con-full -> pas
-   de .e-con-inner, on cible le conteneur directement. */
-.elementor-108363 .elementor-element-09fb99f {
-	max-width: var(--mdb-wrap-max) !important;
-	margin-inline: auto !important;
+/* --- Newsletter en 4e colonne du tier nav — conteneur 27fcfe8 ---
+   « Restez Informés » aligné à gauche comme les autres colonnes. NB : Elementor
+   n'émet PAS les _css_classes sur les CONTENEURS, donc on cible par ID stable
+   (.elementor-element-27fcfe8), pas par .mdb-foot-col--nl. Formulaire en pile
+   verticale (input puis bouton) car la colonne est étroite. */
+.elementor-108363 .elementor-element-27fcfe8 .mdb-foot-eyebrow--nl,
+.elementor-108363 .elementor-element-27fcfe8 .mdb-foot-eyebrow--nl .elementor-heading-title {
+	margin: 0 0 1.5rem !important;
+}
+.elementor-108363 .elementor-element-27fcfe8 .mdb-foot-newsletter { margin: 0 !important; }
+.elementor-108363 .elementor-element-27fcfe8 .mdb-foot-newsletter .wpcf7 { max-width: 100% !important; }
+/* La .mdb-nl-row est un <p> contenant un <span> (wrap email) + le submit,
+   séparés par des <br>. On masque les <br>, pile verticale, pleine largeur. */
+.elementor-108363 .elementor-element-27fcfe8 .mdb-foot-newsletter .mdb-nl-row {
 	display: flex !important;
 	flex-direction: column !important;
-	align-items: center !important;
-	justify-content: center !important;
-	text-align: center !important;
-	gap: 0 !important;
-	min-height: 0 !important;
-	margin-top: clamp(2rem, 4vw, 3rem) !important;
-	padding-top: clamp(2rem, 4vw, 3rem) !important;
-	border-top: 1px solid var(--mdb-rule) !important;
+	align-items: stretch !important;
+	gap: 0.6rem !important;
 }
-/* Pas de padding parasite sur les wrappers de widget du bandeau. */
-.elementor-108363 .elementor-element-09fb99f > .elementor-widget > .elementor-widget-container {
-	padding: 0 !important;
+.elementor-108363 .elementor-element-27fcfe8 .mdb-foot-newsletter .mdb-nl-row br { display: none !important; }
+.elementor-108363 .elementor-element-27fcfe8 .mdb-foot-newsletter .wpcf7-form-control-wrap {
+	display: block !important;
+	width: 100% !important;
 }
-.elementor-108363 .mdb-foot-nl-band .mdb-foot-eyebrow--nl,
-.elementor-108363 .mdb-foot-nl-band .mdb-foot-eyebrow--nl .elementor-heading-title {
-	margin: 0 0 1.1rem !important;
+.elementor-108363 .elementor-element-27fcfe8 .mdb-foot-newsletter input[type="email"] {
+	width: 100% !important;
+	box-sizing: border-box !important;
 }
-.elementor-108363 .mdb-foot-nl-band .mdb-foot-newsletter {
-	margin: 0 !important;
-}
-.elementor-108363 .mdb-foot-nl-band .mdb-foot-newsletter .wpcf7 {
-	margin-inline: auto !important;
-}
-.elementor-108363 .mdb-foot-nl-band .mdb-foot-newsletter .wpcf7-acceptance,
-.elementor-108363 .mdb-foot-nl-band .mdb-foot-newsletter .wpcf7-list-item-label {
-	justify-content: center !important;
+.elementor-108363 .elementor-element-27fcfe8 .mdb-foot-newsletter .mdb-nl-submit,
+.elementor-108363 .elementor-element-27fcfe8 .mdb-foot-newsletter input[type="submit"] {
+	width: 100% !important;
 }
 
-/* --- TIER 3 : barre légale — 878265c --- */
+/* --- TIER 3 : barre légale + réseaux — 878265c ---
+   Le tier accueille désormais le bloc légal ET les réseaux sociaux (déplacés
+   tout en bas). On range les deux en ligne : légal à gauche, réseaux à droite. */
 .elementor-108363 .elementor-element-878265c > .e-con-inner {
 	max-width: var(--mdb-wrap-max) !important;
 	margin-inline: auto !important;
+	display: flex !important;
+	flex-direction: row !important;
+	flex-wrap: wrap !important;
+	align-items: center !important;
+	justify-content: space-between !important;
+	gap: 1.5rem !important;
+}
+.elementor-108363 .elementor-element-878265c > .e-con-inner > .elementor-element-3867107 {
+	flex: 1 1 auto !important;
+}
+/* Réseaux en pied : pas de marge haute (la marge venait du contexte colonne). */
+.elementor-108363 .mdb-foot-social--bottom { margin-top: 0 !important; flex: 0 0 auto !important; }
+.elementor-108363 .mdb-foot-social--bottom .elementor-social-icons-wrapper {
+	justify-content: flex-end !important;
 }
 .elementor-108363 .mdb-foot-hours-strip p:not(.mdb-foot-sub):not(.mdb-foot-btn-wrap) {
 	font-family: var(--mdb-font-body) !important;
@@ -1964,20 +1979,12 @@ body.elementor-editor-active .mdb-sticky-cta {
    mise en place ligne ~1485. Sans ça, la grille 4 colonnes restait figée sur
    mobile et chaque mot passait à la ligne. */
 @media (max-width: 1024px) {
-	/* TIER 1 : marque pleine largeur, les 2 horaires côte à côte dessous. */
+	/* TIER 1 : les 2 blocs horaires côte à côte (sur 2 colonnes). */
 	.elementor-108363 .elementor-element-97020d4 > .e-con-inner {
 		grid-template-columns: 1fr 1fr !important;
 		gap: clamp(1.5rem, 4vw, 3rem) !important;
 	}
-	.elementor-108363 .elementor-element-97020d4 > .e-con-inner > .e-con:first-child {
-		grid-column: 1 / -1 !important;
-		margin-bottom: 1rem !important;
-	}
-	.elementor-108363 .mdb-foot-hours--rest {
-		padding-left: 0 !important;
-		border-left: 0 !important;
-	}
-	/* TIER 2 : 3 -> 2 colonnes. */
+	/* TIER 2 : 4 -> 2 colonnes. */
 	.elementor-108363 .elementor-element-303d9d2 > .e-con-inner {
 		grid-template-columns: 1fr 1fr !important;
 		gap: clamp(2rem, 5vw, 3rem) !important;
