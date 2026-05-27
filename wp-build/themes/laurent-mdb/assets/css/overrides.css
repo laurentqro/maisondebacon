@@ -1608,9 +1608,10 @@ body.elementor-editor-active .mdb-sticky-cta {
 	padding: clamp(3.5rem, 7vw, 6rem) var(--mdb-gutter) clamp(1.5rem, 3vw, 2.5rem) !important;
 }
 /* Structure réelle :
-   .elementor-108363 > .e-con(full) > [ .e-con(boxed)=rangée haut, .e-con(boxed)=bas ]
-   La rangée du haut contient un .e-con-inner avec 4 colonnes (.e-con). */
-.elementor-108363 > .e-con > .e-con:first-child > .e-con-inner {
+   .elementor-108363 > .e-con(full) > [ (strip horaires 97020d4), rangée colonnes
+   303d9d2, rangée légale 878265c ]. On cible par ID stable (et NON par
+   :first/:last-child, car le strip pré-footer décale l'ordre). */
+.elementor-108363 .elementor-element-303d9d2 > .e-con-inner {
 	max-width: var(--mdb-wrap-max) !important;
 	margin-inline: auto !important;
 	display: grid !important;
@@ -1619,15 +1620,91 @@ body.elementor-editor-active .mdb-sticky-cta {
 	align-items: start !important;
 }
 /* Chaque colonne (conteneur enfant de la grille) en pile verticale. */
-.elementor-108363 > .e-con > .e-con:first-child > .e-con-inner > .e-con {
+.elementor-108363 .elementor-element-303d9d2 > .e-con-inner > .e-con {
 	display: flex !important;
 	flex-direction: column !important;
 	width: 100% !important;
 }
-/* Barre légale : la 2e rangée (.e-con-inner) prend la largeur max + filet haut. */
-.elementor-108363 > .e-con > .e-con:last-child > .e-con-inner {
+/* Barre légale : la rangée prend la largeur max + filet haut. */
+.elementor-108363 .elementor-element-878265c > .e-con-inner {
 	max-width: var(--mdb-wrap-max) !important;
 	margin-inline: auto !important;
+}
+
+/* --- Strip horaires (pré-footer horizontal) — conteneur 97020d4 ---
+   Bandeau « réserver » : aligné à gauche sur la colonne marque, filet
+   horizontal dessous (sépare réservation / navigation) + filet vertical
+   entre les deux établissements. */
+.elementor-108363 .elementor-element-97020d4 > .e-con-inner {
+	max-width: var(--mdb-wrap-max) !important;
+	margin-inline: auto !important;
+	display: flex !important;
+	flex-direction: row !important;
+	flex-wrap: wrap !important;
+	justify-content: flex-start !important;
+	align-items: stretch !important;
+	gap: 0 !important;
+	padding-bottom: clamp(2.25rem, 4vw, 3.25rem) !important;
+	margin-bottom: clamp(2.5rem, 5vw, 4rem) !important;
+	border-bottom: 1px solid var(--mdb-rule) !important;
+	text-align: left !important;
+}
+.elementor-108363 .mdb-foot-hours--rest,
+.elementor-108363 .mdb-foot-hours--roof {
+	width: auto !important;
+	flex: 0 1 auto !important;
+	padding: 0 clamp(2rem, 4vw, 3.5rem) !important;
+}
+.elementor-108363 .mdb-foot-hours--rest { padding-left: 0 !important; }
+/* Filet vertical entre Restaurant et Le Roof Top. */
+.elementor-108363 .mdb-foot-hours--roof {
+	border-left: 1px solid var(--mdb-rule) !important;
+}
+.elementor-108363 .mdb-foot-hours-strip .mdb-foot-sub {
+	margin-bottom: 0.6rem !important;
+}
+.elementor-108363 .mdb-foot-hours-strip p:not(.mdb-foot-sub):not(.mdb-foot-btn-wrap) {
+	font-family: var(--mdb-font-body) !important;
+	font-size: 1.02rem !important;
+	line-height: 1.7 !important;
+	color: var(--mdb-cream) !important;
+	opacity: 0.9;
+	margin: 0 !important;
+}
+/* Bouton « Réserver en ligne » sous chaque bloc horaires. */
+.elementor-108363 .mdb-foot-btn-wrap { margin: 1.1rem 0 0 !important; }
+.elementor-108363 a.mdb-foot-btn {
+	display: inline-block !important;
+	font-family: var(--mdb-font-eyebrow) !important;
+	font-size: 0.7rem !important;
+	letter-spacing: 0.22em !important;
+	text-transform: uppercase !important;
+	color: var(--mdb-gold) !important;
+	text-decoration: none !important;
+	padding: 0.7rem 1.6rem !important;
+	border: 1px solid var(--mdb-gold) !important;
+	transition: background-color 0.3s var(--mdb-ease), color 0.3s var(--mdb-ease), border-color 0.3s var(--mdb-ease) !important;
+}
+.elementor-108363 a.mdb-foot-btn:hover {
+	background-color: var(--mdb-gold) !important;
+	border-color: var(--mdb-gold) !important;
+	color: var(--mdb-navy-deep) !important;
+}
+@media (max-width: 600px) {
+	.elementor-108363 .elementor-element-97020d4 > .e-con-inner {
+		flex-direction: column !important;
+		gap: 0 !important;
+	}
+	.elementor-108363 .mdb-foot-hours--rest,
+	.elementor-108363 .mdb-foot-hours--roof {
+		padding: 1.5rem 0 !important;
+	}
+	.elementor-108363 .mdb-foot-hours--rest { padding-top: 0 !important; }
+	/* En pile : le filet redevient horizontal entre les deux blocs. */
+	.elementor-108363 .mdb-foot-hours--roof {
+		border-left: 0 !important;
+		border-top: 1px solid var(--mdb-rule) !important;
+	}
 }
 
 /* --- Colonne marque --- */
