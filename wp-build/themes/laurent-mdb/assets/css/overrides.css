@@ -1619,7 +1619,9 @@ body.elementor-editor-active .mdb-sticky-cta {
    que les 2 blocs horaires + boutons. On garde la MÊME grille 3 colonnes que
    le tier nav pour que Horaires Restaurant / Horaires Le Roof Top s'alignent
    sous La Maison / Événements ; la 3e colonne reste vide (sous Contact). */
-.elementor-108363 .elementor-element-97020d4 > .e-con-inner {
+/* NB : ce conteneur est e-con-full -> PAS de .e-con-inner. On cible le
+   conteneur 97020d4 directement (les blocs horaires sont ses enfants directs). */
+.elementor-108363 .elementor-element-97020d4 {
 	max-width: var(--mdb-wrap-max) !important;
 	margin-inline: auto !important;
 	display: flex !important;
@@ -1632,11 +1634,6 @@ body.elementor-editor-active .mdb-sticky-cta {
 	margin-bottom: clamp(2.5rem, 5vw, 4rem) !important;
 	border-bottom: 1px solid var(--mdb-rule) !important;
 	text-align: left !important;
-}
-.elementor-108363 .elementor-element-97020d4 > .e-con-inner > .e-con {
-	display: flex !important;
-	flex-direction: column !important;
-	width: auto !important;
 }
 /* Les 2 blocs horaires centrés sur la page, filet vertical entre eux. */
 .elementor-108363 .mdb-foot-hours--rest,
@@ -1991,7 +1988,7 @@ body.elementor-editor-active .mdb-sticky-cta {
 }
 @media (max-width: 600px) {
 	/* TIER 1 : les 2 blocs en pile, filet horizontal entre eux. */
-	.elementor-108363 .elementor-element-97020d4 > .e-con-inner {
+	.elementor-108363 .elementor-element-97020d4 {
 		flex-direction: column !important;
 		align-items: center !important;
 	}
