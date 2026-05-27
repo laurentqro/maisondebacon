@@ -212,16 +212,22 @@ button:focus,
 	margin-bottom: clamp(1.5rem, 4vw, 2.6rem);
 }
 .mdb-panel__close {
-	background: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	flex: 0 0 auto;
+	border-radius: 999px;
+	background: var(--mdb-gold);
 	border: 0;
 	cursor: pointer;
-	font-size: 1.6rem;
+	font-size: 1.5rem;
 	line-height: 1;
-	color: var(--mdb-navy-deep);
-	opacity: 0.7;
-	transition: opacity 0.3s var(--mdb-ease), color 0.3s var(--mdb-ease);
+	color: var(--mdb-cream);
+	transition: background 0.3s var(--mdb-ease);
 }
-.mdb-panel__close:hover { opacity: 1; color: var(--mdb-gold-deep); }
+.mdb-panel__close:hover { background: var(--mdb-gold-deep); }
 .mdb-panel__lang { font-size: 0.95rem; gap: 0.6rem; }
 .mdb-panel__lang .mdb-lang__item { color: rgba(20, 32, 44, 0.55); }
 .mdb-panel__lang .mdb-lang__item.is-active { color: var(--mdb-gold-deep); }
@@ -255,9 +261,10 @@ button:focus,
 .mdb-panel__link.is-active { color: var(--mdb-gold-deep); }
 .mdb-panel__item.is-active .mdb-panel__link { font-weight: 600; }
 .mdb-panel__chevron {
-	font-size: 1.4rem;
+	font-size: 1.6rem;
 	color: var(--mdb-gold-deep);
-	opacity: 0.6;
+	opacity: 1;
+	flex: 0 0 auto;
 }
 
 /* Liens secondaires (Carte cadeau, Nous trouver) — juste sous le menu, séparés
@@ -371,17 +378,22 @@ button:focus,
 	position: absolute;
 	top: clamp(1.2rem, 3vw, 1.8rem);
 	right: clamp(1.2rem, 3vw, 1.8rem);
-	z-index: 1;
-	background: none;
+	z-index: 10;
+	width: 44px;
+	height: 44px;
+	align-items: center;
+	justify-content: center;
+	border-radius: 999px;
+	background: var(--mdb-gold);
 	border: 0;
 	cursor: pointer;
-	font-size: 1.6rem;
+	font-size: 1.5rem;
 	line-height: 1;
-	color: var(--mdb-navy-deep);
-	opacity: 0.7;
-	transition: opacity 0.3s var(--mdb-ease), color 0.3s var(--mdb-ease);
+	color: var(--mdb-cream);
+	box-shadow: 0 2px 10px rgba(9, 26, 45, 0.25);
+	transition: background 0.3s var(--mdb-ease);
 }
-.mdb-panel__pane-close:hover { opacity: 1; color: var(--mdb-gold-deep); }
+.mdb-panel__pane-close:hover { background: var(--mdb-gold-deep); }
 
 .mdb-panel__media {
 	width: min(260px, 100%);
@@ -451,7 +463,7 @@ body.mdb-panel-open { overflow: hidden; }
 		width: 100%;
 		z-index: 3; /* au-dessus du nav (z-index: 2) */
 	}
-	.mdb-panel__pane-close { display: block; }
+	.mdb-panel__pane-close { display: flex; }
 }
 
 /* Le header est position:fixed → il sort du flux et recouvre le haut du
