@@ -1519,7 +1519,7 @@ html[lang^="en"] .elementor-element-5ba5eec4 .elementor-heading-title::before { 
 	content: "";
 	position: absolute;
 	inset: 6px;
-	border: 1px solid var(--mdb-gold);
+	border: 2px solid var(--mdb-gold);
 	pointer-events: none;
 	z-index: 5;
 }
