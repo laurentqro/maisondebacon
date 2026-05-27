@@ -1918,14 +1918,17 @@ html[lang^="en"] .elementor-element-5ba5eec4 .elementor-heading-title::before { 
 	padding: 0 !important;
 }
 /* Scrim dégradé navy posé sur la photo de fond (jamais sur le contenu). */
-.elementor-106766 > .elementor-element-651e311::before {
+/* Assombrissement façon hero home : voile navy uniforme + dégradé directionnel.
+   IMPORTANT : Elementor utilise déjà ::before sur ce conteneur pour SON overlay
+   de fond (background_overlay). On ne se bat pas avec : on pose NOTRE scrim sur
+   ::after (qu'Elementor n'utilise pas), au-dessus de la photo mais sous le
+   contenu (.e-con-inner est en z-index:2). */
+.elementor-106766 > .elementor-element-651e311::after {
 	content: "";
 	position: absolute;
 	inset: 0;
-	z-index: 0;
+	z-index: 1;
 	pointer-events: none;
-	/* Assombrissement façon hero home : voile navy uniforme sur toute l'image
-	   + dégradé directionnel (haut/bas) pour ancrer le bloc titre en bas-gauche. */
 	background:
 		linear-gradient(
 			180deg,
