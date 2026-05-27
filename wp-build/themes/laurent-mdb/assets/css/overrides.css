@@ -155,28 +155,43 @@ button:focus,
 	.mdb-header__actions { display: none; }
 	.mdb-menu-toggle__label { display: none; }
 
-	/* Barre plus fine sur mobile : on réduit le padding du header et on borne
-	   le logo. Le surcroît de hauteur venait de la colonne logo (~142px pour
-	   une image de 69px) : on supprime les marges/paddings verticaux du widget
-	   logo et on cale le logo sur une hauteur compacte, centré verticalement. */
+	/* Barre fine sur mobile. On impose une hauteur compacte au CONTENEUR du
+	   header et on force les 3 colonnes (.elementor-column) à cette hauteur,
+	   centrées verticalement. Le surcroît venait des colonnes (142px) que les
+	   réglages desktop Elementor étiraient ; on les borne ici explicitement. */
 	header.mdb-header,
-	.mdb-header { padding-top: 8px !important; padding-bottom: 8px !important; }
-	.mdb-header > .elementor-container { align-items: center !important; }
+	.mdb-header { padding-top: 6px !important; padding-bottom: 6px !important; }
+	.mdb-header > .elementor-container {
+		min-height: 0 !important;
+		align-items: center !important;
+	}
+	.mdb-header > .elementor-container > .elementor-column {
+		min-height: 0 !important;
+		height: auto !important;
+		align-self: center !important;
+	}
+	.mdb-header > .elementor-container > .elementor-column > .elementor-widget-wrap {
+		align-content: center !important;
+	}
 	.mdb-header__logo,
 	.mdb-header__logo .elementor-widget-container {
-		margin-top: 0 !important;
-		margin-bottom: 0 !important;
-		padding-top: 0 !important;
-		padding-bottom: 0 !important;
+		margin: 0 !important;
+		padding: 0 !important;
 	}
-	/* Logo SVG (viewBox seul, sans width/height) : on fixe une LARGEUR explicite
-	   — max-height + width:auto le faisait s'effondrer à 0 (logo invisible).
-	   247×138 → ~84px de large ≈ 47px de haut, compact mais lisible. */
-	.mdb-header__logo img {
-		width: 84px !important;
-		max-width: 84px !important;
-		height: auto !important;
-		margin-block: 0 !important;
+	/* Logo : SVG 247×138 (viewBox seul) ; height fixe + width:auto garde le
+	   ratio. Conteneurs en flex centré pour qu'il ne crée pas de hauteur morte. */
+	.mdb-header .mdb-header__logo,
+	.mdb-header .mdb-header__logo .elementor-widget-wrap,
+	.mdb-header .mdb-header__logo .elementor-widget-container {
+		display: flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+	}
+	.mdb-header .mdb-header__logo img {
+		height: 44px !important;
+		width: auto !important;
+		max-width: 100% !important;
+		margin: 0 !important;
 	}
 }
 
