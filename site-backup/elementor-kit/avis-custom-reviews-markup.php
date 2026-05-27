@@ -30,7 +30,7 @@ $markup = <<<'HTML'
       <span class="mdb-reviews__avg" data-avg>—</span><span class="mdb-reviews__avg-max">/5</span>
     </div>
     <div class="mdb-reviews__stars" data-stars aria-hidden="true"></div>
-    <p class="mdb-reviews__count"><span data-count>—</span> avis vérifiés sur Zenchef</p>
+    <p class="mdb-reviews__count"><span data-count>—</span> <span data-count-suffix>avis vérifiés sur Zenchef</span></p>
     <ul class="mdb-reviews__breakdown" data-breakdown></ul>
   </div>
   <div class="mdb-reviews__grid" data-grid>
@@ -46,26 +46,58 @@ $markup = <<<'HTML'
   var ROOT = document.querySelector('.mdb-reviews[data-rid="354476"]');
   if(!ROOT || ROOT.dataset.mdbInit) return; ROOT.dataset.mdbInit='1';
   var RID = ROOT.dataset.rid;
+
+  /* Locale : la page Avis existe en FR (/avis/) et EN (/en/avis/) via
+     TranslatePress, qui pose <html lang>. Les cartes étant injectées par JS,
+     TRP ne peut pas les traduire -> on porte ici un mini-dictionnaire. */
+  var EN = ((document.documentElement.getAttribute('lang')||'').toLowerCase().indexOf('en') === 0);
+  var T = EN ? {
+    locale:'en-GB', dec:'.',
+    countSuffix:'verified reviews on Zenchef',
+    loading:'Loading reviews…',
+    empty:'Reviews coming soon.',
+    fail:'Find all our reviews on Zenchef.',
+    sourceLabel:'See all reviews on',
+    anon:'Guest', outOf:'out of 5',
+    bd:{service:'Service', ambiance:'Atmosphere', menu:'The menu', vfm:'Value for money'}
+  } : {
+    locale:'fr-FR', dec:',',
+    countSuffix:'avis vérifiés sur Zenchef',
+    loading:'Chargement des avis…',
+    empty:'Avis bientôt disponibles.',
+    fail:'Retrouvez tous nos avis sur Zenchef.',
+    sourceLabel:'Voir tous les avis sur',
+    anon:'Client', outOf:'sur 5',
+    bd:{service:'Service', ambiance:'Ambiance', menu:'La carte', vfm:'Qualité / prix'}
+  };
   var API = 'https://api.zenchef.com/api/v1/restaurants/'+RID;
-  var WANT = 12, MAXPAGES = 4;
+
+  /* applique les libellés statiques de la locale courante */
+  (function(){
+    var s = ROOT.querySelector('[data-count-suffix]'); if(s) s.textContent = T.countSuffix;
+    var l = ROOT.querySelector('[data-loading]'); if(l) l.textContent = T.loading;
+    var sl = ROOT.querySelector('.mdb-reviews__source-label'); if(sl) sl.textContent = T.sourceLabel;
+  })();
+
+  function num(n){ return Number(n).toFixed(1).replace('.', T.dec); }
   function stars(n){ n=Math.round(n||0); var s=''; for(var i=0;i<5;i++){ s+= i<n ? '★' : '☆'; } return s; }
   function esc(t){ var d=document.createElement('div'); d.textContent=t==null?'':String(t); return d.innerHTML; }
-  function fmtDate(d){ try{ var x=new Date(d); return x.toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});}catch(e){return '';} }
-  function name(b){ if(!b) return 'Client'; var f=(b.firstname||'').trim(); var l=(b.lastname||'').trim(); return (f? f : 'Client') + (l? ' '+l : ''); }
+  function fmtDate(d){ try{ var x=new Date(d); return x.toLocaleDateString(T.locale,{day:'numeric',month:'long',year:'numeric'});}catch(e){return '';} }
+  function name(b){ if(!b) return T.anon; var f=(b.firstname||'').trim(); var l=(b.lastname||'').trim(); return (f? f : T.anon) + (l? ' '+l : ''); }
 
   function renderSummary(p){
     var sum = ROOT.querySelector('.mdb-reviews__summary'); if(!sum) return;
     var avg = (p.average_global||0);
-    ROOT.querySelector('[data-avg]').textContent = avg.toFixed(1).replace('.',',');
+    ROOT.querySelector('[data-avg]').textContent = num(avg);
     ROOT.querySelector('[data-stars]').textContent = stars(avg);
-    ROOT.querySelector('[data-count]').textContent = (p.reviews_count||0).toLocaleString('fr-FR');
+    ROOT.querySelector('[data-count]').textContent = (p.reviews_count||0).toLocaleString(T.locale);
     var bd = ROOT.querySelector('[data-breakdown]');
-    var rows = [['Service',p.average_service],['Ambiance',p.average_ambiance],['La carte',p.average_menu],['Qualité / prix',p.average_value_for_money]];
+    var rows = [[T.bd.service,p.average_service],[T.bd.ambiance,p.average_ambiance],[T.bd.menu,p.average_menu],[T.bd.vfm,p.average_value_for_money]];
     bd.innerHTML = rows.map(function(r){
       var v=(r[1]||0); var pct=Math.max(0,Math.min(100,v/5*100));
       return '<li><span class="mdb-reviews__bd-label">'+esc(r[0])+'</span>'
         +'<span class="mdb-reviews__bd-bar"><span style="width:'+pct.toFixed(0)+'%"></span></span>'
-        +'<span class="mdb-reviews__bd-val">'+v.toFixed(1).replace('.',',')+'</span></li>';
+        +'<span class="mdb-reviews__bd-val">'+num(v)+'</span></li>';
     }).join('');
     sum.setAttribute('data-state','ready');
   }
@@ -73,7 +105,7 @@ $markup = <<<'HTML'
   function card(r){
     var b=r.booking||{}; var body=(r.body||'').trim();
     return '<figure class="mdb-review">'
-      +'<div class="mdb-review__stars" aria-label="'+(r.global||0)+' sur 5">'+stars(r.global)+'</div>'
+      +'<div class="mdb-review__stars" aria-label="'+(r.global||0)+' '+T.outOf+'">'+stars(r.global)+'</div>'
       +'<blockquote class="mdb-review__body">'+esc(body)+'</blockquote>'
       +'<figcaption class="mdb-review__meta"><span class="mdb-review__name">'+esc(name(b))+'</span>'
       +'<span class="mdb-review__date">'+esc(fmtDate(r.source_date||r.created_at))+'</span></figcaption>'
@@ -82,6 +114,7 @@ $markup = <<<'HTML'
 
   function fetchJSON(u){ return fetch(u,{credentials:'omit'}).then(function(r){ if(!r.ok) throw 0; return r.json(); }); }
 
+  var WANT = 12, MAXPAGES = 4;
   function gatherReviews(){
     var acc=[];
     function go(page){
@@ -97,13 +130,13 @@ $markup = <<<'HTML'
 
   function renderGrid(list){
     var grid=ROOT.querySelector('[data-grid]'); if(!grid) return;
-    if(!list.length){ grid.innerHTML='<p class="mdb-reviews__loading">Avis bientôt disponibles.</p>'; return; }
+    if(!list.length){ grid.innerHTML='<p class="mdb-reviews__loading">'+esc(T.empty)+'</p>'; return; }
     grid.innerHTML = list.slice(0,WANT).map(card).join('');
   }
 
   function fail(){
     var grid=ROOT.querySelector('[data-grid]');
-    if(grid) grid.innerHTML='<p class="mdb-reviews__loading">Retrouvez tous nos avis sur Zenchef.</p>';
+    if(grid) grid.innerHTML='<p class="mdb-reviews__loading">'+esc(T.fail)+'</p>';
     var sum=ROOT.querySelector('.mdb-reviews__summary'); if(sum) sum.setAttribute('data-state','error');
   }
 
