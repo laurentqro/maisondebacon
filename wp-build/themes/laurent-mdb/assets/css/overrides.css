@@ -1509,9 +1509,14 @@ html[lang^="en"] .elementor-element-5ba5eec4 .elementor-heading-title::before { 
 /* --- Colonne marque --- */
 .elementor-108363 .mdb-foot-logo { text-align: left !important; }
 .elementor-108363 .mdb-foot-logo .elementor-widget-container { text-align: left !important; }
+/* Logo SVG : le fichier Logo_Blanc.svg n'a pas de width/height sur sa balise
+   <svg> (juste un viewBox), donc width:auto le laissait gonfler à la largeur
+   de la colonne sur les grands écrans et chevaucher l'adresse. On fixe une
+   largeur explicite + display:block pour qu'il occupe sa propre ligne. */
 .elementor-108363 .mdb-foot-logo img {
-	width: auto !important;
-	max-width: 210px !important;
+	display: block !important;
+	width: 210px !important;
+	max-width: 100% !important;
 	height: auto !important;
 	margin: 0 0 1.5rem 0 !important;
 }
