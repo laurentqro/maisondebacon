@@ -64,7 +64,17 @@ $carousel = <<<'HTML'
   function esc(t){ var d=document.createElement('div'); d.textContent=t==null?'':String(t); return d.innerHTML; }
   function fmtDate(d){ try{ return new Date(d).toLocaleDateString(T.locale,{month:'long',year:'numeric'});}catch(e){return '';} }
   function name(b){ if(!b) return T.anon; var f=(b.firstname||'').trim(); var l=(b.lastname||'').trim(); return (f?f:T.anon)+(l?' '+l:''); }
-  function fetchJSON(u){ return fetch(u,{credentials:'omit'}).then(function(r){ if(!r.ok) throw 0; return r.json(); }); }
+  /* fetch + cache sessionStorage (TTL 30 min) — partagé avec la page /avis
+     (mêmes clés mdbz:) pour limiter les appels à l'API publique Zenchef. */
+  var TTL = 30*60*1000;
+  function fetchJSON(u){
+    var key='mdbz:'+u, now=Date.now();
+    try{ var c=sessionStorage.getItem(key); if(c){ var o=JSON.parse(c); if(o&&(now-o.t)<TTL) return Promise.resolve(o.d); } }catch(e){}
+    return fetch(u,{credentials:'omit'}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(d){
+      try{ sessionStorage.setItem(key, JSON.stringify({t:now,d:d})); }catch(e){}
+      return d;
+    });
+  }
 
   function renderRating(p){
     var avg=(p.average_global||0);
@@ -128,7 +138,17 @@ $carousel = <<<'HTML'
     if(track) track.innerHTML='<p class="mdb-homeavis-rev__loading">'+esc(T.fail)+'</p>';
   }
 
-  Promise.all([ fetchJSON(API+'/reviewParams').then(renderRating).catch(function(){}), gather().then(renderTrack) ]).catch(fail);
+  /* fetch seulement à l'entrée dans le viewport (idem page /avis) */
+  var started=false;
+  function start(){ if(started) return; started=true;
+    Promise.all([ fetchJSON(API+'/reviewParams').then(renderRating).catch(function(){}), gather().then(renderTrack) ]).catch(fail);
+  }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      if(entries.some(function(e){return e.isIntersecting;})){ io.disconnect(); start(); }
+    }, {rootMargin:'300px 0px'});
+    io.observe(ROOT);
+  } else { start(); }
 })();
 </script>
 HTML;

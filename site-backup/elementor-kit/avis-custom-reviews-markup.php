@@ -30,16 +30,15 @@ $markup = <<<'HTML'
       <span class="mdb-reviews__avg" data-avg>—</span><span class="mdb-reviews__avg-max">/5</span>
     </div>
     <div class="mdb-reviews__stars" data-stars aria-hidden="true"></div>
-    <p class="mdb-reviews__count"><span data-count>—</span> <span data-count-suffix>avis vérifiés sur Zenchef</span></p>
+    <p class="mdb-reviews__count"><span data-count>—</span> <span data-count-suffix>avis vérifiés sur</span> <span class="mdb-reviews__count-logo" role="img" aria-label="Zenchef"></span></p>
     <ul class="mdb-reviews__breakdown" data-breakdown></ul>
   </div>
   <div class="mdb-reviews__grid" data-grid>
     <p class="mdb-reviews__loading" data-loading>Chargement des avis…</p>
   </div>
-  <a class="mdb-reviews__source" data-source href="https://bookings.zenchef.com/results?rid=354476&pid=1001" target="_blank" rel="noopener">
-    <span class="mdb-reviews__source-label">Voir tous les avis sur</span>
-    <span class="mdb-reviews__source-logo" role="img" aria-label="Zenchef"></span>
-  </a>
+  <button type="button" class="mdb-reviews__more" data-more hidden>
+    <span data-more-label>Voir plus d'avis</span>
+  </button>
 </div>
 <script>
 (function(){
@@ -53,23 +52,23 @@ $markup = <<<'HTML'
   var EN = ((document.documentElement.getAttribute('lang')||'').toLowerCase().indexOf('en') === 0);
   var T = EN ? {
     locale:'en-GB', dec:'.',
-    countSuffix:'verified reviews on Zenchef',
+    countSuffix:'verified reviews on',
     loading:'Loading reviews…',
     empty:'Reviews coming soon.',
     fail:'Find all our reviews on Zenchef.',
-    sourceLabel:'See all reviews on',
     anon:'Guest', outOf:'out of 5',
     covers:function(n){ return n + (n>1?' guests':' guest'); },
+    more:'Show more reviews', moreLoading:'Loading…',
     bd:{service:'Service', ambiance:'Atmosphere', menu:'The menu', vfm:'Value for money'}
   } : {
     locale:'fr-FR', dec:',',
-    countSuffix:'avis vérifiés sur Zenchef',
+    countSuffix:'avis vérifiés sur',
     loading:'Chargement des avis…',
     empty:'Avis bientôt disponibles.',
     fail:'Retrouvez tous nos avis sur Zenchef.',
-    sourceLabel:'Voir tous les avis sur',
     anon:'Client', outOf:'sur 5',
     covers:function(n){ return n + (n>1?' couverts':' couvert'); },
+    more:'Voir plus d\'avis', moreLoading:'Chargement…',
     bd:{service:'Service', ambiance:'Ambiance', menu:'La carte', vfm:'Qualité / prix'}
   };
   var API = 'https://api.zenchef.com/api/v1/restaurants/'+RID;
@@ -78,7 +77,7 @@ $markup = <<<'HTML'
   (function(){
     var s = ROOT.querySelector('[data-count-suffix]'); if(s) s.textContent = T.countSuffix;
     var l = ROOT.querySelector('[data-loading]'); if(l) l.textContent = T.loading;
-    var sl = ROOT.querySelector('.mdb-reviews__source-label'); if(sl) sl.textContent = T.sourceLabel;
+    var ml = ROOT.querySelector('[data-more-label]'); if(ml) ml.textContent = T.more;
   })();
 
   function num(n){ return Number(n).toFixed(1).replace('.', T.dec); }
@@ -137,36 +136,72 @@ $markup = <<<'HTML'
       +'</figure>';
   }
 
-  function fetchJSON(u){ return fetch(u,{credentials:'omit'}).then(function(r){ if(!r.ok) throw 0; return r.json(); }); }
-
-  var WANT = 12, MAXPAGES = 4;
-  function gatherReviews(){
-    var acc=[];
-    function go(page){
-      return fetchJSON(API+'/reviews?page='+page).then(function(j){
-        var data=(j&&j.data)||[];
-        data.forEach(function(r){ if((r.body||'').trim().length>0) acc.push(r); });
-        if(acc.length>=WANT || page>=MAXPAGES || !j.next_page_url) return acc;
-        return go(page+1);
-      });
-    }
-    return go(1);
+  /* fetch + cache sessionStorage (TTL 30 min) pour limiter les appels à l'API
+     publique Zenchef (cf. doc : « all calls are monitored »). Une vue répétée
+     ou une bascule FR/EN dans la même session ne re-télécharge pas. */
+  var TTL = 30*60*1000;
+  function fetchJSON(u){
+    var key='mdbz:'+u, now=Date.now();
+    try{ var c=sessionStorage.getItem(key); if(c){ var o=JSON.parse(c); if(o&&(now-o.t)<TTL) return Promise.resolve(o.d); } }catch(e){}
+    return fetch(u,{credentials:'omit'}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(d){
+      try{ sessionStorage.setItem(key, JSON.stringify({t:now,d:d})); }catch(e){}
+      return d;
+    });
   }
 
-  function renderGrid(list){
-    var grid=ROOT.querySelector('[data-grid]'); if(!grid) return;
-    if(!list.length){ grid.innerHTML='<p class="mdb-reviews__loading">'+esc(T.empty)+'</p>'; return; }
-    grid.innerHTML = list.slice(0,WANT).map(card).join('');
+  /* pagination : 1 page API = 10 avis (tous, y c. note seule), bouton « voir plus » */
+  var grid   = ROOT.querySelector('[data-grid]');
+  var moreBtn= ROOT.querySelector('[data-more]');
+  var moreLbl= ROOT.querySelector('[data-more-label]');
+  var page=0, lastPage=1, busy=false, loadedAny=false;
+
+  function setMore(state){
+    if(!moreBtn) return;
+    if(state==='hidden'){ moreBtn.hidden=true; return; }
+    moreBtn.hidden=false;
+    moreBtn.disabled = (state==='loading');
+    if(moreLbl) moreLbl.textContent = (state==='loading') ? T.moreLoading : T.more;
   }
+
+  function loadPage(){
+    if(busy) return; busy=true;
+    if(page>0) setMore('loading');
+    page++;
+    fetchJSON(API+'/reviews?page='+page).then(function(j){
+      lastPage = j.last_page || lastPage;
+      var data=(j&&j.data)||[];
+      if(page===1 && grid) grid.innerHTML='';
+      if(data.length){
+        loadedAny=true;
+        if(grid) grid.insertAdjacentHTML('beforeend', data.map(card).join(''));
+      }
+      if(page===1 && !loadedAny && grid){ grid.innerHTML='<p class="mdb-reviews__loading">'+esc(T.empty)+'</p>'; }
+      setMore(page < lastPage ? 'idle' : 'hidden');
+      busy=false;
+    }).catch(function(){ busy=false; if(page===1) fail(); else setMore('idle'); });
+  }
+
+  if(moreBtn) moreBtn.addEventListener('click', loadPage);
 
   function fail(){
-    var grid=ROOT.querySelector('[data-grid]');
     if(grid) grid.innerHTML='<p class="mdb-reviews__loading">'+esc(T.fail)+'</p>';
+    setMore('hidden');
     var sum=ROOT.querySelector('.mdb-reviews__summary'); if(sum) sum.setAttribute('data-state','error');
   }
 
-  Promise.all([ fetchJSON(API+'/reviewParams').then(renderSummary).catch(function(){}), gatherReviews().then(renderGrid) ])
-    .catch(fail);
+  /* On ne déclenche le fetch que lorsque le bloc entre dans le viewport :
+     les bots qui ne scrollent pas (et le premier paint) n'appellent pas l'API. */
+  var started=false;
+  function start(){ if(started) return; started=true;
+    fetchJSON(API+'/reviewParams').then(renderSummary).catch(function(){});
+    loadPage();
+  }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      if(entries.some(function(e){return e.isIntersecting;})){ io.disconnect(); start(); }
+    }, {rootMargin:'200px 0px'});
+    io.observe(ROOT);
+  } else { start(); }
 })();
 </script>
 HTML;
