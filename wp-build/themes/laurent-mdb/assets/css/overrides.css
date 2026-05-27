@@ -1157,6 +1157,8 @@ body.elementor-editor-active .mdb-sticky-cta {
 	.elementor-element-7a5faa3b,
 	.elementor-element-6520f472,
 	.elementor-element-4c990681 { gap: 0.25rem !important; margin-bottom: 1.5rem !important; }
+	/* …mais on redonne de l'air AU-DESSUS du bouton (sinon il colle au titre). */
+	.elementor-element-7170bb4c .elementor-widget-button { margin-top: 1.1rem !important; }
 }
 
 /* --- a8f323f cartes promo (recrutement / RSE) : fond crème ---------- */
