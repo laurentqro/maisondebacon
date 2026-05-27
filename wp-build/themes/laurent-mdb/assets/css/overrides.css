@@ -1929,12 +1929,12 @@ html[lang^="en"] .elementor-element-5ba5eec4 .elementor-heading-title::before { 
 	background:
 		linear-gradient(
 			180deg,
-			rgba(9, 26, 45, 0.55) 0%,
-			rgba(9, 26, 45, 0.30) 35%,
-			rgba(9, 26, 45, 0.45) 65%,
-			rgba(9, 26, 45, 0.90) 100%
+			rgba(9, 26, 45, 0.70) 0%,
+			rgba(9, 26, 45, 0.50) 35%,
+			rgba(9, 26, 45, 0.58) 65%,
+			rgba(9, 26, 45, 0.92) 100%
 		),
-		linear-gradient(90deg, rgba(9, 26, 45, 0.45) 0%, rgba(9, 26, 45, 0.28) 50%, rgba(9, 26, 45, 0.20) 100%);
+		linear-gradient(90deg, rgba(9, 26, 45, 0.45) 0%, rgba(9, 26, 45, 0.30) 50%, rgba(9, 26, 45, 0.22) 100%);
 }
 /* La grille interne du hero : colonne, alignée bas-gauche, dégagée du header.
    Elementor pose le contenu dans .e-con-inner (display:grid 4 col par défaut) :

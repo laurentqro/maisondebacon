@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'MDB_THEME_VERSION', '0.9.62' );
+define( 'MDB_THEME_VERSION', '0.9.63' );
 define( 'MDB_THEME_DIR', get_stylesheet_directory() );
 define( 'MDB_THEME_URI', get_stylesheet_directory_uri() );
 
@@ -466,7 +466,7 @@ add_action( 'init', function () {
 add_filter( 'body_class', function ( $classes ) {
 	$pages_with_hero = apply_filters(
 		'mdb_pages_with_hero',
-		array( 'restaurant-de-bacon', 'le-rooftop-club-bacon', 'lappartement-de-victor', 'villa-les-roches-de-bacon' )
+		array( 'restaurant-de-bacon', 'le-roof-top', 'le-rooftop-club-bacon', 'lappartement-de-victor', 'villa-les-roches-de-bacon' )
 	);
 
 	$has_hero = is_front_page()
