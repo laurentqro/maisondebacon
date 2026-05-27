@@ -1622,10 +1622,12 @@ body.elementor-editor-active .mdb-sticky-cta {
 .elementor-108363 .elementor-element-97020d4 > .e-con-inner {
 	max-width: var(--mdb-wrap-max) !important;
 	margin-inline: auto !important;
-	display: grid !important;
-	grid-template-columns: 1fr 1fr 1fr 1fr !important;
-	gap: clamp(1.5rem, 3.5vw, 3.5rem) !important;
-	align-items: start !important;
+	display: flex !important;
+	flex-direction: row !important;
+	flex-wrap: wrap !important;
+	justify-content: center !important;
+	align-items: flex-start !important;
+	gap: 0 !important;
 	padding-bottom: clamp(2.5rem, 5vw, 4rem) !important;
 	margin-bottom: clamp(2.5rem, 5vw, 4rem) !important;
 	border-bottom: 1px solid var(--mdb-rule) !important;
@@ -1634,15 +1636,16 @@ body.elementor-editor-active .mdb-sticky-cta {
 .elementor-108363 .elementor-element-97020d4 > .e-con-inner > .e-con {
 	display: flex !important;
 	flex-direction: column !important;
-	width: 100% !important;
+	width: auto !important;
 }
-/* Filet vertical uniquement entre les deux blocs (avant Le Roof Top). */
+/* Les 2 blocs horaires centrés sur la page, filet vertical entre eux. */
 .elementor-108363 .mdb-foot-hours--rest,
 .elementor-108363 .mdb-foot-hours--roof {
-	align-self: start !important;
+	align-self: stretch !important;
+	flex: 0 1 auto !important;
+	padding: 0 clamp(2rem, 4vw, 3.5rem) !important;
 }
 .elementor-108363 .mdb-foot-hours--roof {
-	padding-left: clamp(2rem, 4vw, 4rem) !important;
 	border-left: 1px solid var(--mdb-rule) !important;
 }
 .elementor-108363 .mdb-foot-hours-strip .mdb-foot-sub {
@@ -1979,11 +1982,7 @@ body.elementor-editor-active .mdb-sticky-cta {
    mise en place ligne ~1485. Sans ça, la grille 4 colonnes restait figée sur
    mobile et chaque mot passait à la ligne. */
 @media (max-width: 1024px) {
-	/* TIER 1 : les 2 blocs horaires côte à côte (sur 2 colonnes). */
-	.elementor-108363 .elementor-element-97020d4 > .e-con-inner {
-		grid-template-columns: 1fr 1fr !important;
-		gap: clamp(1.5rem, 4vw, 3rem) !important;
-	}
+	/* TIER 1 : les 2 blocs horaires restent centrés (flex, déjà géré). */
 	/* TIER 2 : 4 -> 2 colonnes. */
 	.elementor-108363 .elementor-element-303d9d2 > .e-con-inner {
 		grid-template-columns: 1fr 1fr !important;
@@ -1991,10 +1990,10 @@ body.elementor-editor-active .mdb-sticky-cta {
 	}
 }
 @media (max-width: 600px) {
-	/* TIER 1 : tout en pile, filet horizontal entre les 2 blocs horaires. */
+	/* TIER 1 : les 2 blocs en pile, filet horizontal entre eux. */
 	.elementor-108363 .elementor-element-97020d4 > .e-con-inner {
-		grid-template-columns: 1fr !important;
-		gap: 0 !important;
+		flex-direction: column !important;
+		align-items: center !important;
 	}
 	.elementor-108363 .mdb-foot-hours--rest,
 	.elementor-108363 .mdb-foot-hours--roof {
@@ -2002,6 +2001,7 @@ body.elementor-editor-active .mdb-sticky-cta {
 		border-left: 0 !important;
 		border-top: 1px solid var(--mdb-rule) !important;
 		margin-top: 1.75rem !important;
+		text-align: center !important;
 	}
 	/* TIER 2 : une seule colonne. */
 	.elementor-108363 .elementor-element-303d9d2 > .e-con-inner {
