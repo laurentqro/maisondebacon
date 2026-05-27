@@ -1114,14 +1114,33 @@ body.elementor-editor-active .mdb-sticky-cta {
 	transform: translateX(0.25em);
 }
 
-/* Mobile : la colonne « Find out more » passe sous le contenu, date à gauche. */
+/* Mobile : carte événement compacte. Date sur une ligne (jour + mois + année),
+   titre juste dessous, rythme resserré. On supprime les grands gaps fluides qui
+   créaient d'énormes vides verticaux entre la date, le titre et chaque event. */
 @media (max-width: 767px) {
-	.elementor-element-337ce1e .ectbe-inner-wrapper { flex-wrap: wrap !important; gap: 1rem 1.25rem !important; }
-	.elementor-element-337ce1e .ectbe-date-area { width: auto !important; display: flex !important; align-items: baseline; gap: 0.5rem; text-align: left !important; }
-	.elementor-element-337ce1e .ectbe-ev-day { font-size: 2.2rem !important; }
-	.elementor-element-337ce1e .ectbe-ev-mo, .elementor-element-337ce1e .ectbe-ev-yr { margin-top: 0 !important; }
+	.elementor-element-337ce1e .ectbe-inner-wrapper {
+		flex-direction: column !important;
+		align-items: flex-start !important;
+		gap: 0.6rem !important;
+		padding: 1.5rem 0 !important;
+	}
+	.elementor-element-337ce1e .ectbe-date-area {
+		width: auto !important;
+		display: flex !important;
+		align-items: baseline !important;
+		gap: 0.45rem !important;
+		text-align: left !important;
+	}
+	.elementor-element-337ce1e .ectbe-ev-day { font-size: 1.9rem !important; }
+	.elementor-element-337ce1e .ectbe-ev-mo,
+	.elementor-element-337ce1e .ectbe-ev-yr { margin-top: 0 !important; font-size: 0.7rem !important; }
 	.elementor-element-337ce1e .ectbe-content-box { flex: 1 1 100% !important; }
-	.elementor-element-337ce1e .ectbe-evt-more-box { flex: 0 0 auto !important; align-self: flex-start !important; }
+	.elementor-element-337ce1e .ectbe-evt-title a,
+	.elementor-element-337ce1e .ectbe-evt-url { font-size: 1.4rem !important; }
+	.elementor-element-337ce1e .ectbe-evt-more-box { flex: 0 0 auto !important; align-self: flex-start !important; margin-top: 0.3rem !important; }
+	/* Intro éditoriale : titre + corps un cran plus petits sur mobile. */
+	.elementor-element-7bacf566 .elementor-heading-title { font-size: clamp(2rem, 9vw, 2.6rem) !important; }
+	.elementor-element-7bacf566 .elementor-widget-text-editor { font-size: 1rem !important; line-height: 1.6 !important; }
 }
 
 /* --- a8f323f cartes promo (recrutement / RSE) : fond crème ---------- */
@@ -1355,19 +1374,49 @@ html[lang^="en"] .elementor-element-5ba5eec4 .elementor-heading-title::before { 
 	margin: 1.25rem 0 0 !important;
 }
 
-/* CTA des univers : ghost crème -> se remplit d'or au survol. */
+/* CTA des univers : ghost crème -> se remplit d'or au survol.
+   On cible AUSSI a.elementor-button + le <span> interne et on force la couleur :
+   sur mobile le lien retombait sinon en bleu lien par défaut (#0000ee) — quasi
+   invisible sur le fond navy. padding + display:inline-flex pour qu'il ait bien
+   l'allure d'un bouton (et pas d'un simple lien texte). */
+.elementor-element-7170bb4c a.elementor-button,
 .elementor-element-7170bb4c .elementor-button {
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	padding: 0.7rem 1.5rem !important;
 	background: transparent !important;
 	color: var(--mdb-cream) !important;
 	border: 1px solid rgba(244, 236, 220, 0.45) !important;
-	letter-spacing: 0.12em;
-	text-transform: uppercase;
-	font-size: 0.8rem;
+	letter-spacing: 0.12em !important;
+	text-transform: uppercase !important;
+	font-size: 0.8rem !important;
 }
+.elementor-element-7170bb4c a.elementor-button .elementor-button-text,
+.elementor-element-7170bb4c .elementor-button .elementor-button-content-wrapper {
+	color: var(--mdb-cream) !important;
+}
+.elementor-element-7170bb4c a.elementor-button:hover,
 .elementor-element-7170bb4c .elementor-button:hover {
 	background: var(--mdb-gold) !important;
 	color: var(--mdb-navy-deep) !important;
 	border-color: var(--mdb-gold) !important;
+}
+.elementor-element-7170bb4c a.elementor-button:hover .elementor-button-text {
+	color: var(--mdb-navy-deep) !important;
+}
+/* Les boutons « Découvrir » portent elementor-hidden-mobile/-tablet (vestige de
+   l'ancienne maquette où toute la carte était cliquable) : ils étaient donc
+   masqués sur mobile. On les ré-affiche dans cette section et on garantit le
+   style bouton (sinon le lien nu retombe en bleu #0000ee, invisible sur navy). */
+.elementor-element-7170bb4c .elementor-widget-button.elementor-hidden-mobile,
+.elementor-element-7170bb4c .elementor-widget-button.elementor-hidden-tablet,
+.elementor-element-7170bb4c .elementor-widget-button.elementor-hidden-phone {
+	display: block !important;
+}
+.elementor-element-7170bb4c .elementor-button,
+.elementor-element-7170bb4c a.elementor-button .elementor-button-text {
+	color: var(--mdb-cream) !important;
 }
 
 /* --- 611a8b9a « Bon Cadeau » : fond crème, déjà proche concept ------ */
