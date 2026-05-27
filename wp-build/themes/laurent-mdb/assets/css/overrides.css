@@ -907,15 +907,21 @@ body.elementor-editor-active .mdb-sticky-cta {
 	max-width: 54ch;
 }
 .elementor-element-7bacf566 .elementor-widget-text-editor strong { color: var(--mdb-gold-deep); }
-/* Le toggle « En Savoir Plus » : lien sobre souligné or, pas de boîte rose. */
-.elementor-element-7bacf566 .elementor-toggle-title,
-.elementor-element-7bacf566 .elementor-tab-title {
-	font-family: var(--mdb-font-eyebrow) !important;
-	font-size: 0.72rem !important;
-	letter-spacing: 0.24em !important;
-	text-transform: uppercase !important;
-	color: var(--mdb-gold-deep) !important;
+/* L'ancien toggle « En Savoir Plus » (1ee0af39) a été converti en text-editor
+   simple (toujours visible) au niveau des données — cf. home-histoire-toggle-to-
+   text.php. Ce 2e bloc de texte reprend le style éditorial du 1er paragraphe. */
+.elementor-element-7bacf566 .elementor-element-1ee0af39 { margin-top: 1rem !important; }
+.elementor-element-7bacf566 .elementor-element-1ee0af39,
+.elementor-element-7bacf566 .elementor-element-1ee0af39 p {
+	color: rgba(20, 32, 44, 0.86) !important;
+	font-family: var(--mdb-font-body) !important;
+	font-size: var(--mdb-step-0) !important;
+	line-height: 1.65 !important;
+	max-width: 54ch;
 }
+.elementor-element-7bacf566 .elementor-element-1ee0af39 p + p { margin-top: 1rem !important; }
+.elementor-element-7bacf566 .elementor-element-1ee0af39 strong { color: var(--mdb-gold-deep) !important; }
+.elementor-element-7bacf566 .elementor-element-1ee0af39 a { color: var(--mdb-gold-deep) !important; }
 
 /* --- 337ce1e « Prochains événements » : strip navy ------------------ */
 /* Le fond navy doit couvrir la section ET son conteneur interne / overlay :
