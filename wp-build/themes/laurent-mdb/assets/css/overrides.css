@@ -1960,21 +1960,25 @@ html[lang^="en"] .elementor-element-5ba5eec4 .elementor-heading-title::before { 
 	margin: 0 auto !important;
 	padding: clamp(150px, 22vh, 220px) var(--mdb-gutter) clamp(2.5rem, 7vh, 4.5rem) !important;
 }
-/* Logo orange : masqué (le titre Cormorant le remplace). */
-.elementor-106766 .elementor-element-34a8c93 { display: none !important; }
+/* Titre = logo orange « Le Roof Top » d'origine (image 34a8c93). Le heading
+   Cormorant bfabdc5 est masqué au profit du logo, posé bas-gauche sur la photo. */
+.elementor-106766 .elementor-element-bfabdc5 { display: none !important; }
 
-/* Titre Cormorant géant, crème. */
-.elementor-106766 .elementor-element-bfabdc5 { align-self: flex-start !important; }
-.elementor-106766 .elementor-element-bfabdc5 .elementor-heading-title {
-	font-family: var(--mdb-font-display) !important;
-	font-weight: 300 !important;
-	font-size: var(--mdb-step-6) !important;
-	line-height: 0.92 !important;
-	letter-spacing: -0.01em !important;
-	color: var(--mdb-cream) !important;
-	text-align: left !important;
-	margin: 0 !important;
-	text-transform: none !important;
+.elementor-106766 .elementor-element-34a8c93 {
+	display: block !important;
+	align-self: flex-start !important;
+	width: auto !important;
+	order: 1;
+}
+.elementor-106766 .elementor-element-34a8c93 .elementor-widget-container,
+.elementor-106766 .elementor-element-34a8c93 figure,
+.elementor-106766 .elementor-element-34a8c93 a { margin: 0 !important; }
+.elementor-106766 .elementor-element-34a8c93 img {
+	width: auto !important;
+	height: clamp(120px, 18vw, 220px) !important;
+	max-width: 100% !important;
+	object-fit: contain;
+	object-position: left center;
 }
 
 /* Horaires -> ligne meta type eyebrow, filet brass devant. */
@@ -2200,8 +2204,8 @@ html[lang^="en"] .elementor-element-5ba5eec4 .elementor-heading-title::before { 
 /* --- Roof Top : mobile --------------------------------------------------- */
 @media (max-width: 768px) {
 	.elementor-106766 > .elementor-element-651e311 { min-height: 100svh !important; }
-	.elementor-106766 .elementor-element-bfabdc5 .elementor-heading-title {
-		font-size: clamp(3.2rem, 16vw, 5rem) !important;
+	.elementor-106766 .elementor-element-34a8c93 img {
+		height: clamp(100px, 32vw, 170px) !important;
 	}
 	.elementor-106766 .elementor-element-fd01a52 {
 		grid-template-columns: 1fr !important;
