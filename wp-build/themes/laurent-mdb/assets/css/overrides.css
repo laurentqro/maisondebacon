@@ -726,36 +726,35 @@ body.elementor-editor-active .mdb-sticky-cta {
 	z-index: 2;
 }
 
-/* Colonne de contenu alignée à gauche, façon concept. Le container boxed
-   57e6219 (850px) est centré par défaut dans la section ; on le pousse à
-   gauche (margin-inline-start: 0) et on aligne ses items à flex-start. */
+/* Colonne de contenu centrée. Le container boxed 57e6219 est centré dans la
+   section ; ses items sont alignés horizontalement au centre. */
 .elementor-element-167c86ed > .elementor-element-57e6219 {
-	margin-inline: 0 auto !important;
-	align-items: flex-start !important;
-	text-align: left;
+	margin-inline: auto !important;
+	align-items: center !important;
+	text-align: center;
 }
 .elementor-element-167c86ed > .elementor-element-57e6219 > .e-con-inner {
-	align-items: flex-start !important;
+	align-items: center !important;
 	gap: clamp(1.1rem, 2.6vh, 2rem) !important;
 }
-/* Chaque widget du hero : aligné à gauche, largeur auto (pas pleine largeur) */
+/* Chaque widget du hero : centré, largeur auto */
 .elementor-element-167c86ed .mdb-hero__eyebrow,
 .elementor-element-167c86ed .mdb-hero__title,
 .elementor-element-167c86ed .mdb-hero__lede,
 .elementor-element-167c86ed .mdb-hero__cta,
 .elementor-element-167c86ed .mdb-hero__link {
-	text-align: left !important;
-	align-self: flex-start !important;
+	text-align: center !important;
+	align-self: center !important;
 	width: auto !important;
 	max-width: 100%;
 }
 .elementor-element-167c86ed .mdb-hero__eyebrow .elementor-heading-title,
 .elementor-element-167c86ed .mdb-hero__title .elementor-heading-title,
 .elementor-element-167c86ed .mdb-hero__lede .elementor-heading-title {
-	text-align: left !important;
+	text-align: center !important;
 }
 
-/* Eyebrow : filet + texte Tenor Sans espacé, crème translucide */
+/* Eyebrow : filets bilatéraux + texte Tenor Sans espacé, crème translucide */
 .mdb-hero__eyebrow .elementor-heading-title {
 	font-family: var(--mdb-font-eyebrow);
 	font-size: var(--mdb-step--1);
@@ -768,7 +767,8 @@ body.elementor-editor-active .mdb-sticky-cta {
 	align-items: center;
 	gap: 1rem;
 }
-.mdb-hero__eyebrow .elementor-heading-title::before {
+.mdb-hero__eyebrow .elementor-heading-title::before,
+.mdb-hero__eyebrow .elementor-heading-title::after {
 	content: "";
 	width: 56px;
 	height: 1px;
@@ -776,7 +776,10 @@ body.elementor-editor-active .mdb-sticky-cta {
 	flex-shrink: 0;
 }
 
-/* Titre géant Cormorant ; "de Bacon" en italique or via <em> */
+/* Titre géant Cormorant ; "de Bacon" en italique or via <em>.
+   NOTE : sur la home, le heading a1b2c302 est masqué au profit du wordmark
+   SVG (.mdb-hero__logo, widget mdbherologo). On garde la règle pour les
+   éventuelles autres pages héritières. */
 .mdb-hero__title .elementor-heading-title {
 	font-family: var(--mdb-font-display);
 	font-weight: 300;
@@ -791,6 +794,25 @@ body.elementor-editor-active .mdb-sticky-cta {
 	font-style: italic;
 	font-weight: 300;
 	color: var(--mdb-gold-bright);
+}
+
+/* Wordmark SVG « Maison De Bacon » dans le hero home — remplace le titre
+   Cormorant a1b2c302 (masqué). Pendant MdB du logo orange RT (hero RT). */
+.elementor-element-167c86ed .elementor-element-a1b2c302 { display: none !important; }
+.elementor-element-167c86ed .mdb-hero__logo {
+	align-self: flex-start !important;
+	width: auto !important;
+	max-width: 100% !important;
+	margin: 0 !important;
+}
+.elementor-element-167c86ed .mdb-hero__logo .elementor-widget-container,
+.elementor-element-167c86ed .mdb-hero__logo figure,
+.elementor-element-167c86ed .mdb-hero__logo a { margin: 0 !important; }
+.elementor-element-167c86ed .mdb-hero__logo img {
+	display: block;
+	width: clamp(420px, 62vw, 900px) !important;
+	height: auto !important;
+	max-width: 100% !important;
 }
 
 /* Lede italique : "Cuisine marine du Chef Nicolas Davouze" */
@@ -895,8 +917,7 @@ body.elementor-editor-active .mdb-sticky-cta {
    Partagé entre MdB (167c86ed) et RT (page-id-106766).
    ========================================================= */
 
-/* Info bar : filet horizontal + texte Tenor caps crème. Filet en gold côté
-   MdB, en terracotta côté RT (token --rt-terracotta-bright). */
+/* Info bar : texte Tenor caps crème, sans filet. */
 .mdb-hero__info .elementor-heading-title {
 	font-family: var(--mdb-font-eyebrow);
 	font-size: var(--mdb-step--1);
@@ -905,13 +926,9 @@ body.elementor-editor-active .mdb-sticky-cta {
 	color: rgba(244, 236, 220, 0.82);
 	font-weight: 400;
 	line-height: 1.5;
-	padding-top: 0.9rem;
-	border-top: 1px solid var(--mdb-rule);
-	max-width: 560px;
 }
 body.page-id-106766 .mdb-hero__info .elementor-heading-title {
 	color: rgba(244, 230, 210, 0.88);
-	border-top-color: rgba(217, 83, 30, 0.32);
 }
 
 /* CTA row : flex row, CTA + « ou appelez » sur la même ligne. */
@@ -921,7 +938,7 @@ body.page-id-106766 .mdb-hero__info .elementor-heading-title {
 .elementor-element-rtherorow {
 	width: auto !important;
 	max-width: 100% !important;
-	align-self: flex-start !important;
+	align-self: center !important;
 }
 .mdb-hero__ctarow > .e-con-inner {
 	display: flex !important;
@@ -934,17 +951,21 @@ body.page-id-106766 .mdb-hero__info .elementor-heading-title {
 	max-width: 100% !important;
 }
 /* La row est e-con-full (sans .e-con-inner). Elementor STRIPS le custom
-   class .mdb-hero__ctarow des CONTAINERS, donc on cible aussi par ID stable. */
+   class .mdb-hero__ctarow des CONTAINERS, donc on cible aussi par ID stable.
+   Layout : empilé vertical (CTA au-dessus du lien « ou appeler le »).
+   align-items: center → le lien « ou appeler » se centre sous le CTA. */
 .mdb-hero__ctarow,
 .mdb-hero__ctarow.e-con-full,
 .elementor-element-mdbherorow,
 .elementor-element-rtherorow {
 	display: flex !important;
-	flex-direction: row !important;
-	flex-wrap: wrap !important;
+	flex-direction: column !important;
+	flex-wrap: nowrap !important;
 	align-items: center !important;
-	gap: 14px 22px !important;
+	gap: 14px !important;
 	padding: 0 !important;
+	width: max-content !important;
+	max-width: 100% !important;
 }
 /* Les widgets enfants du ctarow ne doivent pas prendre 100% — laisser leur
    largeur intrinsèque pour qu'ils s'inline correctement. */
@@ -955,12 +976,15 @@ body.page-id-106766 .mdb-hero__info .elementor-heading-title {
 }
 
 /* « ou appelez » — le widget HTML lui-même n'a pas de marge propre ; on
-   stylise le lien interne .mdb-hero__call-link. */
+   stylise le lien interne .mdb-hero__call-link.
+   Layout vertical : align-items:center sur le ctarow place ce widget centré
+   horizontalement sous le CTA. */
 .mdb-hero__call,
 .elementor-element.mdb-hero__call {
 	width: auto !important;
+	text-align: center !important;
 }
-.mdb-hero__call .elementor-widget-container { padding: 0 !important; margin: 0 !important; }
+.mdb-hero__call .elementor-widget-container { padding: 0 !important; margin: 0 !important; text-align: center !important; }
 a.mdb-hero__call-link,
 a.mdb-hero__call-link:link,
 a.mdb-hero__call-link:visited {
@@ -2277,13 +2301,14 @@ body.page-id-106766 {
 .elementor-106766 .elementor-element-34da85ec > .e-con-inner {
 	display: flex !important;
 	flex-direction: column !important;
-	align-items: flex-start !important;
+	align-items: center !important;
 	grid-template-columns: none !important;
 	gap: clamp(1.1rem, 2.4vh, 1.8rem) !important;
 	width: 100%;
 	max-width: var(--mdb-wrap-max);
 	margin: 0 auto !important;
 	padding: clamp(150px, 22vh, 220px) var(--mdb-gutter) clamp(2.5rem, 7vh, 4.5rem) !important;
+	text-align: center !important;
 }
 /* Titre = logo orange « Le Roof Top » d'origine (image 34a8c93). Le heading
    Cormorant bfabdc5 est masqué au profit du logo, posé bas-gauche sur la photo. */
@@ -2291,22 +2316,20 @@ body.page-id-106766 {
 
 .elementor-106766 .elementor-element-34a8c93 {
 	display: block !important;
-	align-self: flex-start !important;
+	align-self: center !important;
 	width: auto !important;
 	order: 1;
 }
 .elementor-106766 .elementor-element-34a8c93 .elementor-widget-container,
 .elementor-106766 .elementor-element-34a8c93 figure,
-.elementor-106766 .elementor-element-34a8c93 a { margin: 0 !important; }
+.elementor-106766 .elementor-element-34a8c93 a { margin: 0 auto !important; }
 .elementor-106766 .elementor-element-34a8c93 img {
 	width: auto !important;
-	/* Ajusté pour matcher l'empreinte visuelle du titre Cormorant "Maison de Bacon"
-	   du hero MdB (qui culmine ~320px avec ses 2 lignes). Le logo orange est tassé,
-	   donc on peut descendre un cran sans perdre en présence. */
 	height: clamp(200px, 28vw, 380px) !important;
 	max-width: 100% !important;
 	object-fit: contain;
-	object-position: left center;
+	object-position: center center;
+	margin-inline: auto !important;
 }
 
 /* --- Ordre vertical des widgets du hero RT (Layout A — mirror MdB) ---
@@ -2314,10 +2337,10 @@ body.page-id-106766 {
    pour matcher la pile MdB : eyebrow → logo → info bar → CTA row.
    Le CTA (ad86369) est désormais ENFANT du conteneur rtherorow, donc l'ordre
    se pose sur le conteneur row, pas sur le CTA. */
-.elementor-106766 .elementor-element-rthereye   { order: 0; align-self: flex-start !important; width: auto !important; }
+.elementor-106766 .elementor-element-rthereye   { order: 0; align-self: center !important; width: auto !important; }
 .elementor-106766 .elementor-element-34a8c93    { order: 1; }
-.elementor-106766 .elementor-element-rtheroinfo { order: 2; align-self: flex-start !important; width: auto !important; }
-.elementor-106766 .elementor-element-rtherorow  { order: 3; align-self: flex-start !important; width: auto !important; }
+.elementor-106766 .elementor-element-rtheroinfo { order: 2; align-self: center !important; width: auto !important; }
+.elementor-106766 .elementor-element-rtherorow  { order: 3; align-self: center !important; width: auto !important; }
 /* À l'intérieur du rtherorow : CTA en order:1, « ou appelez » en order:2.
    Neutralise l'order:4 hérité des règles ad86369 historiques. */
 .elementor-106766 .elementor-element-rtherorow .elementor-element-ad86369  { order: 1 !important; align-self: center !important; }
@@ -2330,7 +2353,8 @@ body.page-id-106766 {
 body.page-id-106766 .mdb-hero__eyebrow .elementor-heading-title {
 	color: rgba(244, 230, 210, 0.88) !important;
 }
-body.page-id-106766 .mdb-hero__eyebrow .elementor-heading-title::before {
+body.page-id-106766 .mdb-hero__eyebrow .elementor-heading-title::before,
+body.page-id-106766 .mdb-hero__eyebrow .elementor-heading-title::after {
 	background: var(--rt-terracotta-bright) !important;
 }
 
@@ -2665,13 +2689,13 @@ body.page-id-106766 .mdb-header__actions .mdb-btn--solid:hover {
    lettres — il faut une hauteur plus généreuse que le blason MdB carré pour
    que les caractères pèsent visuellement le même poids dans la barre. */
 body.page-id-106766 .mdb-header .mdb-header__logo img {
-	height: 72px !important;
+	height: 110px !important;
 	width: auto !important;
 	max-width: 100% !important;
 }
 @media (max-width: 768px) {
 	body.page-id-106766 .mdb-header .mdb-header__logo img {
-		height: 56px !important;
+		height: 78px !important;
 	}
 }
 
