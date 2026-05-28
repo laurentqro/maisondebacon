@@ -2191,10 +2191,68 @@ body.page-id-106766 {
 .elementor-106766 .elementor-element-34a8c93 a { margin: 0 !important; }
 .elementor-106766 .elementor-element-34a8c93 img {
 	width: auto !important;
-	height: clamp(240px, 34vw, 460px) !important;
+	/* Ajusté pour matcher l'empreinte visuelle du titre Cormorant "Maison de Bacon"
+	   du hero MdB (qui culmine ~320px avec ses 2 lignes). Le logo orange est tassé,
+	   donc on peut descendre un cran sans perdre en présence. */
+	height: clamp(200px, 28vw, 380px) !important;
 	max-width: 100% !important;
 	object-fit: contain;
 	object-position: left center;
+}
+
+/* --- Ordre vertical des widgets du hero RT (mirror du hero MdB) ---
+   La grille 34da85ec est en flex-column ; chaque widget a un ordre explicite
+   pour matcher la pile MdB : eyebrow → logo (titre) → lede (horaires) → CTA → link.
+   Sans ces ordres, les nouveaux widgets (eyebrow/link) atterrissent en haut
+   (order:0) à cause des order: posés sur les anciens (logo=1, texte=3, CTA=4). */
+.elementor-106766 .elementor-element-rthereye { order: 0; align-self: flex-start !important; width: auto !important; }
+/* logo 34a8c93 déjà en order:1 */
+/* texte horaires 7488ca8 déjà en order:3 */
+/* CTA ad86369 + phone 454470c déjà en order:4 */
+.elementor-106766 .elementor-element-rtherelnk { order: 5; align-self: flex-start !important; width: auto !important; }
+
+/* --- Eyebrow miroir du hero MdB (widget rthereye) ---
+   Texte « Soirées & cocktails face à la mer » avec filet, en haut de la pile.
+   On force le filet et la couleur en teinte RT (terracotta-bright + sand) au
+   lieu du gold MdB hérité de la classe partagée .mdb-hero__eyebrow. */
+body.page-id-106766 .mdb-hero__eyebrow .elementor-heading-title {
+	color: rgba(244, 230, 210, 0.88) !important;
+}
+body.page-id-106766 .mdb-hero__eyebrow .elementor-heading-title::before {
+	background: var(--rt-terracotta-bright) !important;
+}
+
+/* --- CTA RT en contexte hero (mdb-hero__cta--rt sur ad86369) ---
+   Reprend la mécanique du CTA MdB (gold plein → terracotta plein), avec la
+   flèche → identique pour que le visuel soit miroir. */
+body.page-id-106766 .mdb-hero__cta .elementor-button,
+body.page-id-106766 .mdb-hero__cta a.elementor-button {
+	background: var(--rt-terracotta) !important;
+	color: var(--rt-sand) !important;
+}
+body.page-id-106766 .mdb-hero__cta .elementor-button:hover {
+	background: var(--rt-terracotta-bright) !important;
+}
+/* L'ancien style ciblé sur l'ID (ad86369) ajoutait son propre padding/font.
+   La classe .mdb-hero__cta fournit déjà ces réglages — on neutralise la double
+   déclaration en laissant la classe gagner (les règles ad86369 sont
+   conservées pour la version éditeur ; en frontend, .mdb-hero__cta arrive
+   après dans la cascade). */
+
+/* --- Liens secondaires RT (phone + voir la carte) ---
+   Téléphone 454470c + lien rtherelnk partagent .mdb-hero__link. Le téléphone
+   garde son icône (.mdb-hero__link--phone) ; le lien « Voir la carte » est
+   un simple texte souligné. La couleur du filet passe en terracotta. */
+body.page-id-106766 .mdb-hero__link .elementor-button,
+body.page-id-106766 .mdb-hero__link a.elementor-button {
+	color: var(--rt-sand) !important;
+}
+body.page-id-106766 .mdb-hero__link .elementor-button-text {
+	border-bottom-color: var(--rt-terracotta-bright) !important;
+}
+body.page-id-106766 .mdb-hero__link .elementor-button:hover .elementor-button-text {
+	color: var(--rt-terracotta-bright) !important;
+	border-bottom-color: var(--rt-sand) !important;
 }
 
 /* Bloc info hero (jours / horaires / tenue). Markup : 3 <p> avec classes
