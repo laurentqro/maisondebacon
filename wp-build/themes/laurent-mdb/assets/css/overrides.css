@@ -2141,17 +2141,19 @@ body.page-id-106766 {
 	inset: 0;
 	z-index: 1;
 	pointer-events: none;
-	/* Scrim terracotta : voile clay + dégradé directionnel pour lisibilité.
-	   Plus chaud que navy, signature de l'identité Roof Top. */
+	/* Voile sombre NEUTRE (charcoal grey) sur le hero RT (demande client) :
+	   ni navy ni terracotta — un gris foncé neutre qui n'entre pas en compétition
+	   avec l'orange du logo et du header au-dessus, tout en gardant la
+	   lisibilité du texte. */
 	background:
 		linear-gradient(
 			180deg,
-			rgba(122, 40, 16, 0.62) 0%,
-			rgba(122, 40, 16, 0.42) 35%,
-			rgba(122, 40, 16, 0.55) 65%,
-			rgba(42, 14, 5, 0.88) 100%
+			rgba(28, 28, 28, 0.62) 0%,
+			rgba(28, 28, 28, 0.42) 35%,
+			rgba(28, 28, 28, 0.55) 65%,
+			rgba(18, 18, 18, 0.88) 100%
 		),
-		linear-gradient(90deg, rgba(122, 40, 16, 0.40) 0%, rgba(122, 40, 16, 0.26) 50%, rgba(122, 40, 16, 0.18) 100%);
+		linear-gradient(90deg, rgba(28, 28, 28, 0.38) 0%, rgba(28, 28, 28, 0.24) 50%, rgba(28, 28, 28, 0.16) 100%);
 }
 /* La grille interne du hero : colonne, alignée bas-gauche, dégagée du header.
    Elementor pose le contenu dans .e-con-inner (display:grid 4 col par défaut) :
@@ -2440,82 +2442,36 @@ body.page-id-106766 {
 }
 
 /* =========================================================================
-   FOOTER en contexte ROOF TOP — recolor terracotta scellé à body.page-id-106766.
-   Le footer 108363 est un template ElementsKit (PAS Elementor Pro), donc on
-   ne peut pas le cloner+conditionner. À la place : on re-teinte le footer
-   global UNIQUEMENT quand on est sur la page Roof Top, en cascadant les
-   tokens RT déjà définis plus haut.
-   Les liens sociaux (widget 4a942b2) restent pointés vers MdB ici — c'est un
-   point à traiter séparément si on veut que la page RT pointe vers les
-   comptes Roof Top (lerooftop.maisondebacon / le.roof.top.cap.d.antibes).
+   HEADER en contexte ROOF TOP — barre principale en terracotta.
+   La barre du template 110554 hérite du fond navy via .mdb-header. On la
+   passe en terracotta UNIQUEMENT sur la page Roof Top, en scellant au body.
+   Le filet bas + l'effet d'ombre au scroll suivent la même teinte.
    ========================================================================= */
-body.page-id-106766 .elementor.elementor-108363 {
-	background: var(--rt-clay) !important;
-	color: var(--rt-sand) !important;
-}
-/* TIER 1 : bandeau « réserver » — filets, séparateur, titres en teinte RT. */
-body.page-id-106766 .elementor-108363 .elementor-element-97020d4 {
-	border-bottom-color: var(--rt-rule) !important;
-}
-body.page-id-106766 .elementor-108363 .mdb-foot-hours--roof {
-	border-left-color: var(--rt-rule) !important;
-}
-/* Sous-titres (« Restaurant », « Le Roof Top », « Adresse »…). */
-body.page-id-106766 .elementor-108363 .mdb-foot-sub,
-body.page-id-106766 .elementor-108363 .mdb-foot-eyebrow,
-body.page-id-106766 .elementor-108363 .mdb-foot-eyebrow .elementor-heading-title {
-	color: var(--rt-terracotta-bright) !important;
-}
-/* Boutons de réservation dans le footer (intégrés au tier hours). */
-body.page-id-106766 .elementor-108363 .mdb-foot-hours-strip .elementor-button,
-body.page-id-106766 .elementor-108363 .elementor-button {
-	background: transparent !important;
-	color: var(--rt-sand) !important;
-	border-color: var(--rt-terracotta-bright) !important;
-	transition: background 0.4s var(--mdb-ease), color 0.4s var(--mdb-ease);
-}
-body.page-id-106766 .elementor-108363 .elementor-button:hover {
+body.page-id-106766 header.mdb-header,
+body.page-id-106766 .mdb-header {
 	background: var(--rt-terracotta) !important;
+	border-bottom-color: rgba(42, 14, 5, 0.32) !important;
+}
+body.page-id-106766.mdb-scrolled .mdb-header {
+	box-shadow: 0 8px 30px -12px rgba(122, 40, 16, 0.65) !important;
+}
+/* Toggle MENU : texte et barres en sable pour rester lisibles sur terracotta. */
+body.page-id-106766 .mdb-menu-toggle,
+body.page-id-106766 .mdb-menu-toggle:hover,
+body.page-id-106766 .mdb-menu-toggle:focus { color: var(--rt-sand) !important; }
+body.page-id-106766 .mdb-menu-toggle__bars span {
+	background: var(--rt-sand) !important;
+}
+/* Boutons CTA droite (Carte cadeau / Réserver) : variantes plus douces sur orange.
+   On garde l'outline mais on remplace les couleurs MdB par les RT. */
+body.page-id-106766 .mdb-header__actions .mdb-btn {
 	color: var(--rt-sand) !important;
-	border-color: var(--rt-terracotta) !important;
+	border-color: rgba(244, 230, 210, 0.55) !important;
 }
-/* Liens sociaux : icônes en terracotta sur fond clay. */
-body.page-id-106766 .elementor-108363 .mdb-foot-social a,
-body.page-id-106766 .elementor-108363 .mdb-foot-social svg {
-	color: var(--rt-terracotta-bright) !important;
-	fill: currentColor !important;
-}
-body.page-id-106766 .elementor-108363 .mdb-foot-social a:hover { color: var(--rt-sand) !important; }
-/* Liens nav du footer (colonnes La Maison / Vos Événements / Contact). */
-body.page-id-106766 .elementor-108363 a {
-	color: var(--rt-sand) !important;
-}
-body.page-id-106766 .elementor-108363 a:hover {
-	color: var(--rt-terracotta-bright) !important;
-}
-/* Barre légale + filets. */
-body.page-id-106766 .elementor-108363 .elementor-element-878265c > .e-con-inner {
-	border-top: 1px solid var(--rt-rule) !important;
-}
-/* Newsletter : champ + bouton soumis. */
-body.page-id-106766 .elementor-108363 .mdb-foot-newsletter input[type="email"] {
-	border-color: var(--rt-rule) !important;
-	color: var(--rt-sand) !important;
-	background: transparent !important;
-}
-body.page-id-106766 .elementor-108363 .mdb-foot-newsletter input[type="email"]::placeholder {
-	color: rgba(244, 230, 210, 0.55) !important;
-}
-body.page-id-106766 .elementor-108363 .mdb-foot-newsletter .mdb-nl-submit,
-body.page-id-106766 .elementor-108363 .mdb-foot-newsletter input[type="submit"] {
-	background: var(--rt-terracotta) !important;
-	color: var(--rt-sand) !important;
-	border-color: var(--rt-terracotta) !important;
-}
-body.page-id-106766 .elementor-108363 .mdb-foot-newsletter .mdb-nl-submit:hover,
-body.page-id-106766 .elementor-108363 .mdb-foot-newsletter input[type="submit"]:hover {
-	background: var(--rt-terracotta-bright) !important;
-	border-color: var(--rt-terracotta-bright) !important;
+body.page-id-106766 .mdb-header__actions .mdb-btn:hover {
+	background: var(--rt-sand) !important;
+	color: var(--rt-terracotta-deep) !important;
+	border-color: var(--rt-sand) !important;
 }
 
 /* =========================================================================
