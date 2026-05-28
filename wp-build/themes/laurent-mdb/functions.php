@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'MDB_THEME_VERSION', '0.9.117' );
+define( 'MDB_THEME_VERSION', '0.9.121' );
 define( 'MDB_THEME_DIR', get_stylesheet_directory() );
 define( 'MDB_THEME_URI', get_stylesheet_directory_uri() );
 
@@ -150,7 +150,13 @@ function mdb_t( $fr ) {
 		'Menu'                       => 'Menu',
 		'Réserver'                   => 'Book',
 		'Carte cadeau'               => 'Gift card',
+		'Voir la carte'              => 'See the menu',
 		'Nous trouver'               => 'Find us',
+		// Hero Layout A — info bar + secondary call link.
+		'Réserver une table en ligne'                  => 'Book a table online',
+		'Ouvert tous les jours · 12h – 14h · 19h – 22h' => 'Open daily · 12pm – 2pm · 7pm – 10pm',
+		'Du mercredi au dimanche · dès 18h · Tenue élégante' => 'Wed to Sun · from 6pm · Smart attire',
+		'ou appelez :'               => 'or call:',
 	);
 
 	// Match direct.
@@ -284,6 +290,9 @@ function mdb_megamenu_data() {
 				array( 'label' => 'Presse', 'url' => $base . '/presse/' ),
 				array( 'label' => 'Avis', 'url' => $base . '/avis/' ),
 				array( 'label' => 'Contact', 'url' => $base . '/contact/' ),
+				// Carte cadeau était un CTA du header (Layout A : header recentré sur
+				// Voir la carte + Réserver). On la garde accessible via le mega-menu.
+				array( 'label' => 'Carte cadeau', 'url' => 'https://maisondebacon.bonkdo.com/fr/' ),
 			),
 		),
 	);

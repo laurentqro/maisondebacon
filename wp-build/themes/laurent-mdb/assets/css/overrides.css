@@ -894,6 +894,109 @@ body.elementor-editor-active .mdb-sticky-cta {
 }
 
 /* =========================================================
+   HERO LAYOUT A — info bar + CTA row (CTA + « ou appelez »).
+   Partagé entre MdB (167c86ed) et RT (page-id-106766).
+   ========================================================= */
+
+/* Info bar : filet horizontal + texte Tenor caps crème. Filet en gold côté
+   MdB, en terracotta côté RT (token --rt-terracotta-bright). */
+.mdb-hero__info .elementor-heading-title {
+	font-family: var(--mdb-font-eyebrow);
+	font-size: var(--mdb-step--1);
+	letter-spacing: 0.26em;
+	text-transform: uppercase;
+	color: rgba(244, 236, 220, 0.82);
+	font-weight: 400;
+	line-height: 1.5;
+	padding-top: 0.9rem;
+	border-top: 1px solid var(--mdb-rule);
+	max-width: 560px;
+}
+body.page-id-106766 .mdb-hero__info .elementor-heading-title {
+	color: rgba(244, 230, 210, 0.88);
+	border-top-color: rgba(217, 83, 30, 0.32);
+}
+
+/* CTA row : flex row, CTA + « ou appelez » sur la même ligne. */
+.mdb-hero__ctarow,
+.elementor-element.mdb-hero__ctarow,
+.elementor-element-mdbherorow,
+.elementor-element-rtherorow {
+	width: auto !important;
+	max-width: 100% !important;
+	align-self: flex-start !important;
+}
+.mdb-hero__ctarow > .e-con-inner {
+	display: flex !important;
+	flex-direction: row !important;
+	flex-wrap: wrap !important;
+	align-items: center !important;
+	gap: 14px 22px !important;
+	padding: 0 !important;
+	width: auto !important;
+	max-width: 100% !important;
+}
+/* Si Elementor rend la row sans .e-con-inner (cas e-con-full), on cible le
+   conteneur direct. */
+.mdb-hero__ctarow.e-con-full {
+	display: flex !important;
+	flex-direction: row !important;
+	flex-wrap: wrap !important;
+	align-items: center !important;
+	gap: 14px 22px !important;
+}
+/* Les widgets enfants du ctarow ne doivent pas prendre 100% — laisser leur
+   largeur intrinsèque pour qu'ils s'inline correctement. */
+.mdb-hero__ctarow .mdb-hero__cta,
+.mdb-hero__ctarow .mdb-hero__call {
+	width: auto !important;
+	flex: 0 0 auto !important;
+}
+
+/* « ou appelez » — le widget HTML lui-même n'a pas de marge propre ; on
+   stylise le lien interne .mdb-hero__call-link. */
+.mdb-hero__call,
+.elementor-element.mdb-hero__call {
+	width: auto !important;
+}
+.mdb-hero__call .elementor-widget-container { padding: 0 !important; margin: 0 !important; }
+a.mdb-hero__call-link,
+a.mdb-hero__call-link:link,
+a.mdb-hero__call-link:visited {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 0.55rem;
+	font-family: var(--mdb-font-eyebrow);
+	font-size: 0.72rem;
+	letter-spacing: 0.24em;
+	text-transform: uppercase;
+	color: rgba(244, 236, 220, 0.78);
+	text-decoration: none;
+	border: 0;
+	white-space: nowrap;
+	transition: color 0.3s var(--mdb-ease);
+}
+a.mdb-hero__call-link .num {
+	font-family: var(--mdb-font-display);
+	font-style: italic;
+	font-weight: 400;
+	font-size: 1rem;
+	letter-spacing: 0;
+	text-transform: none;
+	color: var(--mdb-cream);
+}
+a.mdb-hero__call-link:hover { color: var(--mdb-cream); }
+body.page-id-106766 a.mdb-hero__call-link { color: rgba(244, 230, 210, 0.85); }
+body.page-id-106766 a.mdb-hero__call-link .num { color: var(--rt-sand); }
+body.page-id-106766 a.mdb-hero__call-link:hover { color: var(--rt-sand); }
+/* Mobile : "ou appelez" passe sous le CTA si manque de place (le wrap est
+   déjà géré par flex-wrap sur le ctarow). */
+@media (max-width: 600px) {
+	a.mdb-hero__call-link { font-size: 0.66rem; letter-spacing: 0.18em; }
+	a.mdb-hero__call-link .num { font-size: 0.9rem; }
+}
+
+/* =========================================================
    HOME — refonte des sections sous le hero (esprit concept)
    Scellé par ID de section Elementor. Restyle CSS uniquement :
    typographie, eyebrows, filets héraldiques, rythme de padding,
@@ -2200,16 +2303,19 @@ body.page-id-106766 {
 	object-position: left center;
 }
 
-/* --- Ordre vertical des widgets du hero RT (mirror du hero MdB) ---
+/* --- Ordre vertical des widgets du hero RT (Layout A — mirror MdB) ---
    La grille 34da85ec est en flex-column ; chaque widget a un ordre explicite
-   pour matcher la pile MdB : eyebrow → logo (titre) → lede (horaires) → CTA → link.
-   Sans ces ordres, les nouveaux widgets (eyebrow/link) atterrissent en haut
-   (order:0) à cause des order: posés sur les anciens (logo=1, texte=3, CTA=4). */
-.elementor-106766 .elementor-element-rthereye { order: 0; align-self: flex-start !important; width: auto !important; }
-/* logo 34a8c93 déjà en order:1 */
-/* texte horaires 7488ca8 déjà en order:3 */
-/* CTA ad86369 + phone 454470c déjà en order:4 */
-.elementor-106766 .elementor-element-rtherelnk { order: 5; align-self: flex-start !important; width: auto !important; }
+   pour matcher la pile MdB : eyebrow → logo → info bar → CTA row.
+   Le CTA (ad86369) est désormais ENFANT du conteneur rtherorow, donc l'ordre
+   se pose sur le conteneur row, pas sur le CTA. */
+.elementor-106766 .elementor-element-rthereye   { order: 0; align-self: flex-start !important; width: auto !important; }
+.elementor-106766 .elementor-element-34a8c93    { order: 1; }
+.elementor-106766 .elementor-element-rtheroinfo { order: 2; align-self: flex-start !important; width: auto !important; }
+.elementor-106766 .elementor-element-rtherorow  { order: 3; align-self: flex-start !important; width: auto !important; }
+/* À l'intérieur du rtherorow : CTA en order:1, « ou appelez » en order:2.
+   Neutralise l'order:4 hérité des règles ad86369 historiques. */
+.elementor-106766 .elementor-element-rtherorow .elementor-element-ad86369  { order: 1 !important; align-self: center !important; }
+.elementor-106766 .elementor-element-rtherorow .elementor-element-rtherocall { order: 2 !important; align-self: center !important; }
 
 /* --- Eyebrow miroir du hero MdB (widget rthereye) ---
    Texte « Soirées & cocktails face à la mer » avec filet, en haut de la pile.
