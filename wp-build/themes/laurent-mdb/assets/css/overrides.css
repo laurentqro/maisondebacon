@@ -564,17 +564,14 @@ body.mdb-needs-header-offset .elementor-location-header + div[data-elementor-typ
 	color: rgba(244, 236, 220, 0.58);
 	text-decoration: none;
 	padding: 2px 4px;
-	border-bottom: 1px solid transparent;
-	transition: color 0.3s var(--mdb-ease), border-color 0.3s var(--mdb-ease);
+	transition: color 0.3s var(--mdb-ease);
 }
 .mdb-brandswitch__item:hover { color: var(--mdb-cream); }
 .mdb-brandswitch__item.is-active {
 	color: var(--mdb-gold-bright); /* MdB actif = laiton */
-	border-bottom-color: var(--mdb-gold-bright);
 }
 .mdb-brandswitch__item--rt.is-active {
 	color: var(--rt-terracotta-bright, #e26a3a); /* RT actif = terracotta */
-	border-bottom-color: var(--rt-terracotta-bright, #e26a3a);
 }
 .mdb-brandswitch__sep {
 	color: rgba(177, 137, 84, 0.45);
@@ -982,14 +979,19 @@ a.mdb-hero__call-link:visited {
 }
 a.mdb-hero__call-link .num {
 	font-family: var(--mdb-font-display);
-	font-style: italic;
+	font-style: normal;
 	font-weight: 400;
 	font-size: 1rem;
-	letter-spacing: 0;
+	letter-spacing: 0.02em;
 	text-transform: none;
 	color: var(--mdb-cream);
+	text-decoration: underline;
+	text-decoration-color: rgba(244, 236, 220, 0.55);
+	text-decoration-thickness: 1px;
+	text-underline-offset: 4px;
 }
 a.mdb-hero__call-link:hover { color: var(--mdb-cream); }
+a.mdb-hero__call-link:hover .num { text-decoration-color: var(--mdb-cream); }
 body.page-id-106766 a.mdb-hero__call-link { color: rgba(244, 230, 210, 0.85); }
 body.page-id-106766 a.mdb-hero__call-link .num { color: var(--rt-sand); }
 body.page-id-106766 a.mdb-hero__call-link:hover { color: var(--rt-sand); }
@@ -2488,19 +2490,21 @@ body.page-id-106766 .mdb-hero__link .elementor-button:hover .elementor-button-te
 	border-color: var(--rt-terracotta) !important;
 }
 
-/* --- LE CONCEPT : section sable chaud, eyebrow terracotta + titre Cormorant */
+/* --- Le Concept : section sable chaud, titre h2 Cormorant italique terracotta */
 .elementor-106766 .elementor-element-039f6cd {
 	background: var(--rt-sand) !important;
 	padding: clamp(3.5rem, 8vw, 6rem) var(--mdb-gutter) clamp(1rem, 3vw, 2rem) !important;
 	text-align: center;
 }
 .elementor-106766 .elementor-element-37a9128 .elementor-heading-title {
-	font-family: var(--mdb-font-eyebrow) !important;
-	font-size: 0.8rem !important;
-	letter-spacing: 0.34em !important;
-	text-transform: uppercase !important;
-	color: var(--rt-terracotta) !important;
+	font-family: var(--mdb-font-display) !important;
+	font-style: italic !important;
 	font-weight: 400 !important;
+	font-size: clamp(2.2rem, 4.5vw, 3.4rem) !important;
+	line-height: 1.1 !important;
+	letter-spacing: 0 !important;
+	text-transform: none !important;
+	color: var(--rt-terracotta) !important;
 }
 /* Grille vidéo + texte (fd01a52) sur le même fond sable, 2 colonnes alignées.
    On vise la grille interne réelle (.e-con-inner) comme pour le hero. */
