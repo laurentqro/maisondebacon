@@ -936,14 +936,18 @@ body.page-id-106766 .mdb-hero__info .elementor-heading-title {
 	width: auto !important;
 	max-width: 100% !important;
 }
-/* Si Elementor rend la row sans .e-con-inner (cas e-con-full), on cible le
-   conteneur direct. */
-.mdb-hero__ctarow.e-con-full {
+/* La row est e-con-full (sans .e-con-inner). Elementor STRIPS le custom
+   class .mdb-hero__ctarow des CONTAINERS, donc on cible aussi par ID stable. */
+.mdb-hero__ctarow,
+.mdb-hero__ctarow.e-con-full,
+.elementor-element-mdbherorow,
+.elementor-element-rtherorow {
 	display: flex !important;
 	flex-direction: row !important;
 	flex-wrap: wrap !important;
 	align-items: center !important;
 	gap: 14px 22px !important;
+	padding: 0 !important;
 }
 /* Les widgets enfants du ctarow ne doivent pas prendre 100% — laisser leur
    largeur intrinsèque pour qu'ils s'inline correctement. */

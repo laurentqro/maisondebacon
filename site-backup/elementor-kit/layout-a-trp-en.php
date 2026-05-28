@@ -17,7 +17,7 @@ $pairs = array(
     'Réserver'                                     => 'Book',
     // Info bars MdB + RT.
     'Ouvert tous les jours · 12h – 14h · 19h – 22h' => 'Open daily · 12pm – 2pm · 7pm – 10pm',
-    'Du mercredi au dimanche · dès 18h · Tenue élégante' => 'Wed to Sun · from 6pm · Smart attire',
+    'Du mercredi au dimanche · dès 18h' => 'Wed to Sun · from 6pm',
     // Lien secondaire « ou appeler le 04 93 … » (phrase complète, verbe + objet).
     'ou appeler le'                                => 'or call',
 );

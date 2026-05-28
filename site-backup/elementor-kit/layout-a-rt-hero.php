@@ -32,7 +32,7 @@ $info_widget = array(
     'elType'     => 'widget',
     'widgetType' => 'heading',
     'settings'   => array(
-        'title'        => 'Du mercredi au dimanche · dès 18h · Tenue élégante',
+        'title'        => 'Du mercredi au dimanche · dès 18h',
         'header_size'  => 'h2',
         '_css_classes' => 'mdb-hero__info mdb-hero__info--rt',
     ),
