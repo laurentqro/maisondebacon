@@ -2473,6 +2473,19 @@ body.page-id-106766 .mdb-header__actions .mdb-btn:hover {
 	color: var(--rt-terracotta-deep) !important;
 	border-color: var(--rt-sand) !important;
 }
+/* Le logo RT est portrait (1248×1555) avec beaucoup de blanc autour des
+   lettres — il faut une hauteur plus généreuse que le blason MdB carré pour
+   que les caractères pèsent visuellement le même poids dans la barre. */
+body.page-id-106766 .mdb-header .mdb-header__logo img {
+	height: 72px !important;
+	width: auto !important;
+	max-width: 100% !important;
+}
+@media (max-width: 768px) {
+	body.page-id-106766 .mdb-header .mdb-header__logo img {
+		height: 56px !important;
+	}
+}
 
 /* =========================================================================
    PAGE « AVIS » (104781) — en-tête éditorial + cadre du widget Zenchef.
