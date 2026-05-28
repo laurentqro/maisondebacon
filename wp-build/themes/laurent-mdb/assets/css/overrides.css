@@ -517,15 +517,78 @@ body.mdb-panel-open { overflow: hidden; }
    contenu. Sur les pages dont la 1re section est un hero plein écran
    (fond image/vidéo sombre), c'est voulu : le hero passe sous le header.
    Ailleurs, on pousse le contenu vers le bas via une classe body posée par
-   functions.php (mdb-needs-header-offset). */
+   functions.php (mdb-needs-header-offset).
+   Avec le bandeau switcher (28px) il faut décaler le header de 28px aussi. */
 body.mdb-needs-header-offset .elementor-location-header ~ .e-con,
 body.mdb-needs-header-offset .site-content,
 body.mdb-needs-header-offset .elementor-location-header + div[data-elementor-type="wp-page"] {
-	padding-top: clamp(72px, 9vh, 104px);
+	padding-top: clamp(100px, 11vh, 132px); /* +28px du bandeau switcher */
 }
 
-/* Ancrage : compenser le header fixe pour les liens #section */
-:target { scroll-margin-top: 100px; }
+/* Ancrage : compenser le header fixe + le bandeau switcher pour les liens #section */
+:target { scroll-margin-top: 128px; }
+
+/* =========================================================
+   BRAND SWITCHER — bandeau global au-dessus de la navbar
+   Maison de Bacon | Le Roof Top, l'actif coloré dans sa marque.
+   Rendu par functions.php / wp_body_open. Présent partout (chrome global).
+   Architecture : positionné fixed top:0, le header (.mdb-header) recule de
+   28px (top:28px) ; le footer reste inchangé.
+   ========================================================= */
+.mdb-brandswitch {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: calc(var(--mdb-z-nav) + 1); /* au-dessus du header fixe (80) */
+	height: 28px;
+	background: var(--mdb-ink); /* fond très foncé, neutre, séparé du header */
+	border-bottom: 1px solid rgba(177, 137, 84, 0.18);
+	font-family: var(--mdb-font-eyebrow);
+	font-size: 0.68rem;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: rgba(244, 236, 220, 0.62);
+}
+.mdb-brandswitch__inner {
+	max-width: var(--mdb-wrap-max);
+	margin-inline: auto;
+	padding-inline: var(--mdb-gutter);
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.9rem;
+}
+.mdb-brandswitch__item {
+	color: rgba(244, 236, 220, 0.58);
+	text-decoration: none;
+	padding: 2px 4px;
+	border-bottom: 1px solid transparent;
+	transition: color 0.3s var(--mdb-ease), border-color 0.3s var(--mdb-ease);
+}
+.mdb-brandswitch__item:hover { color: var(--mdb-cream); }
+.mdb-brandswitch__item.is-active {
+	color: var(--mdb-gold-bright); /* MdB actif = laiton */
+	border-bottom-color: var(--mdb-gold-bright);
+}
+.mdb-brandswitch__item--rt.is-active {
+	color: var(--rt-terracotta-bright, #e26a3a); /* RT actif = terracotta */
+	border-bottom-color: var(--rt-terracotta-bright, #e26a3a);
+}
+.mdb-brandswitch__sep {
+	color: rgba(177, 137, 84, 0.45);
+}
+/* Le header fixe recule sous le bandeau switcher. */
+header.mdb-header,
+.mdb-header { top: 28px !important; }
+
+/* Mobile : on garde le bandeau (chrome global, important pour la nav).
+   Hauteur identique pour cohérence ; on serre seulement le tracking. */
+@media (max-width: 768px) {
+	.mdb-brandswitch { font-size: 0.62rem; letter-spacing: 0.18em; }
+	.mdb-brandswitch__inner { gap: 0.6rem; padding-inline: 1rem; }
+}
 
 /* Vidéo de fond du hero — désormais self-hosted (MP4), plus d'embed YouTube :
    aucun chrome (titre, bouton pause, contrôles). La balise <video> couvre la
@@ -2021,13 +2084,16 @@ body.elementor-editor-active .mdb-sticky-cta {
 }
 
 /* =========================================================
-   PAGE « LE ROOF TOP » (106766) — remise dans la charte
-   (header/footer/home : Cormorant + Tenor + Inter, navy/cream/brass).
-   Page héritée de l'ancien thème, 100% orange. On restyle en place,
-   scellé au wrapper .elementor-106766 + IDs Elementor stables.
+   PAGE « LE ROOF TOP » (106766) — identité propre terracotta
+   (décision client 2026-05-27 avec Nicole : le Roof Top est une marque à
+   part entière. Voir mémoire [[roof-top-identity-propre]]).
+   - Header = template Elementor RT (110554, scopé sur cette page)
+   - Page = palette terracotta (vs navy/gold du reste du site)
+   - Mega-menu = GLOBAL inchangé. Footer = global re-teinté en contexte RT.
+   Scellé au wrapper .elementor-106766 + IDs Elementor stables.
    Structure (après nettoyage DB roof-cleanup-junk.php) :
      651e311  hero (photo ROOFTO4 en bg) > grille 34da85ec
-              [titre bfabdc5 « Le Roof Top », logo orange 34a8c93 (masqué),
+              [titre bfabdc5 « Le Roof Top » (masqué), logo orange 34a8c93,
                btn Réserver ad86369, btn tél 454470c, texte horaires 7488ca8]
      34e7f20  rangée 3 boutons (Restaurant / Carte cocktails / Carte mets)
      039f6cd  heading « LE CONCEPT »
@@ -2036,6 +2102,23 @@ body.elementor-editor-active .mdb-sticky-cta {
      0f371ac  sous-texte instagram
      61fe278  bouton « Instagram Le Roof Top »
    ========================================================= */
+
+/* Tokens RT — scellés au contexte de la page Le Roof Top.
+   La palette est tirée du logo + header live (orange terracotta brûlé).
+   On garde la même typo (Cormorant/Tenor/Inter) pour la cohérence éditoriale,
+   mais on substitue navy/gold/cream par terracotta/sable/ivoire. */
+body.page-id-106766 {
+	--rt-terracotta: #d9531e;     /* signature, repris du logo prod */
+	--rt-terracotta-bright: #e26a3a;
+	--rt-terracotta-deep: #b54115; /* hover, ombres */
+	--rt-clay: #7a2810;           /* fond foncé (équiv. navy-deep côté MdB) */
+	--rt-clay-soft: #9b3618;
+	--rt-sand: #f4e6d2;           /* papier crème chaud, équiv. cream */
+	--rt-bone: #e8d5b5;           /* papier vieilli, équiv. bone */
+	--rt-gold-warm: #c7884c;      /* doré chaud pour les filets */
+	--rt-ink: #2a0e05;            /* texte très foncé sur fond clair */
+	--rt-rule: rgba(199, 136, 76, 0.32);
+}
 
 /* --- HERO : photo conservée + scrim navy + contenu bas-gauche -------------- */
 .elementor-106766 > .elementor-element-651e311 {
@@ -2058,15 +2141,17 @@ body.elementor-editor-active .mdb-sticky-cta {
 	inset: 0;
 	z-index: 1;
 	pointer-events: none;
+	/* Scrim terracotta : voile clay + dégradé directionnel pour lisibilité.
+	   Plus chaud que navy, signature de l'identité Roof Top. */
 	background:
 		linear-gradient(
 			180deg,
-			rgba(9, 26, 45, 0.70) 0%,
-			rgba(9, 26, 45, 0.50) 35%,
-			rgba(9, 26, 45, 0.58) 65%,
-			rgba(9, 26, 45, 0.92) 100%
+			rgba(122, 40, 16, 0.62) 0%,
+			rgba(122, 40, 16, 0.42) 35%,
+			rgba(122, 40, 16, 0.55) 65%,
+			rgba(42, 14, 5, 0.88) 100%
 		),
-		linear-gradient(90deg, rgba(9, 26, 45, 0.45) 0%, rgba(9, 26, 45, 0.30) 50%, rgba(9, 26, 45, 0.22) 100%);
+		linear-gradient(90deg, rgba(122, 40, 16, 0.40) 0%, rgba(122, 40, 16, 0.26) 50%, rgba(122, 40, 16, 0.18) 100%);
 }
 /* La grille interne du hero : colonne, alignée bas-gauche, dégagée du header.
    Elementor pose le contenu dans .e-con-inner (display:grid 4 col par défaut) :
@@ -2129,11 +2214,11 @@ body.elementor-editor-active .mdb-sticky-cta {
 	font-size: 0.8rem !important;
 	letter-spacing: 0.28em !important;
 	text-transform: uppercase !important;
-	color: rgba(244, 236, 220, 0.85) !important;
+	color: rgba(244, 230, 210, 0.88) !important;
 	text-align: left !important;
 	line-height: 1.5 !important;
 }
-/* Horaires en exergue : Cormorant italique brass, filet fin au-dessus/dessous */
+/* Horaires en exergue : Cormorant italique terracotta-bright, filet fin. */
 .elementor-106766 .elementor-element-7488ca8 .mdb-rt-hours {
 	display: inline-flex;
 	flex-direction: column;
@@ -2144,15 +2229,15 @@ body.elementor-editor-active .mdb-sticky-cta {
 	font-weight: 400 !important;
 	font-size: var(--mdb-step-2) !important;
 	line-height: 1 !important;
-	color: var(--mdb-gold-bright) !important;
+	color: var(--rt-terracotta-bright) !important;
 	text-align: left !important;
 	margin: 0.8rem 0 !important;
 	padding: 0.7rem 0 !important;
-	border-top: 1px solid var(--mdb-rule);
-	border-bottom: 1px solid var(--mdb-rule);
+	border-top: 1px solid var(--rt-rule);
+	border-bottom: 1px solid var(--rt-rule);
 }
 
-/* CTA hero : « Réserver sa table » brass plein, téléphone en lien discret. */
+/* CTA hero : « Réserver sa table » terracotta plein, téléphone en lien discret. */
 .elementor-106766 .elementor-element-ad86369,
 .elementor-106766 .elementor-element-454470c {
 	align-self: flex-start !important;
@@ -2164,8 +2249,8 @@ body.elementor-editor-active .mdb-sticky-cta {
 	align-items: center;
 	gap: 0.8rem;
 	padding: 1.05rem 1.8rem !important;
-	background: var(--mdb-gold) !important;
-	color: var(--mdb-navy-deep) !important;
+	background: var(--rt-terracotta) !important;
+	color: var(--rt-sand) !important;
 	border: 0 !important;
 	border-radius: 0 !important;
 	font-family: var(--mdb-font-eyebrow) !important;
@@ -2176,7 +2261,7 @@ body.elementor-editor-active .mdb-sticky-cta {
 	transition: background 0.4s var(--mdb-ease), transform 0.4s var(--mdb-ease);
 }
 .elementor-106766 .elementor-element-ad86369 .elementor-button:hover {
-	background: var(--mdb-gold-bright) !important;
+	background: var(--rt-terracotta-bright) !important;
 	transform: translateY(-2px);
 }
 .elementor-106766 .elementor-element-454470c .elementor-button {
@@ -2187,13 +2272,13 @@ body.elementor-editor-active .mdb-sticky-cta {
 	background: transparent !important;
 	border: 0 !important;
 	border-radius: 0 !important;
-	color: var(--mdb-cream) !important;
+	color: var(--rt-sand) !important;
 	font-family: var(--mdb-font-eyebrow) !important;
 	font-size: 0.74rem !important;
 	letter-spacing: 0.24em !important;
 	text-transform: uppercase !important;
 }
-.elementor-106766 .elementor-element-454470c .elementor-button:hover { color: var(--mdb-gold-bright) !important; }
+.elementor-106766 .elementor-element-454470c .elementor-button:hover { color: var(--rt-terracotta-bright) !important; }
 /* Côte à côte sur desktop (le hero étant en flex-column, on regroupe via wrap). */
 @media (min-width: 600px) {
 	.elementor-106766 .elementor-element-ad86369,
@@ -2202,7 +2287,7 @@ body.elementor-editor-active .mdb-sticky-cta {
 
 /* --- RANGÉE BOUTONS (Restaurant / Carte cocktails / Carte mets) ------------ */
 .elementor-106766 .elementor-element-34e7f20 {
-	background: var(--mdb-navy-deep) !important;
+	background: var(--rt-clay) !important;
 	padding: clamp(2rem, 5vw, 3.2rem) var(--mdb-gutter) !important;
 	display: flex !important;
 	flex-wrap: wrap;
@@ -2217,8 +2302,8 @@ body.elementor-editor-active .mdb-sticky-cta {
 	justify-content: center;
 	padding: 0.95rem 1.8rem !important;
 	background: transparent !important;
-	color: var(--mdb-cream) !important;
-	border: 1px solid var(--mdb-gold) !important;
+	color: var(--rt-sand) !important;
+	border: 1px solid var(--rt-terracotta-bright) !important;
 	border-radius: 0 !important;
 	font-family: var(--mdb-font-eyebrow) !important;
 	font-size: 0.74rem !important;
@@ -2228,13 +2313,14 @@ body.elementor-editor-active .mdb-sticky-cta {
 	transition: background 0.4s var(--mdb-ease), color 0.4s var(--mdb-ease);
 }
 .elementor-106766 .elementor-element-34e7f20 .elementor-button:hover {
-	background: var(--mdb-gold) !important;
-	color: var(--mdb-navy-deep) !important;
+	background: var(--rt-terracotta) !important;
+	color: var(--rt-sand) !important;
+	border-color: var(--rt-terracotta) !important;
 }
 
-/* --- LE CONCEPT : section cream, eyebrow brass + titre Cormorant ----------- */
+/* --- LE CONCEPT : section sable chaud, eyebrow terracotta + titre Cormorant */
 .elementor-106766 .elementor-element-039f6cd {
-	background: var(--mdb-cream) !important;
+	background: var(--rt-sand) !important;
 	padding: clamp(3.5rem, 8vw, 6rem) var(--mdb-gutter) clamp(1rem, 3vw, 2rem) !important;
 	text-align: center;
 }
@@ -2243,13 +2329,13 @@ body.elementor-editor-active .mdb-sticky-cta {
 	font-size: 0.8rem !important;
 	letter-spacing: 0.34em !important;
 	text-transform: uppercase !important;
-	color: var(--mdb-gold-deep) !important;
+	color: var(--rt-terracotta) !important;
 	font-weight: 400 !important;
 }
-/* Grille vidéo + texte (fd01a52) sur le même fond cream, 2 colonnes alignées.
+/* Grille vidéo + texte (fd01a52) sur le même fond sable, 2 colonnes alignées.
    On vise la grille interne réelle (.e-con-inner) comme pour le hero. */
 .elementor-106766 .elementor-element-fd01a52 {
-	background: var(--mdb-cream) !important;
+	background: var(--rt-sand) !important;
 	padding: clamp(0.5rem, 2vw, 1.5rem) var(--mdb-gutter) clamp(3.5rem, 8vw, 6rem) !important;
 }
 .elementor-106766 .elementor-element-fd01a52 > .e-con-inner {
@@ -2262,19 +2348,19 @@ body.elementor-editor-active .mdb-sticky-cta {
 }
 .elementor-106766 .elementor-element-d4b8bba .elementor-custom-embed-image-overlay,
 .elementor-106766 .elementor-element-d4b8bba .elementor-wrapper { border-radius: 0 !important; }
-/* Filet brass façon concept autour de la vidéo. */
+/* Filet terracotta autour de la vidéo. */
 .elementor-106766 .elementor-element-d4b8bba .elementor-wrapper { position: relative; }
 .elementor-106766 .elementor-element-d4b8bba .elementor-wrapper::after {
 	content: "";
 	position: absolute;
 	inset: 12px;
-	border: 1px solid rgba(177, 137, 84, 0.55);
+	border: 1px solid rgba(217, 83, 30, 0.55);
 	pointer-events: none;
 }
-.elementor-106766 .elementor-element-e801010 { color: var(--mdb-ink) !important; }
+.elementor-106766 .elementor-element-e801010 { color: var(--rt-ink) !important; }
 .elementor-106766 .elementor-element-e801010 p {
 	font-family: var(--mdb-font-body) !important;
-	color: var(--mdb-ink) !important;
+	color: var(--rt-ink) !important;
 	font-size: var(--mdb-step-0) !important;
 	line-height: 1.7 !important;
 	margin: 0 0 0.9rem !important;
@@ -2284,12 +2370,12 @@ body.elementor-editor-active .mdb-sticky-cta {
 	font-style: italic;
 	font-size: var(--mdb-step-2) !important;
 	line-height: 1.3 !important;
-	color: var(--mdb-navy) !important;
+	color: var(--rt-terracotta-deep) !important;
 }
 
-/* --- INSTAGRAM : bloc de clôture navy, centré --------------------------- */
+/* --- INSTAGRAM : bloc de clôture clay, centré --------------------------- */
 .elementor-106766 .elementor-element-adca52d {
-	background: var(--mdb-navy) !important;
+	background: var(--rt-clay) !important;
 	padding: clamp(3.5rem, 8vw, 6rem) var(--mdb-gutter) 0.5rem !important;
 	text-align: center;
 }
@@ -2298,11 +2384,11 @@ body.elementor-editor-active .mdb-sticky-cta {
 	font-weight: 400 !important;
 	font-size: var(--mdb-step-3) !important;
 	line-height: 1.05 !important;
-	color: var(--mdb-cream) !important;
+	color: var(--rt-sand) !important;
 	text-transform: none !important;
 }
 .elementor-106766 .elementor-element-0f371ac {
-	background: var(--mdb-navy) !important;
+	background: var(--rt-clay) !important;
 	padding: 0 var(--mdb-gutter) 1.8rem !important;
 	text-align: center;
 }
@@ -2311,11 +2397,11 @@ body.elementor-editor-active .mdb-sticky-cta {
 	font-size: 0.8rem !important;
 	letter-spacing: 0.18em !important;
 	text-transform: uppercase !important;
-	color: rgba(244, 236, 220, 0.7) !important;
+	color: rgba(244, 230, 210, 0.74) !important;
 	margin: 0 !important;
 }
 .elementor-106766 .elementor-element-61fe278 {
-	background: var(--mdb-navy) !important;
+	background: var(--rt-clay) !important;
 	padding: 0 var(--mdb-gutter) clamp(3.5rem, 8vw, 6rem) !important;
 	text-align: center;
 }
@@ -2325,8 +2411,8 @@ body.elementor-editor-active .mdb-sticky-cta {
 	gap: 0.8rem;
 	padding: 1rem 1.9rem !important;
 	background: transparent !important;
-	color: var(--mdb-cream) !important;
-	border: 1px solid var(--mdb-gold) !important;
+	color: var(--rt-sand) !important;
+	border: 1px solid var(--rt-terracotta-bright) !important;
 	border-radius: 0 !important;
 	font-family: var(--mdb-font-eyebrow) !important;
 	font-size: 0.76rem !important;
@@ -2335,8 +2421,9 @@ body.elementor-editor-active .mdb-sticky-cta {
 	transition: background 0.4s var(--mdb-ease), color 0.4s var(--mdb-ease);
 }
 .elementor-106766 .elementor-element-61fe278 .elementor-button:hover {
-	background: var(--mdb-gold) !important;
-	color: var(--mdb-navy-deep) !important;
+	background: var(--rt-terracotta) !important;
+	color: var(--rt-sand) !important;
+	border-color: var(--rt-terracotta) !important;
 }
 
 /* --- Roof Top : mobile --------------------------------------------------- */
@@ -2350,6 +2437,85 @@ body.elementor-editor-active .mdb-sticky-cta {
 		gap: 1.5rem !important;
 	}
 	.elementor-106766 .elementor-element-7488ca8 .mdb-rt-hours { font-size: var(--mdb-step-1) !important; }
+}
+
+/* =========================================================================
+   FOOTER en contexte ROOF TOP — recolor terracotta scellé à body.page-id-106766.
+   Le footer 108363 est un template ElementsKit (PAS Elementor Pro), donc on
+   ne peut pas le cloner+conditionner. À la place : on re-teinte le footer
+   global UNIQUEMENT quand on est sur la page Roof Top, en cascadant les
+   tokens RT déjà définis plus haut.
+   Les liens sociaux (widget 4a942b2) restent pointés vers MdB ici — c'est un
+   point à traiter séparément si on veut que la page RT pointe vers les
+   comptes Roof Top (lerooftop.maisondebacon / le.roof.top.cap.d.antibes).
+   ========================================================================= */
+body.page-id-106766 .elementor.elementor-108363 {
+	background: var(--rt-clay) !important;
+	color: var(--rt-sand) !important;
+}
+/* TIER 1 : bandeau « réserver » — filets, séparateur, titres en teinte RT. */
+body.page-id-106766 .elementor-108363 .elementor-element-97020d4 {
+	border-bottom-color: var(--rt-rule) !important;
+}
+body.page-id-106766 .elementor-108363 .mdb-foot-hours--roof {
+	border-left-color: var(--rt-rule) !important;
+}
+/* Sous-titres (« Restaurant », « Le Roof Top », « Adresse »…). */
+body.page-id-106766 .elementor-108363 .mdb-foot-sub,
+body.page-id-106766 .elementor-108363 .mdb-foot-eyebrow,
+body.page-id-106766 .elementor-108363 .mdb-foot-eyebrow .elementor-heading-title {
+	color: var(--rt-terracotta-bright) !important;
+}
+/* Boutons de réservation dans le footer (intégrés au tier hours). */
+body.page-id-106766 .elementor-108363 .mdb-foot-hours-strip .elementor-button,
+body.page-id-106766 .elementor-108363 .elementor-button {
+	background: transparent !important;
+	color: var(--rt-sand) !important;
+	border-color: var(--rt-terracotta-bright) !important;
+	transition: background 0.4s var(--mdb-ease), color 0.4s var(--mdb-ease);
+}
+body.page-id-106766 .elementor-108363 .elementor-button:hover {
+	background: var(--rt-terracotta) !important;
+	color: var(--rt-sand) !important;
+	border-color: var(--rt-terracotta) !important;
+}
+/* Liens sociaux : icônes en terracotta sur fond clay. */
+body.page-id-106766 .elementor-108363 .mdb-foot-social a,
+body.page-id-106766 .elementor-108363 .mdb-foot-social svg {
+	color: var(--rt-terracotta-bright) !important;
+	fill: currentColor !important;
+}
+body.page-id-106766 .elementor-108363 .mdb-foot-social a:hover { color: var(--rt-sand) !important; }
+/* Liens nav du footer (colonnes La Maison / Vos Événements / Contact). */
+body.page-id-106766 .elementor-108363 a {
+	color: var(--rt-sand) !important;
+}
+body.page-id-106766 .elementor-108363 a:hover {
+	color: var(--rt-terracotta-bright) !important;
+}
+/* Barre légale + filets. */
+body.page-id-106766 .elementor-108363 .elementor-element-878265c > .e-con-inner {
+	border-top: 1px solid var(--rt-rule) !important;
+}
+/* Newsletter : champ + bouton soumis. */
+body.page-id-106766 .elementor-108363 .mdb-foot-newsletter input[type="email"] {
+	border-color: var(--rt-rule) !important;
+	color: var(--rt-sand) !important;
+	background: transparent !important;
+}
+body.page-id-106766 .elementor-108363 .mdb-foot-newsletter input[type="email"]::placeholder {
+	color: rgba(244, 230, 210, 0.55) !important;
+}
+body.page-id-106766 .elementor-108363 .mdb-foot-newsletter .mdb-nl-submit,
+body.page-id-106766 .elementor-108363 .mdb-foot-newsletter input[type="submit"] {
+	background: var(--rt-terracotta) !important;
+	color: var(--rt-sand) !important;
+	border-color: var(--rt-terracotta) !important;
+}
+body.page-id-106766 .elementor-108363 .mdb-foot-newsletter .mdb-nl-submit:hover,
+body.page-id-106766 .elementor-108363 .mdb-foot-newsletter input[type="submit"]:hover {
+	background: var(--rt-terracotta-bright) !important;
+	border-color: var(--rt-terracotta-bright) !important;
 }
 
 /* =========================================================================

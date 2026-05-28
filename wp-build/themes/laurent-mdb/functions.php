@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'MDB_THEME_VERSION', '0.9.101' );
+define( 'MDB_THEME_VERSION', '0.9.111' );
 define( 'MDB_THEME_DIR', get_stylesheet_directory() );
 define( 'MDB_THEME_URI', get_stylesheet_directory_uri() );
 
@@ -242,7 +242,7 @@ function mdb_megamenu_data() {
 		array(
 			// Lien direct (même logique que Le Restaurant).
 			'label' => 'Le Roof Top',
-			'url'   => $base . '/le-rooftop-club-bacon/',
+			'url'   => $base . '/le-roof-top/',
 		),
 		array(
 			// Hub des cartes : regroupe TOUS les menus, y compris la carte du bar.
@@ -466,7 +466,7 @@ add_action( 'init', function () {
 add_filter( 'body_class', function ( $classes ) {
 	$pages_with_hero = apply_filters(
 		'mdb_pages_with_hero',
-		array( 'restaurant-de-bacon', 'le-roof-top', 'le-rooftop-club-bacon', 'lappartement-de-victor', 'villa-les-roches-de-bacon' )
+		array( 'restaurant-de-bacon', 'le-roof-top', 'lappartement-de-victor', 'villa-les-roches-de-bacon' )
 	);
 
 	$has_hero = is_front_page()
@@ -485,11 +485,72 @@ add_filter( 'body_class', function ( $classes ) {
  * Le Roof Top a un compte Zenchef distinct (rid=367528).
  */
 add_filter( 'mdb_reservation_url', function ( $url ) {
-	if ( is_page( 'le-rooftop-club-bacon' ) ) {
+	if ( is_page( 'le-roof-top' ) ) {
 		return 'https://bookings.zenchef.com/results?rid=367528';
 	}
 	return $url;
 } );
+
+/**
+ * Bandeau « brand switcher » GLOBAL, en haut de chaque page (au-dessus du
+ * header fixe Elementor) : Maison de Bacon | Le Roof Top.
+ *
+ * L'actif est surligné dans la couleur de marque correspondante (navy côté
+ * MdB, terracotta côté RT). C'est le geste qui matérialise « deux lieux,
+ * une maison » — décision client 2026-05-27.
+ *
+ * Rendu via `wp_body_open` : injecté juste après `<body>`, avant le header
+ * Elementor `position:fixed`. Aucun couplage Elementor (un seul endroit).
+ *
+ * « Maison de Bacon » n'est JAMAIS traduit (marque). « Le Roof Top » non plus.
+ */
+add_action( 'wp_body_open', function () {
+	if ( is_admin() ) {
+		return;
+	}
+	$is_rt = is_page( 'le-roof-top' );
+	$mdb_url = home_url( '/' );
+	$rt_url  = home_url( '/le-roof-top/' );
+	?>
+	<div class="mdb-brandswitch" role="navigation" aria-label="Maison de Bacon — Le Roof Top">
+		<div class="mdb-brandswitch__inner">
+			<a href="<?php echo esc_url( $mdb_url ); ?>"
+				class="mdb-brandswitch__item<?php echo $is_rt ? '' : ' is-active'; ?>"
+				<?php echo $is_rt ? '' : 'aria-current="page"'; ?>>Maison de Bacon</a>
+			<span class="mdb-brandswitch__sep" aria-hidden="true">·</span>
+			<a href="<?php echo esc_url( $rt_url ); ?>"
+				class="mdb-brandswitch__item mdb-brandswitch__item--rt<?php echo $is_rt ? ' is-active' : ''; ?>"
+				<?php echo $is_rt ? 'aria-current="page"' : ''; ?>>Le Roof Top</a>
+		</div>
+	</div>
+	<?php
+}, 1 );
+
+/**
+ * Redirections 301 internes pilotées par l'option `mdb_redirects`.
+ *
+ * Forme : `array( '/ancien-chemin/' => '/nouveau-chemin/' )`. Comparée à
+ * `REQUEST_URI` (avec/sans trailing slash). Permet de déprécier proprement une
+ * page sans toucher au .htaccess. Premier usage : /le-rooftop-club-bacon/
+ * → /le-roof-top/ (canonicalisation 2026-05-28).
+ */
+add_action( 'template_redirect', function () {
+	$map = get_option( 'mdb_redirects', array() );
+	if ( empty( $map ) || ! is_array( $map ) ) {
+		return;
+	}
+
+	$path = isset( $_SERVER['REQUEST_URI'] ) ? wp_parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH ) : '';
+	if ( ! $path ) {
+		return;
+	}
+
+	$path_slash = rtrim( $path, '/' ) . '/';
+	if ( isset( $map[ $path_slash ] ) ) {
+		wp_safe_redirect( home_url( $map[ $path_slash ] ), 301 );
+		exit;
+	}
+}, 1 );
 
 /**
  * Localise en français les chaînes anglaises codées en dur du widget
