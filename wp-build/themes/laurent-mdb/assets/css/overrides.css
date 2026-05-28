@@ -2626,13 +2626,29 @@ body.page-id-106766 .mdb-menu-toggle:focus { color: var(--rt-sand) !important; }
 body.page-id-106766 .mdb-menu-toggle__bars span {
 	background: var(--rt-sand) !important;
 }
-/* Boutons CTA droite (Carte cadeau / Réserver) : variantes plus douces sur orange.
-   On garde l'outline mais on remplace les couleurs MdB par les RT. */
-body.page-id-106766 .mdb-header__actions .mdb-btn {
+/* Boutons CTA droite (Voir la carte / Réserver) sur la barre terracotta.
+   Problème historique : .mdb-btn--solid garde son background gold MdB —
+   gold sur orange = sale. On force LES DEUX variantes en teintes RT.
+    - --ghost (Voir la carte) : transparent + filet sable, texte sable.
+    - --solid (Réserver)      : fond ink/clay foncé, texte sable. Le contraste
+      vient du tone foncé sur fond orange clair, pas d'une teinte concurrente.
+   Hover : inversion sable/clay pour les deux. */
+body.page-id-106766 .mdb-header__actions .mdb-btn--ghost {
+	background: transparent !important;
 	color: var(--rt-sand) !important;
 	border-color: rgba(244, 230, 210, 0.55) !important;
 }
-body.page-id-106766 .mdb-header__actions .mdb-btn:hover {
+body.page-id-106766 .mdb-header__actions .mdb-btn--ghost:hover {
+	background: var(--rt-sand) !important;
+	color: var(--rt-terracotta-deep) !important;
+	border-color: var(--rt-sand) !important;
+}
+body.page-id-106766 .mdb-header__actions .mdb-btn--solid {
+	background: var(--rt-clay) !important;       /* #7a2810 — fond foncé, lisible sur terracotta */
+	color: var(--rt-sand) !important;
+	border-color: var(--rt-clay) !important;
+}
+body.page-id-106766 .mdb-header__actions .mdb-btn--solid:hover {
 	background: var(--rt-sand) !important;
 	color: var(--rt-terracotta-deep) !important;
 	border-color: var(--rt-sand) !important;

@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'MDB_THEME_VERSION', '0.9.121' );
+define( 'MDB_THEME_VERSION', '0.9.122' );
 define( 'MDB_THEME_DIR', get_stylesheet_directory() );
 define( 'MDB_THEME_URI', get_stylesheet_directory_uri() );
 
@@ -156,7 +156,7 @@ function mdb_t( $fr ) {
 		'Réserver une table en ligne'                  => 'Book a table online',
 		'Ouvert tous les jours · 12h – 14h · 19h – 22h' => 'Open daily · 12pm – 2pm · 7pm – 10pm',
 		'Du mercredi au dimanche · dès 18h · Tenue élégante' => 'Wed to Sun · from 6pm · Smart attire',
-		'ou appelez :'               => 'or call:',
+		'ou appeler le'              => 'or call',
 	);
 
 	// Match direct.

@@ -41,7 +41,7 @@ $info_widget = array(
 );
 
 $call_html = sprintf(
-    '<a class="mdb-hero__call-link" href="tel:%s">ou appelez : <span class="num">%s</span></a>',
+    '<a class="mdb-hero__call-link" href="tel:%s">ou appeler le <span class="num">%s</span></a>',
     esc_attr($TEL), esc_html($PHONE)
 );
 $call_widget = array(
