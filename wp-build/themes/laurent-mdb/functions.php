@@ -10,9 +10,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'MDB_THEME_VERSION', '0.9.139' );
+define( 'MDB_THEME_VERSION', '0.9.147' );
 define( 'MDB_THEME_DIR', get_stylesheet_directory() );
 define( 'MDB_THEME_URI', get_stylesheet_directory_uri() );
+define( 'MDB_GA4_ID', 'G-L4W5J047W4' );
 
 /**
  * Enqueue parent + child styles.
@@ -66,6 +67,31 @@ add_action( 'wp_enqueue_scripts', function () {
 		true
 	);
 }, 20 );
+
+
+/**
+ * GA4 — enqueue gtag.js + inline config sur le frontend.
+ *
+ * Enqueué (pas inline en `wp_head`) pour que Cookie Consent (cookiez) puisse
+ * détecter et bloquer le script tant que le consentement n'est pas donné.
+ */
+add_action( 'wp_enqueue_scripts', function () {
+	if ( is_admin() || ( defined( 'ELEMENTOR_VERSION' ) && \Elementor\Plugin::$instance->preview->is_preview_mode() ) ) {
+		return;
+	}
+	wp_enqueue_script(
+		'mdb-gtag',
+		'https://www.googletagmanager.com/gtag/js?id=' . MDB_GA4_ID,
+		array(),
+		null,
+		false
+	);
+	wp_add_inline_script(
+		'mdb-gtag',
+		"window.dataLayer = window.dataLayer || [];\nfunction gtag(){dataLayer.push(arguments);}\ngtag('js', new Date());\ngtag('config', '" . esc_js( MDB_GA4_ID ) . "');",
+		'after'
+	);
+}, 30 );
 
 
 /**
