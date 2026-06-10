@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'MDB_THEME_VERSION', '0.9.156' );
+define( 'MDB_THEME_VERSION', '0.9.157' );
 define( 'MDB_THEME_DIR', get_stylesheet_directory() );
 define( 'MDB_THEME_URI', get_stylesheet_directory_uri() );
 define( 'MDB_GA4_ID', 'G-L4W5J047W4' );
@@ -522,6 +522,33 @@ add_filter( 'mdb_reservation_url', function ( $url ) {
 		return 'https://bookings.zenchef.com/results?rid=367528';
 	}
 	return $url;
+} );
+
+/**
+ * Le Roof Top a ses propres réseaux sociaux (décision Nicole 2026-05-27).
+ * Le footer (template ElementsKit global) pointe vers les comptes Maison de
+ * Bacon ; sur la page Le Roof Top uniquement, on réécrit FB + IG vers les
+ * comptes RT. LinkedIn reste le compte société Maison de Bacon (le RT n'en a
+ * pas de distinct). Réécriture par buffer de sortie car le footer ElementsKit
+ * n'est pas filtrable via `the_content`.
+ */
+add_action( 'template_redirect', function () {
+	if ( ! is_page( 'le-roof-top' ) || is_admin() ) {
+		return;
+	}
+	ob_start( function ( $html ) {
+		return str_replace(
+			array(
+				'https://www.facebook.com/maisondebacon',
+				'https://www.instagram.com/maisondebacon/',
+			),
+			array(
+				'https://www.facebook.com/le.roof.top.cap.d.antibes',
+				'https://www.instagram.com/lerooftop.maisondebacon/',
+			),
+			$html
+		);
+	} );
 } );
 
 /**
