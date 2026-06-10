@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'MDB_THEME_VERSION', '0.9.154' );
+define( 'MDB_THEME_VERSION', '0.9.155' );
 define( 'MDB_THEME_DIR', get_stylesheet_directory() );
 define( 'MDB_THEME_URI', get_stylesheet_directory_uri() );
 define( 'MDB_GA4_ID', 'G-L4W5J047W4' );
@@ -288,7 +288,6 @@ function mdb_megamenu_data() {
 			'children' => mdb_megamenu_location_items( 'mdb_carte' ) ?: array(
 				array( 'label' => 'Notre carte', 'url' => $base . '/notre-carte/' ),
 				array( 'label' => "L'Esprit du midi", 'url' => $base . '/lesprit-du-midi/' ),
-				array( 'label' => "L'Esprit du soir", 'url' => $base . '/lesprit-du-soir/' ),
 				array( 'label' => 'Desserts', 'url' => $base . '/desserts/' ),
 				array( 'label' => 'Les En-K du bar', 'url' => $base . '/les-en-k-du-bar/' ),
 			),
