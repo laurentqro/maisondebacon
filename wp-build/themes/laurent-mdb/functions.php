@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'MDB_THEME_VERSION', '0.9.155' );
+define( 'MDB_THEME_VERSION', '0.9.156' );
 define( 'MDB_THEME_DIR', get_stylesheet_directory() );
 define( 'MDB_THEME_URI', get_stylesheet_directory_uri() );
 define( 'MDB_GA4_ID', 'G-L4W5J047W4' );
@@ -167,7 +167,7 @@ function mdb_t( $fr ) {
 		'Menu Fête des mères'        => "Mother's Day menu",
 		'Vos événements'             => 'Your events',
 		'Villa Les Roches de Bacon'  => 'Villa Les Roches de Bacon',
-		"L'Appartement de Victor"    => "L'Appartement de Victor",
+		"L'Appartement Victor"       => "L'Appartement Victor",
 		'Le Chef Nicolas Davouze'    => 'The Chef Nicolas Davouze',
 		'Presse'                     => 'Press',
 		'Avis'                       => 'Reviews',
@@ -301,7 +301,7 @@ function mdb_megamenu_data() {
 			'children' => array(
 				array( 'label' => 'Vos événements', 'url' => $base . '/vos-evenements/' ),
 				array( 'label' => 'Villa Les Roches de Bacon', 'url' => $base . '/villa-les-roches-de-bacon/' ),
-				array( 'label' => "L'Appartement de Victor", 'url' => $base . '/lappartement-de-victor/' ),
+				array( 'label' => "L'Appartement Victor", 'url' => $base . '/lappartement-de-victor/' ),
 			),
 		),
 		array(
